@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    feather.replace();
+
     loadContent();
     setupEventListeners();
 });
@@ -87,7 +87,7 @@ function loadHomePageContent() {
         card.onclick = () => goToSection(key);
         card.innerHTML = `
             <div class="card-body">
-                <h2 class="card-title text-blue-600"><i data-feather="${section.icon}"></i> ${section.title}</h2>
+                <h2 class="card-title text-blue-600"> ${section.title}</h2>
                 ${latestPost ? `
                     <p class="text-sm text-gray-600 dark:text-gray-400">آخر منشور: ${latestPost.title}</p>
                     <p class="text-xs text-gray-500 dark:text-gray-500">${latestPost.date}</p>
@@ -99,7 +99,7 @@ function loadHomePageContent() {
         `;
         sectionsContainer.appendChild(card);
     });
-    feather.replace();
+
 }
 
 function loadAdminContent() {
