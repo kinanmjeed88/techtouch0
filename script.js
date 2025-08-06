@@ -12,10 +12,33 @@ const sectionsData = {
     tutorials: { title: 'الشروحات', icon: 'book' },
     ai: { title: 'الذكاء الاصطناعي', icon: 'cpu' }
 };
-
-let posts = JSON.parse(localStorage.getItem('posts')) || [];
-let adText = localStorage.getItem('adText') || 'هنا نص الإعلان...';
-let currentPage = 1;
+let posts = JSON.parse(localStorage.getItem(\'posts\')) || [
+    {
+        id: 1,
+        title: \'أول منشور تجريبي\',
+        date: \'2025-08-06\',
+        content: \'هذا هو المحتوى التجريبي لأول منشور. يمكن تعديله من لوحة التحكم.\',
+        link: \'#\',
+        category: \'posts\'
+    },
+    {
+        id: 2,
+        title: \'تطبيق تجريبي جديد\',
+        date: \'2025-08-05\',
+        content: \'هذا هو المحتوى التجريبي لتطبيق جديد. يمكن تعديله من لوحة التحكم.\',
+        link: \'#\',
+        category: \'apps\'
+    },
+    {
+        id: 3,
+        title: \'لعبة تجريبية ممتعة\',
+        date: \'2025-08-04\',
+        content: \'هذا هو المحتوى التجريبي للعبة جديدة. يمكن تعديله من لوحة التحكم.\',
+        link: \'#\',
+        category: \'games\'
+    }
+];
+let adText = localStorage.getItem(\'adText\') || \'إعلان تجريبي: خصم 50% على جميع التطبيقات هذا الأسبوع!\';currentPage = 1;
 const postsPerPage = 10;
 
 function loadContent() {
