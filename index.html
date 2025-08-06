@@ -10,14 +10,56 @@
   <script src="script.js" defer></script>
   <style>
     body { font-family: 'Tajawal', sans-serif; }
+    /* Custom styles for drawer */
+    .drawer-open .drawer-side {
+      transform: translateX(0);
+    }
+    .drawer-side {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 256px;
+      height: 100%;
+      background-color: #f9fafb;
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    }
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    .drawer-open .drawer-overlay {
+      display: block;
+    }
+    .menu li a {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .menu li a:hover {
+      background-color: #e5e7eb;
+    }
+    .menu li a svg {
+      margin-left: 0.5rem;
+    }
   </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
   <!-- الهيدر -->
-  <header class="flex justify-between items-center bg-blue-600 text-white p-4 shadow">
+  <header class="flex justify-between items-center bg-blue-600 text-white p-4 shadow-md">
     <h1 class="text-2xl font-bold">TechTouch</h1>
-    <img src="https://via.placeholder.com/40" class="rounded-full border" alt="الصورة الشخصية">
+    <img src="https://via.placeholder.com/40" class="rounded-full border border-white" alt="الصورة الشخصية">
   </header>
 
   <!-- الشريط الإعلاني -->
@@ -27,41 +69,42 @@
   </div>
 
   <!-- القائمة الجانبية -->
-  <div class="drawer">
-    <input id="drawer-toggle" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content p-4">
-      <label for="drawer-toggle" class="btn btn-primary mb-4">القائمة</label>
+  <div class="relative">
+    <input id="drawer-toggle" type="checkbox" class="hidden" />
+    <div class="p-4">
+      <label for="drawer-toggle" class="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md cursor-pointer mb-4 inline-block">القائمة</label>
       <main id="sections-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <!-- البطاقات يتم حقنها من JS -->
       </main>
     </div> 
     <div class="drawer-side">
       <label for="drawer-toggle" class="drawer-overlay"></label>
-      <ul class="menu p-4 w-64 bg-base-100 text-base-content">
-        <li><h2 class="font-bold mb-2">الأقسام</h2></li        <li><a onclick="goToSection(\'posts\')"> المنشورات</a></li>
-        <li><a onclick="goToSection(\'apps\')"> التطبيقات</a></li>
-        <li><a onclick="goToSection(\'games\')"> الألعاب</a></li>
-        <li><a onclick="goToSection(\'movies\')"> الأفلام</a></li>
-        <li><a onclick="goToSection(\'tutorials\')"> الشروحات</a></li>
-        <li><a onclick="goToSection(\'ai\')"> الذكاء الاصطناعي</a></li>l>
+      <ul class="p-4 w-64 bg-gray-50 text-gray-800">
+        <li><h2 class="font-bold mb-2">الأقسام</h2></li>
+        <li><a onclick="goToSection('posts')"> المنشورات</a></li>
+        <li><a onclick="goToSection('apps')"> التطبيقات</a></li>
+        <li><a onclick="goToSection('games')"> الألعاب</a></li>
+        <li><a onclick="goToSection('movies')"> الأفلام</a></li>
+        <li><a onclick="goToSection('tutorials')"> الشروحات</a></li>
+        <li><a onclick="goToSection('ai')"> الذكاء الاصطناعي</a></li>
+      </ul>
     </div>
   </div>
 
   <!-- زر العودة -->
-  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl shadow-lg" onclick="goHome()">🏠</button>
+  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl shadow-lg flex items-center justify-center" onclick="goHome()">🏠</button>
 
   <!-- الفوتر -->
   <footer class="bg-gray-800 text-white text-center p-4 mt-8">
     <div class="flex justify-center space-x-4 mb-2">
-      <a href="https://www.instagram.com/techtouch0" target="_blank">Instagram</a>
-      <a href="https://www.facebook.com/kinan.mjeed.88" target="_blank">Facebook</a>
-      <a href="https://t.me/techtouch7" target="_blank">Telegram</a>
-      <a href="https://www.tiktok.com/@techtouch6" target="_blank">TikTok</a>
-      <a href="https://www.tiktok.com/@techtouch6" target="_blank">YouTube</a>
+      <a href="https://www.instagram.com/techtouch0" target="_blank" class="hover:text-blue-400">Instagram</a>
+      <a href="https://www.facebook.com/kinan.mjeed.88" target="_blank" class="hover:text-blue-400">Facebook</a>
+      <a href="https://t.me/techtouch7" target="_blank" class="hover:text-blue-400">Telegram</a>
+      <a href="https://www.tiktok.com/@techtouch6" target="_blank" class="hover:text-blue-400">TikTok</a>
+      <a href="https://www.tiktok.com/@techtouch6" target="_blank" class="hover:text-blue-400">YouTube</a>
     </div>
-    <p>جميع الحقوق محفوظة <a href="https://t.me/kinanmjeed" target="_blank" class="text-blue-400">kinanmjeed</a></p>
+    <p>جميع الحقوق محفوظة <a href="https://t.me/kinanmjeed" target="_blank" class="text-blue-400 hover:underline">kinanmjeed</a></p>
   </footer>
-
 
 </body>
 </html>

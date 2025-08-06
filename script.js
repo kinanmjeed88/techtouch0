@@ -1,17 +1,17 @@
-document.addEventListener('DOMContentLoaded', () => {
-
+document.addEventListener(\'DOMContentLoaded\', () => {
     loadContent();
     setupEventListeners();
 });
 
 const sectionsData = {
-    posts: { title: 'المنشورات', icon: 'file-text' },
-    apps: { title: 'التطبيقات', icon: 'smartphone' },
-    games: { title: 'الألعاب', icon: 'gamepad' },
-    movies: { title: 'الأفلام', icon: 'film' },
-    tutorials: { title: 'الشروحات', icon: 'book' },
-    ai: { title: 'الذكاء الاصطناعي', icon: 'cpu' }
+    posts: { title: \'المنشورات\', icon: \'file-text\' },
+    apps: { title: \'التطبيقات\', icon: \'smartphone\' },
+    games: { title: \'الألعاب\', icon: \'gamepad\' },
+    movies: { title: \'الأفلام\', icon: \'film\' },
+    tutorials: { title: \'الشروحات\', icon: \'book\' },
+    ai: { title: \'الذكاء الاصطناعي\', icon: \'cpu\' }
 };
+
 let posts = JSON.parse(localStorage.getItem(\'posts\')) || [
     {
         id: 1,
@@ -38,17 +38,18 @@ let posts = JSON.parse(localStorage.getItem(\'posts\')) || [
         category: \'games\'
     }
 ];
-let adText = localStorage.getItem(\'adText\') || \'إعلان تجريبي: خصم 50% على جميع التطبيقات هذا الأسبوع!\';currentPage = 1;
+let adText = localStorage.getItem(\'adText\') || \'إعلان تجريبي: خصم 50% على جميع التطبيقات هذا الأسبوع!\';
+let currentPage = 1;
 const postsPerPage = 10;
 
 function loadContent() {
     const path = window.location.pathname;
 
-    if (path.includes('admin.html')) {
+    if (path.includes(\'admin.html\')) {
         loadAdminContent();
-    } else if (path.includes('section.html')) {
+    } else if (path.includes(\'section.html\')) {
         loadSectionContent();
-    } else if (path.includes('post.html')) {
+    } else if (path.includes(\'post.html\')) {
         loadPostContent();
     } else {
         loadHomePageContent();
@@ -57,76 +58,90 @@ function loadContent() {
 }
 
 function setupEventListeners() {
-    const drawerToggle = document.getElementById('drawer-toggle');
+    const drawerToggle = document.getElementById(\'drawer-toggle\');
     if (drawerToggle) {
-        drawerToggle.addEventListener('change', () => {
-            document.body.classList.toggle('drawer-open', drawerToggle.checked);
+        drawerToggle.addEventListener(\'change\', () => {
+            document.body.classList.toggle(\'drawer-open\', drawerToggle.checked);
         });
     }
 }
 
 function updateAdBar() {
-    const adElement = document.getElementById('ad-text');
+    const adElement = document.getElementById(\'ad-text\');
     if (adElement) {
         adElement.textContent = adText;
     }
 }
 
 function loadHomePageContent() {
-    const sectionsContainer = document.getElementById('sections-container');
+    const sectionsContainer = document.getElementById(\'sections-container\');
     if (!sectionsContainer) return;
 
-    sectionsContainer.innerHTML = '';
+    sectionsContainer.innerHTML = \'\';
     Object.keys(sectionsData).forEach(key => {
         const section = sectionsData[key];
         const sectionPosts = posts.filter(p => p.category === key);
         const latestPost = sectionPosts.length > 0 ? sectionPosts[0] : null;
 
-        const card = document.createElement('div');
-        card.className = 'card bg-base-100 shadow-xl cursor-pointer transform transition duration-300 hover:scale-105';
+        const card = document.createElement(\'div\');
+        card.className = \'bg-white rounded-lg shadow-md p-6 cursor-pointer transform transition duration-300 hover:scale-105\';
         card.onclick = () => goToSection(key);
         card.innerHTML = `
-            <div class="card-body">
-                <h2 class="card-title text-blue-600"> ${section.title}</h2>
-                ${latestPost ? `
-                    <p class="text-sm text-gray-600 dark:text-gray-400">آخر منشور: ${latestPost.title}</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-500">${latestPost.date}</p>
-                ` : '<p class="text-sm text-gray-500">لا توجد منشورات بعد.</p>'}
-                <div class="card-actions justify-end">
-                    <button class="btn btn-sm btn-outline btn-primary">الدخول لجميع المنشورات</button>
-                </div>
+            <div class="flex items-center mb-4">
+                <div class="text-blue-600 text-2xl ml-2">${getIconHtml(section.icon)}</div>
+                <h2 class="text-xl font-bold text-blue-600">${section.title}</h2>
+            </div>
+            ${latestPost ? `
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">آخر منشور: ${latestPost.title}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500">${latestPost.date}</p>
+            ` : \'<p class="text-sm text-gray-500">لا توجد منشورات بعد.</p>\'}
+            <div class="mt-4 text-right">
+                <button class="text-blue-600 hover:underline text-sm">الدخول لجميع المنشورات</button>
             </div>
         `;
         sectionsContainer.appendChild(card);
     });
+}
 
+function getIconHtml(iconName) {
+    // This is a placeholder. In a real app, you might use an icon library like Font Awesome.
+    // For now, we'll just return a generic icon or an empty string.
+    switch(iconName) {
+        case \'file-text\': return \'<i class="fas fa-file-alt"></i>\';
+        case \'smartphone\': return \'<i class="fas fa-mobile-alt"></i>\';
+        case \'gamepad\': return \'<i class="fas fa-gamepad"></i>\';
+        case \'film\': return \'<i class="fas fa-film"></i>\';
+        case \'book\': return \'<i class="fas fa-book"></i>\';
+        case \'cpu\': return \'<i class="fas fa-microchip"></i>\';
+        default: return \'<i class="fas fa-star"></i>\';
+    }
 }
 
 function loadAdminContent() {
-    document.getElementById('ad-input').value = adText;
+    document.getElementById(\'ad-input\').value = adText;
 }
 
 function updateAd() {
-    const newAdText = document.getElementById('ad-input').value;
+    const newAdText = document.getElementById(\'ad-input\').value;
     if (newAdText) {
         adText = newAdText;
-        localStorage.setItem('adText', adText);
+        localStorage.setItem(\'adText\', adText);
         updateAdBar();
-        alert('تم تحديث الإعلان بنجاح!');
+        alert(\'تم تحديث الإعلان بنجاح!\');
     } else {
-        alert('الرجاء إدخال نص الإعلان.');
+        alert(\'الرجاء إدخال نص الإعلان.\');
     }
 }
 
 function addPost() {
-    const title = document.getElementById('post-title').value;
-    const date = document.getElementById('post-date').value;
-    const content = document.getElementById('post-content').value;
-    const link = document.getElementById('post-link').value;
-    const category = document.getElementById('post-category').value;
+    const title = document.getElementById(\'post-title\').value;
+    const date = document.getElementById(\'post-date\').value;
+    const content = document.getElementById(\'post-content\').value;
+    const link = document.getElementById(\'post-link\').value;
+    const category = document.getElementById(\'post-category\').value;
 
     if (!title || !date || !content || !category) {
-        alert('الرجاء ملء جميع الحقول المطلوبة (باستثناء رابط التحميل).');
+        alert(\'الرجاء ملء جميع الحقول المطلوبة (باستثناء رابط التحميل).\');
         return;
     }
 
@@ -140,31 +155,31 @@ function addPost() {
     };
 
     posts.unshift(newPost); // Add to the beginning
-    localStorage.setItem('posts', JSON.stringify(posts));
-    alert('تم نشر المنشور بنجاح!');
+    localStorage.setItem(\'posts\', JSON.stringify(posts));
+    alert(\'تم نشر المنشور بنجاح!\');
     // Clear form
-    document.getElementById('post-title').value = '';
-    document.getElementById('post-date').value = '';
-    document.getElementById('post-content').value = '';
-    document.getElementById('post-link').value = '';
-    document.getElementById('post-category').value = '';
+    document.getElementById(\'post-title\').value = \'\';
+    document.getElementById(\'post-date\').value = \'\';
+    document.getElementById(\'post-content\').value = \'\';
+    document.getElementById(\'post-link\').value = \'\';
+    document.getElementById(\'post-category\').value = \'\';
 }
 
 function loadSectionContent() {
     const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category');
+    const category = urlParams.get(\'category\');
     if (!category) {
-        document.getElementById('section-title').textContent = 'القسم غير موجود';
+        document.getElementById(\'section-title\').textContent = \'القسم غير موجود\';
         return;
     }
 
-    document.getElementById('section-title').textContent = sectionsData[category] ? sectionsData[category].title : 'القسم';
+    document.getElementById(\'section-title\').textContent = sectionsData[category] ? sectionsData[category].title : \'القسم\';
 
     displayPosts(category);
 }
 
 function displayPosts(category) {
-    const postsContainer = document.getElementById('posts-container');
+    const postsContainer = document.getElementById(\'posts-container\');
     if (!postsContainer) return;
 
     const filteredPosts = posts.filter(p => p.category === category);
@@ -174,37 +189,37 @@ function displayPosts(category) {
     const end = start + postsPerPage;
     const paginatedPosts = filteredPosts.slice(start, end);
 
-    postsContainer.innerHTML = '';
+    postsContainer.innerHTML = \'\';
     if (paginatedPosts.length === 0) {
-        postsContainer.innerHTML = '<p class="text-center text-gray-500">لا توجد منشورات في هذا القسم بعد.</p>';
+        postsContainer.innerHTML = \'<p class="text-center text-gray-500">لا توجد منشورات في هذا القسم بعد.</p>\';
         return;
     }
 
     paginatedPosts.forEach(post => {
-        const postCard = document.createElement('div');
-        postCard.className = 'card bg-base-100 shadow-xl cursor-pointer transform transition duration-300 hover:scale-105';
+        const postCard = document.createElement(\'div\');
+        postCard.className = \'bg-white rounded-lg shadow-md p-6 cursor-pointer transform transition duration-300 hover:scale-105\';
         postCard.onclick = () => goToPost(post.id);
         postCard.innerHTML = `
-            <div class="card-body">
-                <h2 class="card-title text-blue-600">${post.title}</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400">${post.date}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-500">${post.content.substring(0, 100)}...</p>
-                <div class="card-actions justify-end">
-                    <button class="btn btn-sm btn-outline btn-primary">قراءة المزيد</button>
-                </div>
+            <h2 class="text-xl font-bold text-blue-600 mb-2">${post.title}</h2>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">${post.date}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-500">${post.content.substring(0, 100)}...</p>
+            <div class="mt-4 text-right">
+                <button class="text-blue-600 hover:underline text-sm">قراءة المزيد</button>
             </div>
         `;
         postsContainer.appendChild(postCard);
     });
 
     // Enable/disable pagination buttons
-    document.querySelector('.flex.justify-between button:first-child').disabled = currentPage === 1;
-    document.querySelector('.flex.justify-between button:last-child').disabled = currentPage === totalPages;
+    const prevBtn = document.querySelector(\'button[onclick="prevPage()" ]\');
+    const nextBtn = document.querySelector(\'button[onclick="nextPage()" ]\');
+    if (prevBtn) prevBtn.disabled = currentPage === 1;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages;
 }
 
 function nextPage() {
     const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category');
+    const category = urlParams.get(\'category\');
     const filteredPosts = posts.filter(p => p.category === category);
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
     if (currentPage < totalPages) {
@@ -215,7 +230,7 @@ function nextPage() {
 
 function prevPage() {
     const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category');
+    const category = urlParams.get(\'category\');
     if (currentPage > 1) {
         currentPage--;
         displayPosts(category);
@@ -224,24 +239,24 @@ function prevPage() {
 
 function loadPostContent() {
     const urlParams = new URLSearchParams(window.location.search);
-    const postId = parseInt(urlParams.get('id'));
+    const postId = parseInt(urlParams.get(\'id\'));
     const post = posts.find(p => p.id === postId);
 
     if (!post) {
-        document.getElementById('post-title-bar').textContent = 'المنشور غير موجود';
+        document.getElementById(\'post-title-bar\').textContent = \'المنشور غير موجود\';
         return;
     }
 
-    document.getElementById('post-title-bar').textContent = post.title;
-    document.getElementById('post-meta').textContent = `${post.date} | ${sectionsData[post.category].title}`;
-    document.getElementById('post-content').textContent = post.content;
+    document.getElementById(\'post-title-bar\').textContent = post.title;
+    document.getElementById(\'post-meta\').textContent = `${post.date} | ${sectionsData[post.category].title}`;
+    document.getElementById(\'post-content\').textContent = post.content;
 
-    const downloadBtn = document.getElementById('download-btn');
+    const downloadBtn = document.getElementById(\'download-btn\');
     if (post.link) {
         downloadBtn.href = post.link;
-        downloadBtn.classList.remove('hidden');
+        downloadBtn.classList.remove(\'hidden\');
     } else {
-        downloadBtn.classList.add('hidden');
+        downloadBtn.classList.add(\'hidden\');
     }
 }
 
@@ -254,15 +269,7 @@ function goToPost(id) {
 }
 
 function goHome() {
-    window.location.href = 'index.html';
+    window.location.href = \'index.html\';
 }
-
-// Dark Mode Toggle (if needed, can be integrated with DaisyUI theme toggle)
-// const themeToggle = document.getElementById('theme-toggle');
-// if (themeToggle) {
-//     themeToggle.addEventListener('click', () => {
-//         document.documentElement.classList.toggle('dark');
-//     });
-// }
 
 
