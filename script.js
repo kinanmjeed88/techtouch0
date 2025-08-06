@@ -77,10 +77,16 @@ function updateAdBar() {
 }
 
 function loadHomePageContent() {
+    console.log("loadHomePageContent called");
     const sectionsContainer = document.getElementById(\'sections-container\');
-    if (!sectionsContainer) return;
-
+    if (!sectionsContainer) {
+        console.log("sections-container not found");
+        return;
+    }
+    console.log("sectionsContainer found:", sectionsContainer);
     sectionsContainer.innerHTML = \'\';
+    console.log("sectionsData:", sectionsData);
+    console.log("posts:", posts);
     Object.keys(sectionsData).forEach(key => {
         const section = sectionsData[key];
         const sectionPosts = posts.filter(p => p.category === key);
