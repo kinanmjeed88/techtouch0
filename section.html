@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>قسم المنشورات</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4">
+  <h1 class="text-2xl font-bold mb-4" id="section-title">القسم</h1>
+  <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+  <div class="flex justify-between mt-4">
+    <button onclick="prevPage()" class="btn">السابق</button>
+    <button onclick="nextPage()" class="btn">التالي</button>
+  </div>
+  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl" onclick="goHome()">🏠</button>
+</body>
+</html>
+
+

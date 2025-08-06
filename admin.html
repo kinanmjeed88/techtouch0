@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.js"></script>
+  <script src="script.js" defer></script>
+  <style>
+    body { font-family: 'Tajawal', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100 p-6 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+  <h1 class="text-3xl font-bold mb-6 text-blue-600">لوحة التحكم</h1>
+
+  <!-- تحديث الإعلان -->
+  <section class="mb-6">
+    <h2 class="text-xl mb-2">تحديث الشريط الإعلاني</h2>
+    <input type="text" id="ad-input" placeholder="أدخل نص الإعلان" class="border p-2 w-full mb-2">
+    <button onclick="updateAd()" class="bg-blue-600 text-white px-4 py-2 rounded">حفظ الإعلان</button>
+  </section>
+
+  <!-- إضافة منشور -->
+  <section>
+    <h2 class="text-xl mb-2">إضافة منشور جديد</h2>
+    <input type="text" id="post-title" placeholder="العنوان" class="border p-2 w-full mb-2">
+    <input type="date" id="post-date" class="border p-2 w-full mb-2">
+    <textarea id="post-content" placeholder="المحتوى" class="border p-2 w-full mb-2"></textarea>
+    <input type="text" id="post-link" placeholder="رابط التحميل (اختياري)" class="border p-2 w-full mb-2">
+    <select id="post-category" class="border p-2 w-full mb-2">
+      <option value="">اختر القسم</option>
+      <option value="posts">المنشورات</option>
+      <option value="apps">التطبيقات</option>
+      <option value="games">الألعاب</option>
+      <option value="movies">الأفلام</option>
+      <option value="tutorials">الشروحات</option>
+      <option value="ai">الذكاء الاصطناعي</option>
+    </select>
+    <button onclick="addPost()" class="bg-green-600 text-white px-4 py-2 rounded">نشر المنشور</button>
+  </section>
+
+</body>
+</html>
+
+
