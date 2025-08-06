@@ -3,6 +3,9 @@ document.addEventListener(\'DOMContentLoaded\', () => {
     setupEventListeners();
 });
 
+// Call loadContent immediately in case DOMContentLoaded has already fired
+loadContent();
+
 const sectionsData = {
     posts: { title: \'المنشورات\', icon: \'file-text\' },
     apps: { title: \'التطبيقات\', icon: \'smartphone\' },
@@ -105,7 +108,7 @@ function loadHomePageContent() {
 
 function getIconHtml(iconName) {
     // This is a placeholder. In a real app, you might use an icon library like Font Awesome.
-    // For now, we'll just return a generic icon or an empty string.
+    // For now, we\'ll just return a generic icon or an empty string.
     switch(iconName) {
         case \'file-text\': return \'<i class="fa-solid fa-file-lines"></i>\';
         case \'smartphone\': return \'<i class="fa-solid fa-mobile-screen-button"></i>\';
