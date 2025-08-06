@@ -107,13 +107,13 @@ function getIconHtml(iconName) {
     // This is a placeholder. In a real app, you might use an icon library like Font Awesome.
     // For now, we'll just return a generic icon or an empty string.
     switch(iconName) {
-        case \'file-text\': return \'<i class="fas fa-file-alt"></i>\';
-        case \'smartphone\': return \'<i class="fas fa-mobile-alt"></i>\';
-        case \'gamepad\': return \'<i class="fas fa-gamepad"></i>\';
-        case \'film\': return \'<i class="fas fa-film"></i>\';
-        case \'book\': return \'<i class="fas fa-book"></i>\';
-        case \'cpu\': return \'<i class="fas fa-microchip"></i>\';
-        default: return \'<i class="fas fa-star"></i>\';
+        case \'file-text\': return \'<i class="fa-solid fa-file-lines"></i>\';
+        case \'smartphone\': return \'<i class="fa-solid fa-mobile-screen-button"></i>\';
+        case \'gamepad\': return \'<i class="fa-solid fa-gamepad"></i>\';
+        case \'film\': return \'<i class="fa-solid fa-film"></i>\';
+        case \'book\': return \'<i class="fa-solid fa-book"></i>\';
+        case \'cpu\': return \'<i class="fa-solid fa-microchip"></i>\';
+        default: return \'<i class="fa-solid fa-star"></i>\';
     }
 }
 
