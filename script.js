@@ -1,18 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOMContentLoaded fired");
+// تحميل المحتوى عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing...');
     loadContent();
     setupEventListeners();
+    initializeDropdowns();
 });
 
+// بيانات الأقسام
 const sectionsData = {
-    posts: { title: 'المنشورات', icon: 'file-text' },
-    apps: { title: 'التطبيقات', icon: 'smartphone' },
+    posts: { title: 'المنشورات', icon: 'file-lines' },
+    apps: { title: 'التطبيقات', icon: 'mobile-screen-button' },
     games: { title: 'الألعاب', icon: 'gamepad' },
     movies: { title: 'الأفلام', icon: 'film' },
     tutorials: { title: 'الشروحات', icon: 'book' },
-    ai: { title: 'الذكاء الاصطناعي', icon: 'cpu' }
+    ai: { title: 'الذكاء الاصطناعي', icon: 'microchip' }
 };
 
+// بيانات المنشورات
 let posts = JSON.parse(localStorage.getItem('posts')) || [
     {
         id: 1,
@@ -39,10 +43,48 @@ let posts = JSON.parse(localStorage.getItem('posts')) || [
         category: 'games'
     }
 ];
-let adText = localStorage.getItem('adText') || 'إعلان تجريبي: خصم 50% على جميع التطبيقات هذا الأسبوع!';
+
+// نص الإعلان
+let adText = localStorage.getItem('adText') || 'مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!';
+
+// متغيرات التصفح
 let currentPage = 1;
 const postsPerPage = 10;
 
+// بيانات القوائم المنسدلة
+const dropdownData = {
+    movies: [
+        { icon: '🎬', text: 'Cinemana X ايرثلنك', url: 'https://t.me/techtouch7/173' },
+        { icon: '🎭', text: 'CEE أفلام', url: 'https://t.me/techtouch7/174' },
+        { icon: '📽️', text: 'Monveibox أفلام', url: 'https://t.me/techtouch7/2070' },
+        { icon: '🎪', text: 'سينمانا', url: 'https://t.me/techtouch7/1668' },
+        { icon: '🍿', text: 'نتفلكس محاني', url: 'https://t.me/techtouch7/2676' },
+        { icon: '📺', text: 'سيمو دراما', url: 'https://t.me/techtouch7/211?single' }
+    ],
+    sports: [
+        { icon: '📺', text: 'MixFlix tv', url: 'https://t.me/techtouch7/1450' },
+        { icon: '📺', text: 'دراما لايف tv', url: 'https://t.me/techtouch7/1686' },
+        { icon: '⚽', text: 'الأسطورة tv', url: 'https://t.me/techtouch7/2367?single' },
+        { icon: '🏀', text: 'ياسين tv', url: 'https://t.me/techtouch7/136' },
+        { icon: '🏈', text: 'BlackUltra', url: 'https://t.me/techtouch7/2719' },
+        { icon: '🎾', text: 'ZAIN LIVE', url: 'https://t.me/techtouch7/1992' }
+    ],
+    video: [
+        { icon: '✂️', text: 'Viva cut بديل كاب كات', url: 'https://t.me/techtouch7/2975?single' },
+        { icon: '🎨', text: 'CapCut اصدار 2', url: 'https://t.me/techtouch7/3250' },
+        { icon: '🎬', text: 'CapCut اصدار 1', url: 'https://t.me/techtouch7/3287' }
+    ],
+    misc: [
+        { icon: '📱', text: 'MYTV الأندرويد', url: 'https://t.me/techtouch7/204' },
+        { icon: '📲', text: 'MYTV الآيفون', url: 'https://t.me/techtouch7/1041' },
+        { icon: '📺', text: 'شبكتي tv للشاشات', url: 'https://t.me/techtouch7/1556' },
+        { icon: '📱', text: 'شبكتي tv للهاتف', url: 'https://t.me/techtouch7/1818' },
+        { icon: '🖥️', text: 'المنصة X للشاشات', url: 'https://t.me/techtouch7/1639' },
+        { icon: '📲', text: 'المنصة X للهاتف', url: 'https://t.me/techtouch7/1533' }
+    ]
+};
+
+// تحميل المحتوى حسب الصفحة
 function loadContent() {
     console.log("loadContent called");
     const path = window.location.pathname;
@@ -59,15 +101,22 @@ function loadContent() {
     updateAdBar();
 }
 
+// إعداد مستمعي الأحداث
 function setupEventListeners() {
-    const drawerToggle = document.getElementById('drawer-toggle');
-    if (drawerToggle) {
-        drawerToggle.addEventListener('change', () => {
-            document.body.classList.toggle('drawer-open', drawerToggle.checked);
+    // إضافة تأثيرات التفاعل للبطاقات
+    const cards = document.querySelectorAll('.main-card, .sub-card, .dropdown-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.02)';
         });
-    }
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
 }
 
+// تحديث شريط الإعلان
 function updateAdBar() {
     const adElement = document.getElementById('ad-text');
     if (adElement) {
@@ -75,61 +124,38 @@ function updateAdBar() {
     }
 }
 
+// تحميل محتوى الصفحة الرئيسية
 function loadHomePageContent() {
     console.log("loadHomePageContent called");
-    const sectionsContainer = document.getElementById('sections-container');
-    if (!sectionsContainer) {
-        console.log("sections-container not found");
-        return;
-    }
-    console.log("sectionsContainer found:", sectionsContainer);
-    sectionsContainer.innerHTML = '';
-    console.log("sectionsContainer.innerHTML after clearing:", sectionsContainer.innerHTML);
-    console.log("sectionsData:", sectionsData);
-    console.log("posts:", posts);
-    Object.keys(sectionsData).forEach(key => {
-        console.log("Processing section:", key);
-        const section = sectionsData[key];
-        const sectionPosts = posts.filter(p => p.category === key);
-        const latestPost = sectionPosts.length > 0 ? sectionPosts[0] : null;
+    updateLatestPosts();
+}
 
-        const card = document.createElement('div');
-        card.className = 'bg-white rounded-lg shadow-md p-6 cursor-pointer transform transition duration-300 hover:scale-105';
-        card.onclick = () => goToSection(key);
-        card.innerHTML = `
-            <div class="flex items-center mb-4">
-                <div class="text-blue-600 text-2xl ml-2">${getIconHtml(section.icon)}</div>
-                <h2 class="text-xl font-bold text-blue-600">${section.title}</h2>
-            </div>
-            ${latestPost ? `
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">آخر منشور: ${latestPost.title}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-500">${latestPost.date}</p>
-            ` : '<p class="text-sm text-gray-500">لا توجد منشورات بعد.</p>'}
-            <div class="mt-4 text-right">
-                <button class="text-blue-600 hover:underline text-sm">الدخول لجميع المنشورات</button>
-            </div>
-        `;
-        sectionsContainer.appendChild(card);
-        console.log("Card appended for section:", key);
+// تحديث آخر المنشورات في البطاقات
+function updateLatestPosts() {
+    Object.keys(sectionsData).forEach(category => {
+        const categoryPosts = posts.filter(p => p.category === category);
+        const latestPost = categoryPosts.length > 0 ? categoryPosts[0] : null;
+        const element = document.getElementById(`${category}-latest`);
+        
+        if (element) {
+            if (latestPost) {
+                element.textContent = `آخر منشور: ${latestPost.title}`;
+            } else {
+                element.textContent = `لا توجد منشورات بعد`;
+            }
+        }
     });
 }
 
-function getIconHtml(iconName) {
-    switch(iconName) {
-        case 'file-text': return '<i class="fa-solid fa-file-lines"></i>';
-        case 'smartphone': return '<i class="fa-solid fa-mobile-screen-button"></i>';
-        case 'gamepad': return '<i class="fa-solid fa-gamepad"></i>';
-        case 'film': return '<i class="fa-solid fa-film"></i>';
-        case 'book': return '<i class="fa-solid fa-book"></i>';
-        case 'cpu': return '<i class="fa-solid fa-microchip"></i>';
-        default: return '<i class="fa-solid fa-star"></i>';
+// تحميل محتوى صفحة الإدارة
+function loadAdminContent() {
+    const adInput = document.getElementById('ad-input');
+    if (adInput) {
+        adInput.value = adText;
     }
 }
 
-function loadAdminContent() {
-    document.getElementById('ad-input').value = adText;
-}
-
+// تحديث الإعلان
 function updateAd() {
     const newAdText = document.getElementById('ad-input').value;
     if (newAdText) {
@@ -142,6 +168,7 @@ function updateAd() {
     }
 }
 
+// إضافة منشور جديد
 function addPost() {
     const title = document.getElementById('post-title').value;
     const date = document.getElementById('post-date').value;
@@ -163,10 +190,11 @@ function addPost() {
         category
     };
 
-    posts.unshift(newPost); // Add to the beginning
+    posts.unshift(newPost);
     localStorage.setItem('posts', JSON.stringify(posts));
     alert('تم نشر المنشور بنجاح!');
-    // Clear form
+    
+    // مسح النموذج
     document.getElementById('post-title').value = '';
     document.getElementById('post-date').value = '';
     document.getElementById('post-content').value = '';
@@ -174,19 +202,25 @@ function addPost() {
     document.getElementById('post-category').value = '';
 }
 
+// تحميل محتوى صفحة القسم
 function loadSectionContent() {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
     if (!category) {
-        document.getElementById('section-title').textContent = 'القسم غير موجود';
+        const titleElement = document.getElementById('section-title');
+        if (titleElement) titleElement.textContent = 'القسم غير موجود';
         return;
     }
 
-    document.getElementById('section-title').textContent = sectionsData[category] ? sectionsData[category].title : 'القسم';
+    const titleElement = document.getElementById('section-title');
+    if (titleElement) {
+        titleElement.textContent = sectionsData[category] ? sectionsData[category].title : 'القسم';
+    }
 
     displayPosts(category);
 }
 
+// عرض المنشورات
 function displayPosts(category) {
     const postsContainer = document.getElementById('posts-container');
     if (!postsContainer) return;
@@ -210,8 +244,8 @@ function displayPosts(category) {
         postCard.onclick = () => goToPost(post.id);
         postCard.innerHTML = `
             <h2 class="text-xl font-bold text-blue-600 mb-2">${post.title}</h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">${post.date}</p>
-            <p class="text-sm text-gray-500 dark:text-gray-500">${post.content.substring(0, 100)}...</p>
+            <p class="text-sm text-gray-600 mb-2">${post.date}</p>
+            <p class="text-sm text-gray-500">${post.content.substring(0, 100)}...</p>
             <div class="mt-4 text-right">
                 <button class="text-blue-600 hover:underline text-sm">قراءة المزيد</button>
             </div>
@@ -219,13 +253,14 @@ function displayPosts(category) {
         postsContainer.appendChild(postCard);
     });
 
-    // Enable/disable pagination buttons
+    // تفعيل/تعطيل أزرار التصفح
     const prevBtn = document.querySelector('button[onclick="prevPage()"]');
     const nextBtn = document.querySelector('button[onclick="nextPage()"]');
     if (prevBtn) prevBtn.disabled = currentPage === 1;
     if (nextBtn) nextBtn.disabled = currentPage === totalPages;
 }
 
+// الصفحة التالية
 function nextPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
@@ -237,6 +272,7 @@ function nextPage() {
     }
 }
 
+// الصفحة السابقة
 function prevPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
@@ -246,39 +282,243 @@ function prevPage() {
     }
 }
 
+// تحميل محتوى المنشور
 function loadPostContent() {
     const urlParams = new URLSearchParams(window.location.search);
     const postId = parseInt(urlParams.get('id'));
     const post = posts.find(p => p.id === postId);
 
     if (!post) {
-        document.getElementById('post-title-bar').textContent = 'المنشور غير موجود';
+        const titleElement = document.getElementById('post-title-bar');
+        if (titleElement) titleElement.textContent = 'المنشور غير موجود';
         return;
     }
 
-    document.getElementById('post-title-bar').textContent = post.title;
-    document.getElementById('post-meta').textContent = `${post.date} | ${sectionsData[post.category].title}`;
-    document.getElementById('post-content').textContent = post.content;
-
+    const titleElement = document.getElementById('post-title-bar');
+    const metaElement = document.getElementById('post-meta');
+    const contentElement = document.getElementById('post-content');
     const downloadBtn = document.getElementById('download-btn');
-    if (post.link) {
-        downloadBtn.href = post.link;
-        downloadBtn.classList.remove('hidden');
-    } else {
-        downloadBtn.classList.add('hidden');
+
+    if (titleElement) titleElement.textContent = post.title;
+    if (metaElement) metaElement.textContent = `${post.date} | ${sectionsData[post.category].title}`;
+    if (contentElement) contentElement.textContent = post.content;
+
+    if (downloadBtn) {
+        if (post.link && post.link !== '#') {
+            downloadBtn.href = post.link;
+            downloadBtn.classList.remove('hidden');
+        } else {
+            downloadBtn.classList.add('hidden');
+        }
     }
 }
 
+// التنقل إلى قسم
 function goToSection(category) {
     window.location.href = `section.html?category=${category}`;
 }
 
+// التنقل إلى منشور
 function goToPost(id) {
     window.location.href = `post.html?id=${id}`;
 }
 
+// العودة للصفحة الرئيسية
 function goHome() {
     window.location.href = 'index.html';
 }
 
+// فتح الشريط الجانبي
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('overlay').classList.add('active');
+}
+
+// إغلاق الشريط الجانبي
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('active');
+}
+
+// تهيئة القوائم المنسدلة
+function initializeDropdowns() {
+    const dropdownCards = document.querySelectorAll('.dropdown-card');
+    
+    dropdownCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const dropdownType = this.getAttribute('data-dropdown');
+            const headerText = this.querySelector('.dropdown-header').textContent;
+            
+            if (dropdownType && dropdownData[dropdownType]) {
+                openDropdownModal(dropdownType, headerText);
+            }
+        });
+    });
+}
+
+// فتح النافذة المنبثقة للقائمة المنسدلة
+function openDropdownModal(dropdownType, title) {
+    const modal = document.getElementById('popupModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    
+    if (!modal || !modalTitle || !modalContent) return;
+    
+    modalTitle.textContent = title;
+    modalContent.innerHTML = '';
+    
+    const items = dropdownData[dropdownType];
+    if (items) {
+        items.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'modal-item';
+            itemDiv.innerHTML = `
+                <span class="modal-item-icon">${item.icon}</span>
+                <span class="modal-item-text">${item.text}</span>
+            `;
+            
+            itemDiv.addEventListener('click', function() {
+                window.open(item.url, '_blank');
+                modal.style.display = 'none';
+            });
+            
+            modalContent.appendChild(itemDiv);
+        });
+    }
+    
+    modal.style.display = 'block';
+}
+
+// إغلاق النافذة المنبثقة
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('popupModal');
+    const closeButton = document.querySelector('.close-button');
+    
+    if (event.target === modal || event.target === closeButton) {
+        modal.style.display = 'none';
+    }
+});
+
+// إضافة الأنماط للنافذة المنبثقة
+const modalStyles = `
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.close-button {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #ffeb3b;
+}
+
+.modal h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.modal-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 1);
+}
+
+.modal-item-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    color: white;
+    flex-shrink: 0;
+}
+
+.modal-item-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+`;
+
+document.head.insertAdjacentHTML('beforeend', modalStyles);
 

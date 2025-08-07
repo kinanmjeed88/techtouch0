@@ -1,26 +1,280 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>قسم المنشورات</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    body { font-family: \'Tajawal\', sans-serif; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قسم المنشورات - TechTouch</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .post-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            .post-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4">
-  <h1 class="text-2xl font-bold mb-4" id="section-title">القسم</h1>
-  <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-  <div class="flex justify-between mt-4">
-    <button onclick="prevPage()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">السابق</button>
-    <button onclick="nextPage()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">التالي</button>
-  </div>
-  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl shadow-lg flex items-center justify-center" onclick="goHome()">🏠</button>
-  <script src="script.js"></script>
+<body>
+    <!-- Header -->
+    <header class="glass-effect text-white p-4 mb-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <a href="index.html" class="text-2xl hover:text-yellow-300 transition-colors">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h1 class="text-2xl font-bold gradient-text" id="section-title">القسم</h1>
+            </div>
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <i class="fas fa-folder-open text-2xl"></i>
+                <span class="text-sm opacity-90">استعراض المحتوى</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 pb-20">
+        <!-- Posts Container -->
+        <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Posts will be populated by JavaScript -->
+        </div>
+        
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state hidden">
+            <i class="fas fa-inbox"></i>
+            <h3 class="text-xl font-bold mb-2">لا توجد منشورات</h3>
+            <p class="text-sm opacity-75">لم يتم نشر أي محتوى في هذا القسم بعد</p>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="flex justify-center space-x-4 space-x-reverse mt-8" id="pagination-container">
+            <button onclick="prevPage()" id="prev-btn" class="btn-primary">
+                <i class="fas fa-chevron-right ml-2"></i>
+                السابق
+            </button>
+            <button onclick="nextPage()" id="next-btn" class="btn-primary">
+                التالي
+                <i class="fas fa-chevron-left mr-2"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Floating Home Button -->
+    <a href="index.html" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
+        <i class="fas fa-home"></i>
+    </a>
+    
+    <!-- Footer -->
+    <footer class="glass-effect text-white text-center p-6 mt-12">
+        <div class="container mx-auto">
+            <div class="flex justify-center space-x-6 space-x-reverse mb-4">
+                <a href="https://www.instagram.com/techtouch0" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="https://www.facebook.com/kinan.mjeed.88" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-facebook text-xl"></i>
+                </a>
+                <a href="https://t.me/techtouch7" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-telegram text-xl"></i>
+                </a>
+                <a href="https://www.tiktok.com/@techtouch6" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-tiktok text-xl"></i>
+                </a>
+            </div>
+            <p class="text-sm opacity-90">
+                جميع الحقوق محفوظة © 2025 
+                <a href="https://t.me/kinanmjeed" target="_blank" class="text-yellow-300 hover:underline">kinanmjeed</a>
+            </p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+    <script>
+        // تحسين عرض المنشورات
+        function displayPosts(category) {
+            const postsContainer = document.getElementById('posts-container');
+            const emptyState = document.getElementById('empty-state');
+            const paginationContainer = document.getElementById('pagination-container');
+            
+            if (!postsContainer) return;
+
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const filteredPosts = posts.filter(p => p.category === category);
+            const postsPerPage = 9; // زيادة عدد المنشورات لكل صفحة
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+
+            const start = (currentPage - 1) * postsPerPage;
+            const end = start + postsPerPage;
+            const paginatedPosts = filteredPosts.slice(start, end);
+
+            postsContainer.innerHTML = '';
+            
+            if (paginatedPosts.length === 0) {
+                emptyState.classList.remove('hidden');
+                paginationContainer.classList.add('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+                paginationContainer.classList.remove('hidden');
+            }
+
+            paginatedPosts.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.className = 'post-card';
+                postCard.onclick = () => goToPost(post.id);
+                
+                // تحديد أيقونة القسم
+                const sectionIcons = {
+                    posts: 'file-lines',
+                    apps: 'mobile-screen-button',
+                    games: 'gamepad',
+                    movies: 'film',
+                    tutorials: 'book',
+                    ai: 'microchip'
+                };
+                
+                const sectionColors = {
+                    posts: 'blue',
+                    apps: 'green',
+                    games: 'purple',
+                    movies: 'red',
+                    tutorials: 'orange',
+                    ai: 'cyan'
+                };
+                
+                const icon = sectionIcons[post.category] || 'star';
+                const color = sectionColors[post.category] || 'gray';
+                
+                postCard.innerHTML = `
+                    <div class="flex items-start mb-4">
+                        <div class="text-2xl text-${color}-600 ml-3">
+                            <i class="fas fa-${icon}"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">${post.title}</h2>
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <i class="fas fa-calendar-alt ml-1"></i>
+                                <span>${post.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4 line-clamp-3">${post.content.substring(0, 150)}${post.content.length > 150 ? '...' : ''}</p>
+                    <div class="flex justify-between items-center">
+                        <button class="text-${color}-600 hover:text-${color}-700 font-medium text-sm transition-colors">
+                            <i class="fas fa-arrow-left ml-1"></i>
+                            قراءة المزيد
+                        </button>
+                        ${post.link && post.link !== '#' ? `
+                            <div class="text-green-600">
+                                <i class="fas fa-download"></i>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                postsContainer.appendChild(postCard);
+            });
+
+            // تحديث أزرار التصفح
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (prevBtn) prevBtn.disabled = currentPage === 1;
+            if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+        }
+    </script>
 </body>
 </html>
-
 

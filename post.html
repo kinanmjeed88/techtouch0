@@ -1,25 +1,240 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تفاصيل المنشور</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    body { font-family: \'Tajawal\', sans-serif; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنشور - TechTouch</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .post-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .post-meta {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        .post-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #374151;
+        }
+        
+        .post-image {
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .post-container {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .post-content {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4">
-  <div class="bg-blue-600 text-white p-3 rounded mb-4" id="post-title-bar">عنوان المنشور</div>
-  <div class="text-sm mb-2" id="post-meta"></div>
-  <img id="post-image" class="w-full rounded mb-4 hidden" alt="صورة المنشور">
-  <div id="post-content" class="mb-4 p-4 bg-white rounded-lg shadow-md"></div>
-  <a id="download-btn" class="bg-green-600 text-white px-5 py-2 rounded-md hover:bg-green-700 transition duration-300 hidden" target="_blank">تحميل</a>
-  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl shadow-lg flex items-center justify-center" onclick="goHome()">🏠</button>
-  <script src="script.js"></script>
+<body>
+    <!-- Header -->
+    <header class="glass-effect text-white p-4 mb-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <button onclick="history.back()" class="text-2xl hover:text-yellow-300 transition-colors">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1 class="text-xl font-bold gradient-text">تفاصيل المنشور</h1>
+            </div>
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <i class="fas fa-file-alt text-2xl"></i>
+                <span class="text-sm opacity-90">قراءة المحتوى</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 pb-20">
+        <div class="post-container">
+            <!-- Post Title -->
+            <div class="text-center mb-6">
+                <h1 class="text-3xl font-bold gradient-text mb-4" id="post-title-bar">عنوان المنشور</h1>
+                <div class="post-meta">
+                    <div class="flex items-center justify-center space-x-4 space-x-reverse text-gray-600">
+                        <div class="flex items-center">
+                            <i class="fas fa-calendar-alt ml-2"></i>
+                            <span id="post-meta">معلومات المنشور</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post Image (if available) -->
+            <img id="post-image" class="post-image w-full hidden" alt="صورة المنشور">
+            
+            <!-- Post Content -->
+            <div class="post-content" id="post-content">
+                محتوى المنشور سيظهر هنا...
+            </div>
+            
+            <!-- Download Button -->
+            <div class="text-center mt-8">
+                <a id="download-btn" class="btn-success hidden" target="_blank">
+                    <i class="fas fa-download ml-2"></i>
+                    تحميل الملف
+                </a>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex justify-center space-x-4 space-x-reverse mt-8 pt-6 border-t border-gray-200">
+                <button onclick="history.back()" class="btn-primary">
+                    <i class="fas fa-arrow-right ml-2"></i>
+                    العودة
+                </button>
+                <a href="index.html" class="btn-primary">
+                    <i class="fas fa-home ml-2"></i>
+                    الصفحة الرئيسية
+                </a>
+            </div>
+        </div>
+        
+        <!-- Related Posts Section (Future Enhancement) -->
+        <div class="post-container">
+            <h3 class="text-xl font-bold gradient-text mb-4 text-center">
+                <i class="fas fa-star ml-2"></i>
+                منشورات ذات صلة
+            </h3>
+            <div class="text-center text-gray-600">
+                <i class="fas fa-clock text-3xl mb-2 opacity-50"></i>
+                <p>قريباً - منشورات مشابهة</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Home Button -->
+    <a href="index.html" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
+        <i class="fas fa-home"></i>
+    </a>
+    
+    <!-- Footer -->
+    <footer class="glass-effect text-white text-center p-6 mt-12">
+        <div class="container mx-auto">
+            <div class="flex justify-center space-x-6 space-x-reverse mb-4">
+                <a href="https://www.instagram.com/techtouch0" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="https://www.facebook.com/kinan.mjeed.88" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-facebook text-xl"></i>
+                </a>
+                <a href="https://t.me/techtouch7" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-telegram text-xl"></i>
+                </a>
+                <a href="https://www.tiktok.com/@techtouch6" target="_blank" class="hover:text-yellow-300 transition-colors">
+                    <i class="fab fa-tiktok text-xl"></i>
+                </a>
+            </div>
+            <p class="text-sm opacity-90">
+                جميع الحقوق محفوظة © 2025 
+                <a href="https://t.me/kinanmjeed" target="_blank" class="text-yellow-300 hover:underline">kinanmjeed</a>
+            </p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
 </body>
 </html>
-
 
