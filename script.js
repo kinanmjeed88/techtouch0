@@ -1,4 +1,5 @@
 document.addEventListener(\'DOMContentLoaded\', () => {
+    console.log(\"DOMContentLoaded fired\");
     loadContent();
     setupEventListeners();
 });
@@ -43,6 +44,7 @@ let currentPage = 1;
 const postsPerPage = 10;
 
 function loadContent() {
+    console.log(\"loadContent called\");
     const path = window.location.pathname;
 
     if (path.includes(\'admin.html\')) {
@@ -74,18 +76,19 @@ function updateAdBar() {
 }
 
 function loadHomePageContent() {
-    console.log("loadHomePageContent called");
+    console.log(\"loadHomePageContent called\");
     const sectionsContainer = document.getElementById(\'sections-container\');
     if (!sectionsContainer) {
-        console.log("sections-container not found");
+        console.log(\"sections-container not found\");
         return;
     }
-    console.log("sectionsContainer found:", sectionsContainer);
+    console.log(\"sectionsContainer found:\", sectionsContainer);
     sectionsContainer.innerHTML = \'\';
-    console.log("sectionsContainer.innerHTML after clearing:", sectionsContainer.innerHTML);
-    console.log("sectionsData:", sectionsData);
-    console.log("posts:", posts);
+    console.log(\"sectionsContainer.innerHTML after clearing:\", sectionsContainer.innerHTML);
+    console.log(\"sectionsData:\", sectionsData);
+    console.log(\"posts:\", posts);
     Object.keys(sectionsData).forEach(key => {
+        console.log(\"Processing section:\", key);
         const section = sectionsData[key];
         const sectionPosts = posts.filter(p => p.category === key);
         const latestPost = sectionPosts.length > 0 ? sectionPosts[0] : null;
@@ -94,31 +97,32 @@ function loadHomePageContent() {
         card.className = \'bg-white rounded-lg shadow-md p-6 cursor-pointer transform transition duration-300 hover:scale-105\';
         card.onclick = () => goToSection(key);
         card.innerHTML = `
-            <div class="flex items-center mb-4">
-                <div class="text-blue-600 text-2xl ml-2">${getIconHtml(section.icon)}</div>
-                <h2 class="text-xl font-bold text-blue-600">${section.title}</h2>
+            <div class=\"flex items-center mb-4\">
+                <div class=\"text-blue-600 text-2xl ml-2\">${getIconHtml(section.icon)}</div>
+                <h2 class=\"text-xl font-bold text-blue-600\">${section.title}</h2>
             </div>
             ${latestPost ? `
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">آخر منشور: ${latestPost.title}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-500">${latestPost.date}</p>
-            ` : \'<p class="text-sm text-gray-500">لا توجد منشورات بعد.</p>\'}
-            <div class="mt-4 text-right">
-                <button class="text-blue-600 hover:underline text-sm">الدخول لجميع المنشورات</button>
+                <p class=\"text-sm text-gray-600 dark:text-gray-400 mb-2\">آخر منشور: ${latestPost.title}</p>
+                <p class=\"text-xs text-gray-500 dark:text-gray-500\">${latestPost.date}</p>
+            ` : \'<p class=\"text-sm text-gray-500\">لا توجد منشورات بعد.</p>\'}
+            <div class=\"mt-4 text-right\">
+                <button class=\"text-blue-600 hover:underline text-sm\">الدخول لجميع المنشورات</button>
             </div>
         `;
         sectionsContainer.appendChild(card);
+        console.log(\"Card appended for section:\", key);
     });
 }
 
 function getIconHtml(iconName) {
     switch(iconName) {
-        case \'file-text\': return \'<i class="fa-solid fa-file-lines"></i>\';
-        case \'smartphone\': return \'<i class="fa-solid fa-mobile-screen-button"></i>\';
-        case \'gamepad\': return \'<i class="fa-solid fa-gamepad"></i>\';
-        case \'film\': return \'<i class="fa-solid fa-film"></i>\';
-        case \'book\': return \'<i class="fa-solid fa-book"></i>\';
-        case \'cpu\': return \'<i class="fa-solid fa-microchip"></i>\';
-        default: return \'<i class="fa-solid fa-star"></i>\';
+        case \'file-text\': return \'<i class=\"fa-solid fa-file-lines\"></i>\';
+        case \'smartphone\': return \'<i class=\"fa-solid fa-mobile-screen-button\"></i>\';
+        case \'gamepad\': return \'<i class=\"fa-solid fa-gamepad\"></i>\';
+        case \'film\': return \'<i class=\"fa-solid fa-film\"></i>\';
+        case \'book\': return \'<i class=\"fa-solid fa-book\"></i>\';
+        case \'cpu\': return \'<i class=\"fa-solid fa-microchip\"></i>\';
+        default: return \'<i class=\"fa-solid fa-star\"></i>\';
     }
 }
 
@@ -196,7 +200,7 @@ function displayPosts(category) {
 
     postsContainer.innerHTML = \'\';
     if (paginatedPosts.length === 0) {
-        postsContainer.innerHTML = \'<p class="text-center text-gray-500">لا توجد منشورات في هذا القسم بعد.</p>\';
+        postsContainer.innerHTML = \'<p class=\"text-center text-gray-500\">لا توجد منشورات في هذا القسم بعد.</p>\';
         return;
     }
 
@@ -205,19 +209,19 @@ function displayPosts(category) {
         postCard.className = \'bg-white rounded-lg shadow-md p-6 cursor-pointer transform transition duration-300 hover:scale-105\';
         postCard.onclick = () => goToPost(post.id);
         postCard.innerHTML = `
-            <h2 class="text-xl font-bold text-blue-600 mb-2">${post.title}</h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">${post.date}</p>
-            <p class="text-sm text-gray-500 dark:text-gray-500">${post.content.substring(0, 100)}...</p>
-            <div class="mt-4 text-right">
-                <button class="text-blue-600 hover:underline text-sm">قراءة المزيد</button>
+            <h2 class=\"text-xl font-bold text-blue-600 mb-2\">${post.title}</h2>
+            <p class=\"text-sm text-gray-600 dark:text-gray-400 mb-2\">${post.date}</p>
+            <p class=\"text-sm text-gray-500 dark:text-gray-500\">${post.content.substring(0, 100)}...</p>
+            <div class=\"mt-4 text-right\">
+                <button class=\"text-blue-600 hover:underline text-sm\">قراءة المزيد</button>
             </div>
         `;
         postsContainer.appendChild(postCard);
     });
 
     // Enable/disable pagination buttons
-    const prevBtn = document.querySelector(\'button[onclick="prevPage()" ]\');
-    const nextBtn = document.querySelector(\'button[onclick="nextPage()" ]\');
+    const prevBtn = document.querySelector(\'button[onclick=\"prevPage()\"]\');
+    const nextBtn = document.querySelector(\'button[onclick=\"nextPage()\"]\');
     if (prevBtn) prevBtn.disabled = currentPage === 1;
     if (nextBtn) nextBtn.disabled = currentPage === totalPages;
 }
@@ -276,6 +280,5 @@ function goToPost(id) {
 function goHome() {
     window.location.href = \'index.html\';
 }
-
 
 
