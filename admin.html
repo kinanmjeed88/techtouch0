@@ -393,31 +393,43 @@
     <script>
         // Default admin password (can be changed)
         const ADMIN_PASSWORD = "admin123"; 
-        const DEFAULT_PROFILE_PIC = "https://via.placeholder.com/100"; // Default profile        document.addEventListener("DOMContentLoaded", function() {
+        const DEFAULT_PROFILE_PIC = "https://via.placeholder.com/100"; // Default profile pic
+        
+        document.addEventListener("DOMContentLoaded", function() {
             checkLogin();
             loadAdText();
             loadProfilePic();
             updateStats();
             
             // إضافة event listener لزر Enter في حقل كلمة المرور
-            document.getElementById("admin-password").addEventListener("keypress", function(e) {
-                if (e.key === "Enter") {
-                    loginAdmin();
-                }
-            });
+            const passwordField = document.getElementById("admin-password");
+            if (passwordField) {
+                passwordField.addEventListener("keypress", function(e) {
+                    if (e.key === "Enter") {
+                        loginAdmin();
+                    }
+                });
+            }
             
             // إضافة معاينة فورية للصورة الشخصية
-            document.getElementById("profile-pic-file").addEventListener("change", function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById("profile-preview-img").src = e.target.result;
-                        document.getElementById("profile-preview").classList.remove("hidden");
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+            const profilePicFile = document.getElementById("profile-pic-file");
+            if (profilePicFile) {
+                profilePicFile.addEventListener("change", function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const previewImg = document.getElementById("profile-preview-img");
+                            const preview = document.getElementById("profile-preview");
+                            if (previewImg && preview) {
+                                previewImg.src = e.target.result;
+                                preview.classList.remove("hidden");
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
         });
 
         function checkLogin() {
@@ -432,18 +444,37 @@
         }
 
         function loginAdmin() {
+            console.log("loginAdmin function called"); // للتشخيص
+            
             const passwordInput = document.getElementById("admin-password");
             const loginError = document.getElementById("login-error");
             const storedPassword = localStorage.getItem("adminPassword") || ADMIN_PASSWORD;
+            
+            console.log("Password input:", passwordInput ? passwordInput.value : "not found");
+            console.log("Stored password:", storedPassword);
 
-            if (passwordInput && passwordInput.value === storedPassword) {
+            if (passwordInput && passwordInput.value.trim() === storedPassword) {
+                console.log("Login successful");
                 localStorage.setItem("adminLoggedIn", "true");
                 passwordInput.value = ""; // مسح حقل كلمة المرور
-                checkLogin();
+                
+                // إخفاء رسالة الخطأ
                 if (loginError) {
                     loginError.classList.add("hidden");
                 }
+                
+                // إظهار لوحة التحكم
+                const loginSection = document.getElementById("login-section");
+                const adminPanel = document.getElementById("admin-panel");
+                
+                if (loginSection && adminPanel) {
+                    loginSection.classList.add("hidden");
+                    adminPanel.classList.remove("hidden");
+                }
+                
+                checkLogin();
             } else {
+                console.log("Login failed");
                 if (loginError) {
                     loginError.classList.remove("hidden");
                 }
