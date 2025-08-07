@@ -6,8 +6,20 @@ document.addEventListener("DOMContentLoaded", function() {
         loadContent();
         setupEventListeners();
         initializeDropdowns();
+        updateProfilePic(); // تحديث الصورة الشخصية
     });
 });
+
+// تحديث الصورة الشخصية في الشريط العلوي
+function updateProfilePic() {
+    const profilePicDisplay = document.getElementById("profile-pic-display");
+    if (profilePicDisplay) {
+        const savedProfilePic = localStorage.getItem("profilePic");
+        if (savedProfilePic) {
+            profilePicDisplay.src = savedProfilePic;
+        }
+    }
+}
 
 // بيانات الأقسام
 const sectionsData = {
@@ -425,6 +437,76 @@ function goToSection(category) {
 // التنقل إلى منشور
 function goToPost(id) {
     window.location.href = `post.html?id=${id}`;
+}
+
+// إضافة دوال عرض المحتوى في نفس الصفحة
+function showSubContent(type) {
+    const contentArea = document.getElementById("sub-content-area");
+    const titleElement = document.getElementById("sub-content-title");
+    const listElement = document.getElementById("sub-content-list");
+    
+    // بيانات المحتوى لكل قسم
+    const contentData = {
+        movies: {
+            title: "تطبيقات الأفلام",
+            items: [
+                { name: "Netflix", url: "https://netflix.com" },
+                { name: "Disney+", url: "https://disneyplus.com" },
+                { name: "Amazon Prime", url: "https://primevideo.com" },
+                { name: "Shahid", url: "https://shahid.mbc.net" }
+            ]
+        },
+        sports: {
+            title: "تطبيقات رياضية",
+            items: [
+                { name: "ESPN", url: "https://espn.com" },
+                { name: "beIN Sports", url: "https://beinsports.com" },
+                { name: "KooraLive", url: "https://kooralive.tv" },
+                { name: "Yalla Shoot", url: "https://yallashoot.com" }
+            ]
+        },
+        video: {
+            title: "تصميم الفيديو",
+            items: [
+                { name: "Adobe Premiere", url: "https://adobe.com/premiere" },
+                { name: "Final Cut Pro", url: "https://apple.com/final-cut-pro" },
+                { name: "DaVinci Resolve", url: "https://blackmagicdesign.com" },
+                { name: "Canva Video", url: "https://canva.com" }
+            ]
+        },
+        misc: {
+            title: "قسم المتفرقات",
+            items: [
+                { name: "أدوات مفيدة", url: "#" },
+                { name: "مواقع تعليمية", url: "#" },
+                { name: "تطبيقات عامة", url: "#" },
+                { name: "موارد مجانية", url: "#" }
+            ]
+        }
+    };
+    
+    const data = contentData[type];
+    if (!data) return;
+    
+    titleElement.textContent = data.title;
+    listElement.innerHTML = "";
+    
+    data.items.forEach(item => {
+        const itemElement = document.createElement("div");
+        itemElement.className = "flex items-center justify-between p-3 bg-white/50 rounded-lg hover:bg-white/70 transition-colors cursor-pointer";
+        itemElement.innerHTML = `
+            <span class="font-medium text-gray-800">${item.name}</span>
+            <i class="fas fa-external-link-alt text-gray-500"></i>
+        `;
+        itemElement.onclick = () => window.open(item.url, '_blank');
+        listElement.appendChild(itemElement);
+    });
+    
+    contentArea.classList.remove("hidden");
+}
+
+function hideSubContent() {
+    document.getElementById("sub-content-area").classList.add("hidden");
 }
 
 // العودة للصفحة الرئيسية

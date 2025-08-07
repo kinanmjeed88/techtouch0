@@ -251,7 +251,10 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">تغيير الصورة الشخصية:</label>
                         <img id="profile-pic-preview" class="profile-pic-preview" src="" alt="صورة شخصية">
-                        <input type="url" id="profile-pic-url" placeholder="رابط الصورة الشخصية" class="form-input">
+                        <input type="file" id="profile-pic-file" accept="image/*" class="form-input">
+                        <div id="profile-preview" class="mt-2 hidden">
+                            <img id="profile-preview-img" class="w-32 h-32 object-cover rounded-full border-2 border-gray-300" alt="معاينة الصورة الشخصية">
+                        </div>
                         <button onclick="changeProfilePic()" class="btn-primary">
                             <i class="fas fa-image ml-2"></i>
                             تغيير الصورة
@@ -390,15 +393,25 @@
     <script>
         // Default admin password (can be changed)
         const ADMIN_PASSWORD = "admin123"; 
-        const DEFAULT_PROFILE_PIC = "https://via.placeholder.com/100"; // Default profile picture
-
-        document.addEventListener("DOMContentLoaded", function() {
+        const DEFAULT_PROFILE_PIC = "https://via.placeholder.com/100"; // Default profile        document.addEventListener("DOMContentLoaded", function() {
             checkLogin();
-            updateStats();
+            loadAdText();
             loadProfilePic();
-        });
-
-        function checkLogin() {
+            updateStats();
+            
+            // إضافة معاينة فورية للصورة الشخصية
+            document.getElementById("profile-pic-file").addEventListener("change", function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById("profile-preview-img").src = e.target.result;
+                        document.getElementById("profile-preview").classList.remove("hidden");
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });on checkLogin() {
             const isLoggedIn = localStorage.getItem("adminLoggedIn");
             if (isLoggedIn === "true") {
                 document.getElementById("login-section").classList.add("hidden");
@@ -437,17 +450,25 @@
         function loadProfilePic() {
             const profilePicUrl = localStorage.getItem("profilePic") || DEFAULT_PROFILE_PIC;
             document.getElementById("profile-pic-preview").src = profilePicUrl;
-            document.getElementById("profile-pic-url").value = profilePicUrl;
         }
 
         function changeProfilePic() {
-            const newProfilePicUrl = document.getElementById("profile-pic-url").value;
-            if (newProfilePicUrl) {
-                localStorage.setItem("profilePic", newProfilePicUrl);
-                loadProfilePic();
-                alert("تم تغيير الصورة الشخصية بنجاح!");
+            const fileInput = document.getElementById("profile-pic-file");
+            const file = fileInput.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    localStorage.setItem("profilePic", imageUrl);
+                    loadProfilePic();
+                    alert("تم تغيير الصورة الشخصية بنجاح!");
+                    fileInput.value = "";
+                    document.getElementById("profile-preview").classList.add("hidden");
+                };
+                reader.readAsDataURL(file);
             } else {
-                alert("الرجاء إدخال رابط الصورة الشخصية.");
+                alert("الرجاء اختيار صورة شخصية.");
             }
         }
 
