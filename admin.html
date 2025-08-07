@@ -412,18 +412,16 @@
                     
                     <div class="md:col-span-2">
                         <button id="add-post-btn" class="btn-success w-full">
-                            <i class="fas fa-paper-plane ml-2"></i>
-                            نشر المنشور
-                        </button>
-                    </div>
-                </div>
+                    <i class="fas fa-plus ml-2"></i>
+                    نشر المنشور
+                </button>
             </div>
             
             <!-- Posts Management Section -->
             <div class="admin-card">
                 <div class="flex items-center mb-6">
-                    <div class="text-3xl text-indigo-600 ml-4">
-                        <i class="fas fa-list-ul"></i>
+                    <div class="text-3xl text-blue-600 ml-4">
+                        <i class="fas fa-list"></i>
                     </div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-800">إدارة المنشورات</h2>
@@ -431,31 +429,33 @@
                     </div>
                 </div>
                 
-                <!-- Search Bar -->
+                <!-- Search Box -->
                 <div class="mb-6">
                     <div class="relative">
                         <input type="text" id="search-posts" placeholder="البحث عن منشور..." class="form-input pl-10">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <i class="fas fa-search text-gray-400"></i>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Posts List -->
-                <div id="posts-list-container" class="space-y-4 max-h-96 overflow-y-auto">
-                    <!-- Posts will be populated by JavaScript -->
-                </div>
-                
-                <!-- Empty State -->
-                <div id="posts-empty-state" class="text-center py-8 hidden">
-                    <div class="text-6xl text-gray-300 mb-4">
-                        <i class="fas fa-inbox"></i>
+                <div id="posts-list-container">
+                    <div id="posts-list" class="space-y-4">
+                        <!-- Posts will be loaded here -->
                     </div>
-                    <p class="text-gray-500 text-lg">لا توجد منشورات</p>
+                    
+                    <!-- Empty State -->
+                    <div id="posts-empty-state" class="text-center py-12 hidden">
+                        <div class="text-6xl text-gray-300 mb-4">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <p class="text-gray-500 text-lg">لا توجد منشورات</p>
+                    </div>
                 </div>
             </div>
             
-            <!-- Statistics Section -->
+            <!-- Quick Stats Section -->
             <div class="admin-card">
                 <div class="flex items-center mb-6">
                     <div class="text-3xl text-purple-600 ml-4">
