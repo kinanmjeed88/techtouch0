@@ -1105,8 +1105,8 @@
 
             const newItem = { icon: icon || "🔗", text, url };
 
-            // Load existing dropdown data from localStorage
-            let currentDropdownData = JSON.parse(localStorage.getItem("dropdownData")) || {};
+            // Load existing dropdown data from current global variable
+            let currentDropdownData = { ...dropdownData };
 
             // Initialize category if it doesn't exist
             if (!currentDropdownData[category]) {
@@ -1116,20 +1116,41 @@
             // Add the new item to the specific category
             currentDropdownData[category].push(newItem);
 
-            localStorage.setItem("dropdownData", JSON.stringify(currentDropdownData));
-            alert("تم إضافة العنصر بنجاح!");
+            // Update global variable
+            dropdownData = currentDropdownData;
 
-            // Clear form fields
-            document.getElementById("dropdown-icon").value = "";
-            document.getElementById("dropdown-title").value = "";
-            document.getElementById("dropdown-url").value = "";
+            // Save to GitHub
+            saveToGitHub('dropdowns.json', currentDropdownData)
+                .then(() => {
+                    alert("تم إضافة العنصر بنجاح!");
+                    
+                    // Clear form fields
+                    document.getElementById("dropdown-icon").value = "";
+                    document.getElementById("dropdown-title").value = "";
+                    document.getElementById("dropdown-url").value = "";
 
-            // Reload the dropdown items list
-            loadDropdownItemsList();
+                    // Reload the dropdown items list
+                    loadDropdownItemsList();
+                })
+                .catch((error) => {
+                    console.error('Error saving dropdown item:', error);
+                    alert("حدث خطأ أثناء حفظ العنصر. سيتم حفظه محلياً كنسخة احتياطية.");
+                    
+                    // Backup save to localStorage
+                    localStorage.setItem("dropdownData", JSON.stringify(currentDropdownData));
+                    
+                    // Clear form fields
+                    document.getElementById("dropdown-icon").value = "";
+                    document.getElementById("dropdown-title").value = "";
+                    document.getElementById("dropdown-url").value = "";
+
+                    // Reload the dropdown items list
+                    loadDropdownItemsList();
+                });
         }
 
         function loadDropdownItemsList() {
-            const dropdownData = JSON.parse(localStorage.getItem("dropdownData")) || {};
+            // Use global dropdownData instead of localStorage
             const container = document.getElementById("dropdown-items-list");
             
             if (!container) return;
@@ -1230,6 +1251,7 @@
             loadDropdownItemsList();
         }
     </script>
+    <script src="github-config.js"></script>
 </body>
 </html>
 

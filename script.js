@@ -31,102 +31,139 @@ const sectionsData = {
     ai: { title: "الذكاء الاصطناعي", icon: "microchip" }
 };
 
-// بيانات المنشورات
-let posts = JSON.parse(localStorage.getItem("posts")) || [
-    {
-        id: 1,
-        title: "أول منشور تجريبي",
-        date: "2025-08-06",
-        content: "هذا هو المحتوى التجريبي لأول منشور. يمكن تعديله من لوحة التحكم.",
-        link: "#",
-        imageUrl: "",
-        telegramLink: "",
-        category: "posts"
-    },
-    {
-        id: 2,
-        title: "تطبيق تجريبي جديد",
-        date: "2025-08-05",
-        content: "هذا هو المحتوى التجريبي لتطبيق جديد. يمكن تعديله من لوحة التحكم.",
-        link: "#",
-        imageUrl: "",
-        telegramLink: "",
-        category: "apps"
-    },
-    {
-        id: 3,
-        title: "لعبة تجريبية ممتعة",
-        date: "2025-08-04",
-        content: "هذا هو المحتوى التجريبي للعبة جديدة. يمكن تعديله من لوحة التحكم.",
-        link: "#",
-        imageUrl: "",
-        telegramLink: "",
-        category: "games"
-    },
-    {
-        id: 4,
-        title: "سينمانا الاسود",
-        date: "2025-08-03",
-        content: "تطبيق سينمانا الأسود لمشاهدة الأفلام والمسلسلات.",
-        link: "#",
-        imageUrl: "",
-        telegramLink: "",
-        category: "movies"
-    }
-];
+// بيانات المنشورات - سيتم تحميلها من GitHub
+let posts = [];
 
-// نص الإعلان
+// نص الإعلان - سيبقى في localStorage مؤقتاً
 let adText = localStorage.getItem("adText") || "مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!";
 
 // متغيرات التصفح
 let currentPage = 1;
 const postsPerPage = 10;
 
-// بيانات القوائم المنسدلة
-let dropdownData = JSON.parse(localStorage.getItem("dropdownData")) || {
-    movies: [
-        { icon: "🎬", text: "Cinemana X ايرثلنك", url: "https://t.me/techtouch7/173" },
-        { icon: "🎭", text: "CEE أفلام", url: "https://t.me/techtouch7/174" },
-        { icon: "📽️", text: "Monveibox أفلام", url: "https://t.me/techtouch7/2070" },
-        { icon: "🎪", text: "سينمانا", url: "https://t.me/techtouch7/1668" },
-        { icon: "🍿", text: "نتفلكس محاني", url: "https://t.me/techtouch7/2676" },
-        { icon: "📺", text: "سيمو دراما", url: "https://t.me/techtouch7/211?single" }
-    ],
-    sports: [
-        { icon: "📺", text: "MixFlix tv", url: "https://t.me/techtouch7/1450" },
-        { icon: "📺", text: "دراما لايف tv", url: "https://t.me/techtouch7/1686" },
-        { icon: "⚽", text: "الأسطورة tv", url: "https://t.me/techtouch7/2367?single" },
-        { icon: "🏀", text: "ياسين tv", url: "https://t.me/techtouch7/136" },
-        { icon: "🏈", text: "BlackUltra", url: "https://t.me/techtouch7/2719" },
-        { icon: "🎾", text: "ZAIN LIVE", url: "https://t.me/techtouch7/1992" }
-    ],
-    video: [
-        { icon: "✂️", text: "Viva cut بديل كاب كات", url: "https://t.me/techtouch7/2975?single" },
-        { icon: "🎨", text: "CapCut اصدار 2", url: "https://t.me/techtouch7/3250" },
-        { icon: "🎬", text: "CapCut اصدار 1", url: "https://t.me/techtouch7/3287" }
-    ],
-    misc: [
-        { icon: "📱", text: "MYTV الأندرويد", url: "https://t.me/techtouch7/204" },
-        { icon: "📲", text: "MYTV الآيفون", url: "https://t.me/techtouch7/1041" },
-        { icon: "📺", text: "شبكتي tv للشاشات", url: "https://t.me/techtouch7/1556" },
-        { icon: "📱", text: "شبكتي tv للهاتف", url: "https://t.me/techtouch7/1818" },
-        { icon: "🖥️", text: "المنصة X للشاشات", url: "https://t.me/techtouch7/1639" },
-        { icon: "📲", text: "المنصة X للهاتف", url: "https://t.me/techtouch7/1533" }
-    ]
-};
+// بيانات القوائم المنسدلة - سيتم تحميلها من GitHub
+let dropdownData = {};
 
-// تحديث بيانات القوائم المنسدلة من localStorage
-function updateDropdownData() {
-    const savedData = localStorage.getItem("dropdownData");
-    if (savedData) {
-        dropdownData = JSON.parse(savedData);
+// تحميل البيانات من GitHub
+async function loadDataFromGitHub() {
+    try {
+        // تحميل المنشورات
+        const postsData = await fetchFromGitHub('posts.json');
+        if (postsData) {
+            posts = postsData;
+        }
+        
+        // تحميل القوائم المنسدلة
+        const dropdownsData = await fetchFromGitHub('dropdowns.json');
+        if (dropdownsData) {
+            dropdownData = dropdownsData;
+        }
+        
+        console.log('Data loaded from GitHub successfully');
+        return true;
+    } catch (error) {
+        console.error('Error loading data from GitHub:', error);
+        // في حالة الفشل، استخدم البيانات المحلية كبديل
+        loadFallbackData();
+        return false;
     }
 }
 
+// تحميل البيانات الاحتياطية من localStorage
+function loadFallbackData() {
+    console.log('Loading fallback data from localStorage');
+    
+    // تحميل المنشورات من localStorage
+    posts = JSON.parse(localStorage.getItem("posts")) || [
+        {
+            id: 1,
+            title: "أول منشور تجريبي",
+            date: "2025-08-06",
+            content: "هذا هو المحتوى التجريبي لأول منشور. يمكن تعديله من لوحة التحكم.",
+            link: "#",
+            imageUrl: "",
+            telegramLink: "",
+            category: "posts"
+        },
+        {
+            id: 2,
+            title: "تطبيق تجريبي جديد",
+            date: "2025-08-05",
+            content: "هذا هو المحتوى التجريبي لتطبيق جديد. يمكن تعديله من لوحة التحكم.",
+            link: "#",
+            imageUrl: "",
+            telegramLink: "",
+            category: "apps"
+        },
+        {
+            id: 3,
+            title: "لعبة تجريبية ممتعة",
+            date: "2025-08-04",
+            content: "هذا هو المحتوى التجريبي للعبة جديدة. يمكن تعديله من لوحة التحكم.",
+            link: "#",
+            imageUrl: "",
+            telegramLink: "",
+            category: "games"
+        },
+        {
+            id: 4,
+            title: "سينمانا الاسود",
+            date: "2025-08-03",
+            content: "تطبيق سينمانا الأسود لمشاهدة الأفلام والمسلسلات.",
+            link: "#",
+            imageUrl: "",
+            telegramLink: "",
+            category: "movies"
+        }
+    ];
+    
+    // تحميل القوائم المنسدلة من localStorage
+    dropdownData = JSON.parse(localStorage.getItem("dropdownData")) || {
+        movies: [
+            { icon: "🎬", text: "Cinemana X ايرثلنك", url: "https://t.me/techtouch7/173" },
+            { icon: "🎭", text: "CEE أفلام", url: "https://t.me/techtouch7/174" },
+            { icon: "📽️", text: "Monveibox أفلام", url: "https://t.me/techtouch7/2070" },
+            { icon: "🎪", text: "سينمانا", url: "https://t.me/techtouch7/1668" },
+            { icon: "🍿", text: "نتفلكس محاني", url: "https://t.me/techtouch7/2676" },
+            { icon: "📺", text: "سيمو دراما", url: "https://t.me/techtouch7/211?single" }
+        ],
+        sports: [
+            { icon: "📺", text: "MixFlix tv", url: "https://t.me/techtouch7/1450" },
+            { icon: "📺", text: "دراما لايف tv", url: "https://t.me/techtouch7/1686" },
+            { icon: "⚽", text: "الأسطورة tv", url: "https://t.me/techtouch7/2367?single" },
+            { icon: "🏀", text: "ياسين tv", url: "https://t.me/techtouch7/136" },
+            { icon: "🏈", text: "BlackUltra", url: "https://t.me/techtouch7/2719" },
+            { icon: "🎾", text: "ZAIN LIVE", url: "https://t.me/techtouch7/1992" }
+        ],
+        video: [
+            { icon: "✂️", text: "Viva cut بديل كاب كات", url: "https://t.me/techtouch7/2975?single" },
+            { icon: "🎨", text: "CapCut اصدار 2", url: "https://t.me/techtouch7/3250" },
+            { icon: "🎬", text: "CapCut اصدار 1", url: "https://t.me/techtouch7/3287" }
+        ],
+        misc: [
+            { icon: "📱", text: "MYTV الأندرويد", url: "https://t.me/techtouch7/204" },
+            { icon: "📲", text: "MYTV الآيفون", url: "https://t.me/techtouch7/1041" },
+            { icon: "📺", text: "شبكتي tv للشاشات", url: "https://t.me/techtouch7/1556" },
+            { icon: "📱", text: "شبكتي tv للهاتف", url: "https://t.me/techtouch7/1818" },
+            { icon: "🖥️", text: "المنصة X للشاشات", url: "https://t.me/techtouch7/1639" },
+            { icon: "📲", text: "المنصة X للهاتف", url: "https://t.me/techtouch7/1533" }
+        ]
+    };
+}
+
+// تحديث بيانات القوائم المنسدلة (لم تعد تستخدم localStorage)
+async function updateDropdownData() {
+    // البيانات تُحمل الآن من GitHub في loadDataFromGitHub()
+    console.log('Dropdown data updated from GitHub');
+}
+
 // تحميل المحتوى حسب الصفحة
-function loadContent() {
+async function loadContent() {
     console.log("loadContent called");
-    updateDropdownData(); // تحديث بيانات القوائم المنسدلة
+    
+    // تحميل البيانات من GitHub أولاً
+    await loadDataFromGitHub();
+    
     const path = window.location.pathname;
 
     if (path.includes("admin.html")) {
@@ -233,9 +270,6 @@ function addPost() {
 }
 
 function savePost(title, date, content, link, imageUrl, telegramLink, category) {
-    // استخدام نفس هيكل البيانات المستخدم في admin.html
-    let posts = JSON.parse(localStorage.getItem("posts") || "[]");
-    
     const newPost = {
         id: Date.now(),
         title: title,
@@ -250,22 +284,53 @@ function savePost(title, date, content, link, imageUrl, telegramLink, category) 
 
     // إضافة المنشور في بداية المصفوفة
     posts.unshift(newPost);
-    localStorage.setItem("posts", JSON.stringify(posts));
-
-    // مسح النموذج
-    document.getElementById("post-title").value = "";
-    document.getElementById("post-date").value = "";
-    document.getElementById("post-content").value = "";
-    document.getElementById("post-link").value = "";
-    document.getElementById("post-image-file").value = "";
-    document.getElementById("telegram-link").value = "";
-    document.getElementById("post-category").value = "";
     
-    // إخفاء معاينة الصورة
-    document.getElementById("image-preview").classList.add("hidden");
+    // حفظ البيانات إلى GitHub
+    saveToGitHub('posts.json', posts)
+        .then(() => {
+            alert("تم إضافة المنشور بنجاح!");
+            
+            // مسح النموذج
+            document.getElementById("post-title").value = "";
+            document.getElementById("post-date").value = "";
+            document.getElementById("post-content").value = "";
+            document.getElementById("post-link").value = "";
+            document.getElementById("post-image-file").value = "";
+            document.getElementById("telegram-link").value = "";
+            document.getElementById("post-category").value = "";
+            
+            // إخفاء معاينة الصورة
+            const imagePreview = document.getElementById("image-preview");
+            if (imagePreview) {
+                imagePreview.classList.add("hidden");
+            }
 
-    alert("تم إضافة المنشور بنجاح!");
-    updateStats();
+            updateStats();
+        })
+        .catch((error) => {
+            console.error('Error saving post:', error);
+            alert("حدث خطأ أثناء حفظ المنشور. سيتم حفظه محلياً كنسخة احتياطية.");
+            
+            // حفظ احتياطي في localStorage
+            localStorage.setItem("posts", JSON.stringify(posts));
+            
+            // مسح النموذج
+            document.getElementById("post-title").value = "";
+            document.getElementById("post-date").value = "";
+            document.getElementById("post-content").value = "";
+            document.getElementById("post-link").value = "";
+            document.getElementById("post-image-file").value = "";
+            document.getElementById("telegram-link").value = "";
+            document.getElementById("post-category").value = "";
+            
+            // إخفاء معاينة الصورة
+            const imagePreview = document.getElementById("image-preview");
+            if (imagePreview) {
+                imagePreview.classList.add("hidden");
+            }
+
+            updateStats();
+        });
 }
 
 // عرض المنشورات حسب القسم

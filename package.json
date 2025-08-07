@@ -1,0 +1,15 @@
+{
+  "name": "techtouch0",
+  "version": "1.0.0",
+  "description": "TechTouch website with GitHub storage",
+  "main": "index.html",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "author": "kinanmjeed88",
+  "license": "MIT"
+}
+
