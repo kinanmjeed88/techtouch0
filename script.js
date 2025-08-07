@@ -73,7 +73,7 @@ function updateAdBar() {
     }
 }
 
-window.loadHomePageContent = function() {
+function loadHomePageContent() {
     console.log("loadHomePageContent called");
     const sectionsContainer = document.getElementById(\'sections-container\');
     if (!sectionsContainer) {
@@ -82,6 +82,7 @@ window.loadHomePageContent = function() {
     }
     console.log("sectionsContainer found:", sectionsContainer);
     sectionsContainer.innerHTML = \'\';
+    console.log("sectionsContainer.innerHTML after clearing:", sectionsContainer.innerHTML);
     console.log("sectionsData:", sectionsData);
     console.log("posts:", posts);
     Object.keys(sectionsData).forEach(key => {
@@ -100,7 +101,7 @@ window.loadHomePageContent = function() {
             ${latestPost ? `
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">آخر منشور: ${latestPost.title}</p>
                 <p class="text-xs text-gray-500 dark:text-gray-500">${latestPost.date}</p>
-            ` : \'<p class="text-sm text-gray-500">لا توجد منشورات بعد.</p>\''}
+            ` : \'<p class="text-sm text-gray-500">لا توجد منشورات بعد.</p>\'}
             <div class="mt-4 text-right">
                 <button class="text-blue-600 hover:underline text-sm">الدخول لجميع المنشورات</button>
             </div>
@@ -111,7 +112,7 @@ window.loadHomePageContent = function() {
 
 function getIconHtml(iconName) {
     // This is a placeholder. In a real app, you might use an icon library like Font Awesome.
-    // For now, we\\'ll just return a generic icon or an empty string.
+    // For now, we\\\'ll just return a generic icon or an empty string.
     switch(iconName) {
         case \'file-text\': return \'<i class="fa-solid fa-file-lines"></i>\';
         case \'smartphone\': return \'<i class="fa-solid fa-mobile-screen-button"></i>\';
@@ -277,7 +278,6 @@ function goToPost(id) {
 function goHome() {
     window.location.href = \'index.html\';
 }
-
 
 
 
