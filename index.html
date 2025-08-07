@@ -20,13 +20,13 @@
         * {
             font-family: 'Tajawal', sans-serif;
         }
-        
-        body {
-            background: linear-gradient(135deg, #87ceeb 0%, #4682b4 100%); /* Sky blue gradient */
+                body {
+            background: #1B8EEF;
             min-height: 100vh;
-            /* تحسين الأداء */
-            will-change: transform;
-            transform: translateZ(0);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Tajawal', sans-serif;
+        }lateZ(0);
         }
         
         .glass-effect {
@@ -259,16 +259,16 @@
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
     
     <!-- Header -->
-    <header class="glass-effect text-white p-4 mb-6">
+    <header style="background-color: #0C18C0;" class="text-white p-4 mb-6">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4 space-x-reverse">
                 <button onclick="openSidebar()" class="text-2xl hover:text-yellow-300 transition-colors">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 class="text-2xl font-bold gradient-text">TechTouch</h1>
+                <h1 class="text-2xl font-bold text-white">TechTouch</h1>
             </div>
             <div class="flex items-center space-x-4 space-x-reverse">
-                <img id="profile-pic-display" src="https://via.placeholder.com/100" alt="الصورة الشخصية" class="w-10 h-10 rounded-full border-2 border-white/30">
+                <img id="profile-pic-display" src="https://via.placeholder.com/100" alt="الصورة الشخصية" class="w-10 h-10 rounded-full border-2 border-white" style="border-width: 2px;">
             </div>
         </div>
     </header>
@@ -490,7 +490,7 @@
     </div>
     
     <!-- Footer -->
-    <footer class="glass-effect text-white text-center p-6 mt-12">
+    <footer style="background-color: #0C18C0;" class="text-white text-center p-6 mt-12">
         <div class="container mx-auto">
             <div class="flex justify-center space-x-6 space-x-reverse mb-4">
                 <a href="https://www.instagram.com/techtouch0" target="_blank" class="hover:text-yellow-300 transition-colors">

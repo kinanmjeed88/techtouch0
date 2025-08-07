@@ -399,6 +399,13 @@
             loadProfilePic();
             updateStats();
             
+            // إضافة event listener لزر Enter في حقل كلمة المرور
+            document.getElementById("admin-password").addEventListener("keypress", function(e) {
+                if (e.key === "Enter") {
+                    loginAdmin();
+                }
+            });
+            
             // إضافة معاينة فورية للصورة الشخصية
             document.getElementById("profile-pic-file").addEventListener("change", function(e) {
                 const file = e.target.files[0];
@@ -425,27 +432,35 @@
         }
 
         function loginAdmin() {
-            const passwordInput = document.getElementById("admin-password").value;
+            const passwordInput = document.getElementById("admin-password");
             const loginError = document.getElementById("login-error");
             const storedPassword = localStorage.getItem("adminPassword") || ADMIN_PASSWORD;
 
-            if (passwordInput === storedPassword) {
+            if (passwordInput && passwordInput.value === storedPassword) {
                 localStorage.setItem("adminLoggedIn", "true");
+                passwordInput.value = ""; // مسح حقل كلمة المرور
                 checkLogin();
-                loginError.classList.add("hidden");
+                if (loginError) {
+                    loginError.classList.add("hidden");
+                }
             } else {
-                loginError.classList.remove("hidden");
+                if (loginError) {
+                    loginError.classList.remove("hidden");
+                }
             }
         }
 
         function changePassword() {
             const newPassword = document.getElementById("new-password").value;
-            if (newPassword) {
-                localStorage.setItem("adminPassword", newPassword);
-                alert("تم تغيير كلمة المرور بنجاح!");
+            if (newPassword && newPassword.trim() !== "") {
+                localStorage.setItem("adminPassword", newPassword.trim());
+                // إعادة تعيين حالة تسجيل الدخول لإجبار المستخدم على تسجيل الدخول مرة أخرى
+                localStorage.removeItem("adminLoggedIn");
+                alert("تم تغيير كلمة المرور بنجاح! سيتم إعادة توجيهك لتسجيل الدخول مرة أخرى.");
                 document.getElementById("new-password").value = "";
+                checkLogin(); // إعادة فحص حالة تسجيل الدخول
             } else {
-                alert("الرجاء إدخال كلمة مرور جديدة.");
+                alert("الرجاء إدخال كلمة مرور جديدة صحيحة.");
             }
         }
 
