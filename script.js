@@ -1,9 +1,12 @@
 // تحميل المحتوى عند تحميل الصفحة
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM loaded, initializing...");
-    loadContent();
-    setupEventListeners();
-    initializeDropdowns();
+    // تحميل المحتوى بشكل فوري
+    requestAnimationFrame(() => {
+        loadContent();
+        setupEventListeners();
+        initializeDropdowns();
+    });
 });
 
 // بيانات الأقسام
@@ -138,6 +141,9 @@ function loadHomePageContent() {
 
 // تحديث آخر المنشورات في البطاقات
 function updateLatestPosts() {
+    // استخدام fragment لتحسين الأداء
+    const fragment = document.createDocumentFragment();
+    
     Object.keys(sectionsData).forEach(category => {
         const categoryPosts = posts.filter(p => p.category === category);
         const latestPost = categoryPosts.length > 0 ? categoryPosts[0] : null;
@@ -162,54 +168,78 @@ function updateAd() {
         updateAdBar();
         alert("تم تحديث الإعلان بنجاح!");
     } else {
-        alert("الرجاء إدخال نص الإعلان.");
+        alert("يرجى إدخال نص الإعلان!");
     }
 }
 
-// إضافة منشور جديد (وظيفة لوحة التحكم)
+// إضافة منشور جديد
 function addPost() {
-    const title = document.getElementById("post-title").value;
+    const title = document.getElementById("post-title").value.trim();
     const date = document.getElementById("post-date").value;
-    const content = document.getElementById("post-content").value;
-    const link = document.getElementById("post-link").value;
-    const imageUrl = document.getElementById("post-image-url").value;
-    const telegramLink = document.getElementById("telegram-link").value;
+    const content = document.getElementById("post-content").value.trim();
+    const link = document.getElementById("post-link").value.trim();
+    const imageFile = document.getElementById("post-image-file").files[0];
+    const telegramLink = document.getElementById("telegram-link").value.trim();
     const category = document.getElementById("post-category").value;
 
-    if (!title || !date || !content || !category) {
-        alert("الرجاء ملء جميع الحقول المطلوبة (باستثناء رابط التحميل والصورة ورابط التليجرام).");
+    if (!title || !content || !category) {
+        alert("يرجى ملء جميع الحقول المطلوبة!");
         return;
+    }
+
+    // معالجة الصورة إذا تم رفعها
+    let imageUrl = "";
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imageUrl = e.target.result;
+            savePost(title, date, content, link, imageUrl, telegramLink, category);
+        };
+        reader.readAsDataURL(imageFile);
+    } else {
+        savePost(title, date, content, link, imageUrl, telegramLink, category);
+    }
+}
+
+function savePost(title, date, content, link, imageUrl, telegramLink, category) {
+    const posts = JSON.parse(localStorage.getItem("posts") || "{}");
+    
+    if (!posts[category]) {
+        posts[category] = [];
     }
 
     const newPost = {
         id: Date.now(),
-        title,
-        date,
-        content,
-        link,
-        imageUrl,
-        telegramLink,
-        category
+        title: title,
+        date: date || new Date().toISOString().split('T')[0],
+        content: content,
+        link: link,
+        imageUrl: imageUrl,
+        telegramLink: telegramLink,
+        timestamp: Date.now()
     };
 
-    posts.unshift(newPost);
+    posts[category].unshift(newPost);
     localStorage.setItem("posts", JSON.stringify(posts));
-    alert("تم نشر المنشور بنجاح!");
-    
+
     // مسح النموذج
     document.getElementById("post-title").value = "";
     document.getElementById("post-date").value = "";
     document.getElementById("post-content").value = "";
     document.getElementById("post-link").value = "";
-    document.getElementById("post-image-url").value = "";
+    document.getElementById("post-image-file").value = "";
     document.getElementById("telegram-link").value = "";
     document.getElementById("post-category").value = "";
+    
+    // إخفاء معاينة الصورة
+    document.getElementById("image-preview").classList.add("hidden");
+
+    alert("تم إضافة المنشور بنجاح!");
+    updateStats();
 }
 
-// تحميل محتوى صفحة القسم
-function loadSectionContent() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get("category");
+// عرض المنشورات حسب القسم
+function displayPosts(category) {
     if (!category) {
         const titleElement = document.getElementById("section-title");
         if (titleElement) titleElement.textContent = "القسم غير موجود";

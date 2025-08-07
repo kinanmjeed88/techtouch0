@@ -318,8 +318,11 @@
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">رابط صورة المنشور (اختياري):</label>
-                        <input type="url" id="post-image-url" placeholder="https://example.com/image.jpg" class="form-input">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">صورة المنشور:</label>
+                        <input type="file" id="post-image-file" accept="image/*" class="form-input">
+                        <div id="image-preview" class="mt-2 hidden">
+                            <img id="preview-img" class="w-32 h-32 object-cover rounded-lg border-2 border-gray-300" alt="معاينة الصورة">
+                        </div>
                     </div>
 
                     <div>
@@ -491,4 +494,22 @@
     </script>
 </body>
 </html>
+
+
+    <script>
+        // معاينة الصورة المرفوعة
+        document.getElementById('post-image-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('image-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('image-preview').classList.add('hidden');
+            }
+        });
+    </script>
 

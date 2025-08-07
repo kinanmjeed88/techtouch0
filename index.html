@@ -22,8 +22,11 @@
         }
         
         body {
-            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); /* Blue gradient */
+            background: linear-gradient(135deg, #87ceeb 0%, #4682b4 100%); /* Sky blue gradient */
             min-height: 100vh;
+            /* تحسين الأداء */
+            will-change: transform;
+            transform: translateZ(0);
         }
         
         .glass-effect {
@@ -34,6 +37,9 @@
         
         .card-hover {
             transition: all 0.3s ease;
+            /* تحسين الأداء */
+            will-change: transform, box-shadow;
+            transform: translateZ(0);
         }
         
         .card-hover:hover {
@@ -109,7 +115,7 @@
             margin-bottom: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            height: 160px; /* Doubled height */
+            height: 200px; /* Increased height even more */
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -121,16 +127,17 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
         
-        .main-card .text-3xl {
-            font-size: 4rem; /* Doubled icon size */
+        .main-card .fas {
+            font-size: 3rem; /* Larger icon size */
         }
         
-        .main-card .text-xl {
-            font-size: 2.5rem; /* Doubled title size */
+        .main-card h2 {
+            font-size: 2rem; /* Larger title size */
+            font-weight: bold;
         }
         
-        .main-card .text-sm {
-            font-size: 1.2rem; /* Increased description size */
+        .main-card p {
+            font-size: 1.1rem; /* Larger description size */
         }
         
         .sub-cards-container {
@@ -166,16 +173,17 @@
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(30, 64, 175, 0.1)); /* Blue gradient */
             backdrop-filter: blur(15px);
             border-radius: 15px;
-            padding: 1rem;
-            height: 80px; /* Doubled height */
+            padding: 0.75rem;
+            height: 60px; /* Smaller height for 4 columns */
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 1.2rem; /* Increased font size */
+            font-size: 0.9rem; /* Smaller font for 4 columns */
             font-weight: 500;
+            text-align: center;
         }
         
         .dropdown-card:hover {
@@ -184,16 +192,29 @@
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(30, 64, 175, 0.2));
         }
         
+        /* Responsive adjustments for very small screens */
+        @media (max-width: 480px) {
+            .dropdown-card {
+                height: 50px;
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+        }
+        
         /* Ad banner specific styles */
         .ad-banner {
             background-color: #fcd34d; /* Yellow */
-            color: #ef4444; /* Red */
+            color: #000000; /* Black for main text */
             font-weight: bold;
             text-align: center;
             padding: 0.75rem;
             margin-bottom: 1.5rem;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ad-banner .ad-label {
+            color: #ef4444; /* Red for "إعلان" only */
         }
 
         @media (max-width: 768px) {
@@ -255,7 +276,7 @@
     
     <!-- Ad Banner -->
     <div class="ad-banner mx-4 rounded-lg pulse-glow">
-        <span class="font-bold">📢 إعلان:</span>
+        <span class="ad-label font-bold">📢 إعلان:</span>
         <span id="ad-text" class="mr-2">مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!</span>
     </div>
     
@@ -362,18 +383,14 @@
         
         <!-- Sub Cards Section -->
         <div class="mt-6">
-            <!-- First Row -->
-            <div class="sub-cards-container">
+            <!-- Single Row with 4 columns -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                 <div class="dropdown-card" data-dropdown="movies">
                     <span class="dropdown-header">تطبيقات افلام</span>
                 </div>
                 <div class="dropdown-card" data-dropdown="sports">
                     <span class="dropdown-header">تطبيقات رياضيه</span>
                 </div>
-            </div>
-            
-            <!-- Second Row -->
-            <div class="sub-cards-container">
                 <div class="dropdown-card" data-dropdown="video">
                     <span class="dropdown-header">تصميم الفيديو</span>
                 </div>
