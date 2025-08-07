@@ -1,0 +1,32 @@
+{
+    "movies": [
+        { "icon": "🎬", "text": "Cinemana X ايرثلنك", "url": "https://t.me/techtouch7/173" },
+        { "icon": "🎭", "text": "CEE أفلام", "url": "https://t.me/techtouch7/174" },
+        { "icon": "📽️", "text": "Monveibox أفلام", "url": "https://t.me/techtouch7/2070" },
+        { "icon": "🎪", "text": "سينمانا", "url": "https://t.me/techtouch7/1668" },
+        { "icon": "🍿", "text": "نتفلكس محاني", "url": "https://t.me/techtouch7/2676" },
+        { "icon": "📺", "text": "سيمو دراما", "url": "https://t.me/techtouch7/211?single" }
+    ],
+    "sports": [
+        { "icon": "📺", "text": "MixFlix tv", "url": "https://t.me/techtouch7/1450" },
+        { "icon": "📺", "text": "دراما لايف tv", "url": "https://t.me/techtouch7/1686" },
+        { "icon": "⚽", "text": "الأسطورة tv", "url": "https://t.me/techtouch7/2367?single" },
+        { "icon": "🏀", "text": "ياسين tv", "url": "https://t.me/techtouch7/136" },
+        { "icon": "🏈", "text": "BlackUltra", "url": "https://t.me/techtouch7/2719" },
+        { "icon": "🎾", "text": "ZAIN LIVE", "url": "https://t.me/techtouch7/1992" }
+    ],
+    "video": [
+        { "icon": "✂️", "text": "Viva cut بديل كاب كات", "url": "https://t.me/techtouch7/2975?single" },
+        { "icon": "🎨", "text": "CapCut اصدار 2", "url": "https://t.me/techtouch7/3250" },
+        { "icon": "🎬", "text": "CapCut اصدار 1", "url": "https://t.me/techtouch7/3287" }
+    ],
+    "misc": [
+        { "icon": "📱", "text": "MYTV الأندرويد", "url": "https://t.me/techtouch7/204" },
+        { "icon": "📲", "text": "MYTV الآيفون", "url": "https://t.me/techtouch7/1041" },
+        { "icon": "📺", "text": "شبكتي tv للشاشات", "url": "https://t.me/techtouch7/1556" },
+        { "icon": "📱", "text": "شبكتي tv للهاتف", "url": "https://t.me/techtouch7/1818" },
+        { "icon": "🖥️", "text": "المنصة X للشاشات", "url": "https://t.me/techtouch7/1639" },
+        { "icon": "📲", "text": "المنصة X للهاتف", "url": "https://t.me/techtouch7/1533" }
+    ]
+}
+

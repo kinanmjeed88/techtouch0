@@ -83,7 +83,7 @@ let currentPage = 1;
 const postsPerPage = 10;
 
 // بيانات القوائم المنسدلة
-const dropdownData = {
+let dropdownData = JSON.parse(localStorage.getItem("dropdownData")) || {
     movies: [
         { icon: "🎬", text: "Cinemana X ايرثلنك", url: "https://t.me/techtouch7/173" },
         { icon: "🎭", text: "CEE أفلام", url: "https://t.me/techtouch7/174" },
@@ -115,9 +115,18 @@ const dropdownData = {
     ]
 };
 
+// تحديث بيانات القوائم المنسدلة من localStorage
+function updateDropdownData() {
+    const savedData = localStorage.getItem("dropdownData");
+    if (savedData) {
+        dropdownData = JSON.parse(savedData);
+    }
+}
+
 // تحميل المحتوى حسب الصفحة
 function loadContent() {
     console.log("loadContent called");
+    updateDropdownData(); // تحديث بيانات القوائم المنسدلة
     const path = window.location.pathname;
 
     if (path.includes("admin.html")) {
@@ -553,23 +562,29 @@ function initializeDropdowns() {
 
 // فتح النافذة المنبثقة للقائمة المنسدلة
 function openDropdownModal(dropdownType, title) {
-    const modal = document.getElementById("popupModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalContent = document.getElementById("modalContent");
+    updateDropdownData(); // تحديث البيانات من localStorage
     
-    if (!modal || !modalTitle || !modalContent) return;
+    const modal = document.getElementById("dropdown-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalList = document.getElementById("modal-list");
+    
+    if (!modal || !modalTitle || !modalList) {
+        console.error("Modal elements not found");
+        return;
+    }
     
     modalTitle.textContent = title;
-    modalContent.innerHTML = "";
+    modalList.innerHTML = "";
     
-    const items = dropdownData[dropdownType];
-    if (items) {
+    const items = dropdownData[dropdownType] || [];
+    if (items.length > 0) {
         items.forEach(item => {
             const itemDiv = document.createElement("div");
-            itemDiv.className = "modal-item";
+            itemDiv.className = "flex items-center p-3 bg-white/90 rounded-lg hover:bg-white cursor-pointer transition-all duration-200 hover:transform hover:scale-105";
             itemDiv.innerHTML = `
-                <span class="modal-item-icon">${item.icon}</span>
-                <span class="modal-item-text">${item.text}</span>
+                <span class="text-2xl mr-4">${item.icon}</span>
+                <span class="font-medium text-gray-800 flex-1">${item.text}</span>
+                <i class="fas fa-external-link-alt text-gray-500"></i>
             `;
             
             itemDiv.addEventListener("click", function() {
@@ -577,8 +592,16 @@ function openDropdownModal(dropdownType, title) {
                 modal.style.display = "none";
             });
             
-            modalContent.appendChild(itemDiv);
+            modalList.appendChild(itemDiv);
         });
+    } else {
+        const emptyDiv = document.createElement("div");
+        emptyDiv.className = "text-center p-6 text-white";
+        emptyDiv.innerHTML = `
+            <i class="fas fa-inbox text-4xl mb-3 opacity-50"></i>
+            <p class="text-lg">لا توجد عناصر في هذا القسم</p>
+        `;
+        modalList.appendChild(emptyDiv);
     }
     
     modal.style.display = "block";
@@ -586,18 +609,17 @@ function openDropdownModal(dropdownType, title) {
 
 // إغلاق النافذة المنبثقة
 function closeDropdownModal() {
-    const modal = document.getElementById("popupModal");
+    const modal = document.getElementById("dropdown-modal");
     if (modal) {
         modal.style.display = "none";
     }
 }
 
-// إغلاق النافذة المنبثقة
+// إغلاق النافذة المنبثقة عند النقر خارجها
 document.addEventListener("click", function(event) {
-    const modal = document.getElementById("popupModal");
-    const closeButton = document.querySelector(".close-button");
+    const modal = document.getElementById("dropdown-modal");
     
-    if (event.target === modal || event.target === closeButton) {
+    if (event.target === modal) {
         modal.style.display = "none";
     }
 });
