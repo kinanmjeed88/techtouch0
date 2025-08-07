@@ -384,16 +384,16 @@
         <div class="mt-6">
             <!-- Single Row with 4 columns -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                <div class="dropdown-card" onclick="showSubContent('movies')">
+                <div class="dropdown-card" data-dropdown="movies" onclick="openDropdownModal('movies', 'تطبيقات الأفلام')">
                     <span class="dropdown-header">تطبيقات افلام</span>
                 </div>
-                <div class="dropdown-card" onclick="showSubContent('sports')">
+                <div class="dropdown-card" data-dropdown="sports" onclick="openDropdownModal('sports', 'تطبيقات رياضية')">
                     <span class="dropdown-header">تطبيقات رياضيه</span>
                 </div>
-                <div class="dropdown-card" onclick="showSubContent('video')">
+                <div class="dropdown-card" data-dropdown="video" onclick="openDropdownModal('video', 'تصميم الفيديو')">
                     <span class="dropdown-header">تصميم الفيديو</span>
                 </div>
-                <div class="dropdown-card" onclick="showSubContent('misc')">
+                <div class="dropdown-card" data-dropdown="misc" onclick="openDropdownModal('misc', 'قسم المتفرقات')">
                     <span class="dropdown-header">قسم المتفرقات</span>
                 </div>
             </div>

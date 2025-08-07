@@ -62,6 +62,16 @@ let posts = JSON.parse(localStorage.getItem("posts")) || [
         imageUrl: "",
         telegramLink: "",
         category: "games"
+    },
+    {
+        id: 4,
+        title: "سينمانا الاسود",
+        date: "2025-08-03",
+        content: "تطبيق سينمانا الأسود لمشاهدة الأفلام والمسلسلات.",
+        link: "#",
+        imageUrl: "",
+        telegramLink: "",
+        category: "movies"
     }
 ];
 
@@ -576,6 +586,14 @@ function openDropdownModal(dropdownType, title) {
 }
 
 // إغلاق النافذة المنبثقة
+function closeDropdownModal() {
+    const modal = document.getElementById("popupModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// إغلاق النافذة المنبثقة
 document.addEventListener("click", function(event) {
     const modal = document.getElementById("popupModal");
     const closeButton = document.querySelector(".close-button");
@@ -707,5 +725,24 @@ const modalStyles = `
 `;
 
 document.head.insertAdjacentHTML("beforeend", modalStyles);
+
+// تحميل محتوى صفحة القسم
+function loadSectionContent() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("category");
+    
+    if (!category) {
+        const titleElement = document.getElementById("section-title");
+        if (titleElement) titleElement.textContent = "القسم غير موجود";
+        return;
+    }
+
+    const titleElement = document.getElementById("section-title");
+    if (titleElement) {
+        titleElement.textContent = sectionsData[category] ? sectionsData[category].title : "القسم";
+    }
+
+    displayPosts(category);
+}
 
 

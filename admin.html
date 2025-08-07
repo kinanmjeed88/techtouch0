@@ -411,7 +411,9 @@
                     reader.readAsDataURL(file);
                 }
             });
-        });on checkLogin() {
+        });
+
+        function checkLogin() {
             const isLoggedIn = localStorage.getItem("adminLoggedIn");
             if (isLoggedIn === "true") {
                 document.getElementById("login-section").classList.add("hidden");
