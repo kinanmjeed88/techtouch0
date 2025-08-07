@@ -49,6 +49,47 @@
             background-clip: text;
         }
         
+        /* Home Button Styles */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1B8EEF, #0C18C0);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #0C18C0, #1B8EEF);
+        }
+        
+        .home-button:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .home-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                top: 15px;
+                left: 15px;
+            }
+        }
+        
         .btn-primary {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
@@ -131,6 +172,11 @@
     </style>
 </head>
 <body>
+    <!-- Home Button -->
+    <a href="index.html" class="home-button" title="العودة للصفحة الرئيسية">
+        <i class="fas fa-home"></i>
+    </a>
+    
     <!-- Header -->
     <header class="glass-effect text-white p-4 mb-6">
         <div class="container mx-auto flex justify-between items-center">

@@ -49,6 +49,47 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
         
+        /* Home Button Styles */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1B8EEF, #0C18C0);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #0C18C0, #1B8EEF);
+        }
+        
+        .home-button:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .home-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                top: 15px;
+                left: 15px;
+            }
+        }
+        
         .gradient-text {
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
@@ -109,6 +150,11 @@
     </style>
 </head>
 <body>
+    <!-- Home Button -->
+    <a href="index.html" class="home-button" title="العودة للصفحة الرئيسية">
+        <i class="fas fa-home"></i>
+    </a>
+    
     <!-- Header -->
     <header class="glass-effect text-white p-4 mb-6">
         <div class="container mx-auto flex justify-between items-center">
@@ -152,13 +198,8 @@
         </div>
     </div>
     
-    <!-- Floating Home Button -->
-    <a href="index.html" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
-        <i class="fas fa-home"></i>
-    </a>
-    
-    <!-- Footer -->
-    <footer class="glass-effect text-white text-center p-6 mt-12">
+    <script src="script.js"></script>
+    <script>t text-white text-center p-6 mt-12">
         <div class="container mx-auto">
             <div class="flex justify-center space-x-6 space-x-reverse mb-4">
                 <a href="https://www.instagram.com/techtouch0" target="_blank" class="hover:text-yellow-300 transition-colors">

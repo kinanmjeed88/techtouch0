@@ -339,6 +339,47 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
+        /* Home Button Styles */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1B8EEF, #0C18C0);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #0C18C0, #1B8EEF);
+        }
+        
+        .home-button:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .home-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                top: 15px;
+                left: 15px;
+            }
+        }
+
         .modal-item .icon {
             font-size: 1.5rem;
             margin-left: 1rem;
@@ -348,6 +389,11 @@
     </style>
 </head>
 <body>
+    <!-- Home Button -->
+    <a href="index.html" class="home-button" title="العودة للصفحة الرئيسية">
+        <i class="fas fa-home"></i>
+    </a>
+    
     <!-- Overlay -->
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
     
@@ -476,32 +522,30 @@
         <!-- Sub Cards Section -->
         <div class="mt-6">
             <!-- Single Row with 4 columns -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="dropdown-card" data-dropdown="movies" onclick="openDropdownModal('movies', 'تطبيقات الأفلام')">
+            <div class="grid grid-cols-2 md:grid-c                <div class="dropdown-card" data-dropdown="movies" onclick="openDropdownModal(\'movies\', \'تطبيقات الأفلام\')">
                     <div class="dropdown-icon">
                         <i class="fas fa-film"></i>
                     </div>
-                    <span class="dropdown-header">تطبيقات أفلام</span>
+                    <span class="dropdown-header">أفلام</span>
                 </div>
-                <div class="dropdown-card" data-dropdown="sports" onclick="openDropdownModal('sports', 'تطبيقات رياضية')">
+                <div class="dropdown-card" data-dropdown="sports" onclick="openDropdownModal(\'sports\', \'تطبيقات رياضية\')">
                     <div class="dropdown-icon">
                         <i class="fas fa-futbol"></i>
                     </div>
-                    <span class="dropdown-header">تطبيقات رياضية</span>
+                    <span class="dropdown-header">رياضية</span>
                 </div>
-                <div class="dropdown-card" data-dropdown="video" onclick="openDropdownModal('video', 'تصميم الفيديو')">
+                <div class="dropdown-card" data-dropdown="video" onclick="openDropdownModal(\'video\', \'تصميم الفيديو\')">
                     <div class="dropdown-icon">
                         <i class="fas fa-video"></i>
                     </div>
-                    <span class="dropdown-header">تصميم الفيديو</span>
+                    <span class="dropdown-header">الفيديو</span>
                 </div>
-                <div class="dropdown-card" data-dropdown="misc" onclick="openDropdownModal('misc', 'قسم المتفرقات')">
+                <div class="dropdown-card" data-dropdown="misc" onclick="openDropdownModal(\'misc\', \'قسم المتفرقات\')">
                     <div class="dropdown-icon">
                         <i class="fas fa-th-large"></i>
                     </div>
-                    <span class="dropdown-header">قسم المتفرقات</span>
-                </div>
-            </div>
+                    <span class="dropdown-header">المتفرقات</span>
+                </div>           </div>
         </div>
     </div>
     
@@ -565,11 +609,6 @@
             </nav>
         </div>
     </div>
-    
-    <!-- Floating Admin Button -->
-    <a href="admin.html" class="fixed bottom-6 left-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
-        <i class="fas fa-cog"></i>
-    </a>
     
     <!-- Footer -->
     <footer style="background-color: #0C18C0;" class="text-white text-center p-6 mt-12">
