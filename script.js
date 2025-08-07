@@ -224,12 +224,9 @@ function addPost() {
 }
 
 function savePost(title, date, content, link, imageUrl, telegramLink, category) {
-    const posts = JSON.parse(localStorage.getItem("posts") || "{}");
+    // استخدام نفس هيكل البيانات المستخدم في admin.html
+    let posts = JSON.parse(localStorage.getItem("posts") || "[]");
     
-    if (!posts[category]) {
-        posts[category] = [];
-    }
-
     const newPost = {
         id: Date.now(),
         title: title,
@@ -238,10 +235,12 @@ function savePost(title, date, content, link, imageUrl, telegramLink, category) 
         link: link,
         imageUrl: imageUrl,
         telegramLink: telegramLink,
+        category: category,
         timestamp: Date.now()
     };
 
-    posts[category].unshift(newPost);
+    // إضافة المنشور في بداية المصفوفة
+    posts.unshift(newPost);
     localStorage.setItem("posts", JSON.stringify(posts));
 
     // مسح النموذج

@@ -651,6 +651,7 @@
         }
 
         function savePost(title, date, content, link, imageUrl, telegramLink, category) {
+            // استخدام نفس هيكل البيانات المستخدم في script.js
             let posts = JSON.parse(localStorage.getItem("posts") || "[]");
             
             const newPost = {
@@ -665,6 +666,7 @@
                 timestamp: Date.now()
             };
 
+            // إضافة المنشور في بداية المصفوفة
             posts.unshift(newPost);
             localStorage.setItem("posts", JSON.stringify(posts));
 
