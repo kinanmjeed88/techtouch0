@@ -176,6 +176,70 @@
             box-shadow: 0 0 15px rgba(27, 142, 239, 0.3);
         }
         
+        .post-item {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(27, 142, 239, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .post-item:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-edit {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .btn-edit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-delete {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .btn-delete:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .category-posts { background: #dbeafe; color: #1e40af; }
+        .category-apps { background: #dcfce7; color: #166534; }
+        .category-games { background: #f3e8ff; color: #7c3aed; }
+        .category-movies { background: #fee2e2; color: #dc2626; }
+        .category-tutorials { background: #fed7aa; color: #ea580c; }
+        .category-ai { background: #cffafe; color: #0891b2; }
+        
         @media (max-width: 768px) {
             .admin-card {
                 padding: 1.5rem;
@@ -352,6 +416,42 @@
                             نشر المنشور
                         </button>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Posts Management Section -->
+            <div class="admin-card">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl text-indigo-600 ml-4">
+                        <i class="fas fa-list-ul"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">إدارة المنشورات</h2>
+                        <p class="text-gray-600">عرض وتعديل وحذف المنشورات الموجودة</p>
+                    </div>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" id="search-posts" placeholder="البحث عن منشور..." class="form-input pl-10">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Posts List -->
+                <div id="posts-list-container" class="space-y-4 max-h-96 overflow-y-auto">
+                    <!-- Posts will be populated by JavaScript -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="posts-empty-state" class="text-center py-8 hidden">
+                    <div class="text-6xl text-gray-300 mb-4">
+                        <i class="fas fa-inbox"></i>
+                    </div>
+                    <p class="text-gray-500 text-lg">لا توجد منشورات</p>
                 </div>
             </div>
             
@@ -671,6 +771,14 @@
             localStorage.setItem("posts", JSON.stringify(posts));
 
             // Clear form
+            clearPostForm();
+
+            alert("تم إضافة المنشور بنجاح!");
+            updateStats();
+            loadPostsList(); // تحديث قائمة المنشورات
+        }
+
+        function clearPostForm() {
             document.getElementById("post-title").value = "";
             document.getElementById("post-date").value = "";
             document.getElementById("post-content").value = "";
@@ -684,9 +792,153 @@
             if (imagePreview) {
                 imagePreview.classList.add("hidden");
             }
+        }
 
-            alert("تم إضافة المنشور بنجاح!");
+        // وظائف إدارة المنشورات الجديدة
+        function loadPostsList() {
+            const posts = JSON.parse(localStorage.getItem("posts") || "[]");
+            const container = document.getElementById("posts-list-container");
+            const emptyState = document.getElementById("posts-empty-state");
+            
+            if (!container) return;
+
+            if (posts.length === 0) {
+                container.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+            container.innerHTML = "";
+
+            posts.forEach(post => {
+                const postElement = createPostElement(post);
+                container.appendChild(postElement);
+            });
+        }
+
+        function createPostElement(post) {
+            const div = document.createElement("div");
+            div.className = "post-item";
+            
+            const categoryNames = {
+                posts: "المنشورات",
+                apps: "التطبيقات", 
+                games: "الألعاب",
+                movies: "الأفلام",
+                tutorials: "الشروحات",
+                ai: "الذكاء الاصطناعي"
+            };
+
+            div.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">${post.title}</h3>
+                            <span class="category-badge category-${post.category}">${categoryNames[post.category] || post.category}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-2">${post.content.substring(0, 100)}${post.content.length > 100 ? "..." : ""}</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span><i class="fas fa-calendar-alt ml-1"></i>${post.date}</span>
+                            ${post.link && post.link !== "#" ? '<span><i class="fas fa-link ml-1"></i>رابط متاح</span>' : ''}
+                            ${post.imageUrl ? '<span><i class="fas fa-image ml-1"></i>صورة متاحة</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="flex gap-2 ml-4">
+                        <button onclick="editPost(${post.id})" class="btn-edit">
+                            <i class="fas fa-edit ml-1"></i>تعديل
+                        </button>
+                        <button onclick="deletePost(${post.id})" class="btn-delete">
+                            <i class="fas fa-trash ml-1"></i>حذف
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        function searchPosts() {
+            const searchTerm = document.getElementById("search-posts").value.toLowerCase().trim();
+            const posts = JSON.parse(localStorage.getItem("posts") || "[]");
+            
+            let filteredPosts = posts;
+            if (searchTerm) {
+                filteredPosts = posts.filter(post => 
+                    post.title.toLowerCase().includes(searchTerm) ||
+                    post.content.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            const container = document.getElementById("posts-list-container");
+            const emptyState = document.getElementById("posts-empty-state");
+            
+            if (!container) return;
+
+            if (filteredPosts.length === 0) {
+                container.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+            container.innerHTML = "";
+
+            filteredPosts.forEach(post => {
+                const postElement = createPostElement(post);
+                container.appendChild(postElement);
+            });
+        }
+
+        function deletePost(postId) {
+            if (!confirm("هل أنت متأكد من حذف هذا المنشور؟")) {
+                return;
+            }
+
+            let posts = JSON.parse(localStorage.getItem("posts") || "[]");
+            posts = posts.filter(post => post.id !== postId);
+            localStorage.setItem("posts", JSON.stringify(posts));
+            
+            loadPostsList();
             updateStats();
+            alert("تم حذف المنشور بنجاح!");
+        }
+
+        function editPost(postId) {
+            const posts = JSON.parse(localStorage.getItem("posts") || "[]");
+            const post = posts.find(p => p.id === postId);
+            
+            if (!post) {
+                alert("المنشور غير موجود!");
+                return;
+            }
+
+            // ملء النموذج ببيانات المنشور
+            document.getElementById("post-title").value = post.title;
+            document.getElementById("post-date").value = post.date;
+            document.getElementById("post-content").value = post.content;
+            document.getElementById("post-link").value = post.link || "";
+            document.getElementById("telegram-link").value = post.telegramLink || "";
+            document.getElementById("post-category").value = post.category;
+
+            // إظهار الصورة إذا كانت موجودة
+            if (post.imageUrl) {
+                const imagePreview = document.getElementById("image-preview");
+                const previewImg = document.getElementById("preview-img");
+                if (imagePreview && previewImg) {
+                    previewImg.src = post.imageUrl;
+                    imagePreview.classList.remove("hidden");
+                }
+            }
+
+            // حذف المنشور القديم
+            let posts_updated = posts.filter(p => p.id !== postId);
+            localStorage.setItem("posts", JSON.stringify(posts_updated));
+            
+            // التمرير إلى نموذج الإضافة
+            document.getElementById("post-title").scrollIntoView({ behavior: 'smooth' });
+            
+            alert("تم تحميل بيانات المنشور للتعديل. قم بإجراء التغييرات المطلوبة ثم اضغط 'نشر المنشور'.");
         }
 
         function updateStats() {
@@ -722,6 +974,62 @@
 
             statsContainer.innerHTML = statsHTML;
         }
+
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener("DOMContentLoaded", function() {
+            // Event listeners
+            document.getElementById("login-btn").addEventListener("click", loginAdmin);
+            document.getElementById("admin-password").addEventListener("keypress", function(e) {
+                if (e.key === "Enter") loginAdmin();
+            });
+            document.getElementById("change-password-btn").addEventListener("click", changePassword);
+            document.getElementById("change-profile-btn").addEventListener("click", changeProfilePic);
+            document.getElementById("update-ad-btn").addEventListener("click", updateAd);
+            document.getElementById("add-post-btn").addEventListener("click", addPost);
+            
+            // مستمع البحث
+            document.getElementById("search-posts").addEventListener("input", searchPosts);
+            
+            // Profile picture preview
+            document.getElementById("profile-pic-file").addEventListener("change", function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById("profile-preview");
+                        const previewImg = document.getElementById("profile-preview-img");
+                        if (preview && previewImg) {
+                            previewImg.src = e.target.result;
+                            preview.classList.remove("hidden");
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Post image preview
+            document.getElementById("post-image-file").addEventListener("change", function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById("image-preview");
+                        const previewImg = document.getElementById("preview-img");
+                        if (preview && previewImg) {
+                            previewImg.src = e.target.result;
+                            preview.classList.remove("hidden");
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Load initial data
+            loadProfilePic();
+            loadAdText();
+            updateStats();
+            loadPostsList(); // تحميل قائمة المنشورات عند تحميل الصفحة
+        });
     </script>
 </body>
 </html>
