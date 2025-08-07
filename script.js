@@ -1,4 +1,3 @@
-
 // تحميل المحتوى عند تحميل الصفحة
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM loaded, initializing...");
@@ -231,7 +230,7 @@ function savePost(title, date, content, link, imageUrl, telegramLink, category) 
     const newPost = {
         id: Date.now(),
         title: title,
-        date: date || new Date().toISOString().split("T")[0],
+        date: date || new Date().toISOString().split('T')[0],
         content: content,
         link: link,
         imageUrl: imageUrl,
@@ -460,42 +459,37 @@ function showSubContent(type) {
         movies: {
             title: "تطبيقات الأفلام",
             items: [
-                { icon: "🎬", text: "Cinemana X ايرثلنك", url: "https://t.me/techtouch7/173" },
-                { icon: "🎭", text: "CEE أفلام", url: "https://t.me/techtouch7/174" },
-                { icon: "📽️", text: "Monveibox أفلام", url: "https://t.me/techtouch7/2070" },
-                { icon: "🎪", text: "سينمانا", url: "https://t.me/techtouch7/1668" },
-                { icon: "🍿", text: "نتفلكس محاني", url: "https://t.me/techtouch7/2676" },
-                { icon: "📺", text: "سيمو دراما", url: "https://t.me/techtouch7/211?single" }
+                { name: "Netflix", url: "https://netflix.com" },
+                { name: "Disney+", url: "https://disneyplus.com" },
+                { name: "Amazon Prime", url: "https://primevideo.com" },
+                { name: "Shahid", url: "https://shahid.mbc.net" }
             ]
         },
         sports: {
             title: "تطبيقات رياضية",
             items: [
-                { icon: "📺", text: "MixFlix tv", url: "https://t.me/techtouch7/1450" },
-                { icon: "📺", text: "دراما لايف tv", url: "https://t.me/techtouch7/1686" },
-                { icon: "⚽", text: "الأسطورة tv", url: "https://t.me/techtouch7/2367?single" },
-                { icon: "🏀", text: "ياسين tv", url: "https://t.me/techtouch7/136" },
-                { icon: "🏈", text: "BlackUltra", url: "https://t.me/techtouch7/2719" },
-                { icon: "🎾", text: "ZAIN LIVE", url: "https://t.me/techtouch7/1992" }
+                { name: "ESPN", url: "https://espn.com" },
+                { name: "beIN Sports", url: "https://beinsports.com" },
+                { name: "KooraLive", url: "https://kooralive.tv" },
+                { name: "Yalla Shoot", url: "https://yallashoot.com" }
             ]
         },
         video: {
             title: "تصميم الفيديو",
             items: [
-                { icon: "✂️", text: "Viva cut بديل كاب كات", url: "https://t.me/techtouch7/2975?single" },
-                { icon: "🎨", text: "CapCut اصدار 2", url: "https://t.me/techtouch7/3250" },
-                { icon: "🎬", text: "CapCut اصدار 1", url: "https://t.me/techtouch7/3287" }
+                { name: "Adobe Premiere", url: "https://adobe.com/premiere" },
+                { name: "Final Cut Pro", url: "https://apple.com/final-cut-pro" },
+                { name: "DaVinci Resolve", url: "https://blackmagicdesign.com" },
+                { name: "Canva Video", url: "https://canva.com" }
             ]
         },
         misc: {
             title: "قسم المتفرقات",
             items: [
-                { icon: "📱", text: "MYTV الأندرويد", url: "https://t.me/techtouch7/204" },
-                { icon: "📲", text: "MYTV الآيفون", url: "https://t.me/techtouch7/1041" },
-                { icon: "📺", text: "شبكتي tv للشاشات", url: "https://t.me/techtouch7/1556" },
-                { icon: "📱", text: "شبكتي tv للهاتف", url: "https://t.me/techtouch7/1818" },
-                { icon: "🖥️", text: "المنصة X للشاشات", url: "https://t.me/techtouch7/1639" },
-                { icon: "📲", text: "المنصة X للهاتف", url: "https://t.me/techtouch7/1533" }
+                { name: "أدوات مفيدة", url: "#" },
+                { name: "مواقع تعليمية", url: "#" },
+                { name: "تطبيقات عامة", url: "#" },
+                { name: "موارد مجانية", url: "#" }
             ]
         }
     };
@@ -507,53 +501,274 @@ function showSubContent(type) {
     listElement.innerHTML = "";
     
     data.items.forEach(item => {
-        const itemDiv = document.createElement("a");
-        itemDiv.href = item.url;
-        itemDiv.target = "_blank"; // Open in new tab
-        itemDiv.className = "modal-item";
-        itemDiv.innerHTML = `
-            <span class="icon">${item.icon}</span>
-            <span>${item.text}</span>
+        const itemElement = document.createElement("div");
+        itemElement.className = "flex items-center justify-between p-3 bg-white/50 rounded-lg hover:bg-white/70 transition-colors cursor-pointer";
+        itemElement.innerHTML = `
+            <span class="font-medium text-gray-800">${item.name}</span>
+            <i class="fas fa-external-link-alt text-gray-500"></i>
         `;
-        listElement.appendChild(itemDiv);
+        itemElement.onclick = () => window.open(item.url, '_blank');
+        listElement.appendChild(itemElement);
     });
-
+    
     contentArea.classList.remove("hidden");
 }
 
-function openDropdownModal(type, title) {
-    const modal = document.getElementById("dropdownModal");
-    const modalTitle = document.getElementById("dropdownModalTitle");
-    const modalList = document.getElementById("dropdownModalList");
+function hideSubContent() {
+    document.getElementById("sub-content-area").classList.add("hidden");
+}
 
+// العودة للصفحة الرئيسية
+function goHome() {
+    window.location.href = "index.html";
+}
+
+// فتح الشريط الجانبي
+function openSidebar() {
+    document.getElementById("sidebar").classList.add("open");
+    document.getElementById("overlay").classList.add("active");
+}
+
+// إغلاق الشريط الجانبي
+function closeSidebar() {
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+// تهيئة القوائم المنسدلة
+function initializeDropdowns() {
+    const dropdownCards = document.querySelectorAll(".dropdown-card");
+    
+    dropdownCards.forEach(card => {
+        card.addEventListener("click", function() {
+            const dropdownType = this.getAttribute("data-dropdown");
+            const headerText = this.querySelector(".dropdown-header").textContent;
+            
+            if (dropdownType && dropdownData[dropdownType]) {
+                openDropdownModal(dropdownType, headerText);
+            }
+        });
+    });
+}
+
+// فتح النافذة المنبثقة للقائمة المنسدلة
+function openDropdownModal(dropdownType, title) {
+    const modal = document.getElementById("popupModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalContent = document.getElementById("modalContent");
+    
+    if (!modal || !modalTitle || !modalContent) return;
+    
     modalTitle.textContent = title;
-    modalList.innerHTML = "";
-
-    const data = dropdownData[type];
-    if (data) {
-        data.forEach(item => {
-            const itemDiv = document.createElement("a");
-            itemDiv.href = item.url;
-            itemDiv.target = "_blank";
+    modalContent.innerHTML = "";
+    
+    const items = dropdownData[dropdownType];
+    if (items) {
+        items.forEach(item => {
+            const itemDiv = document.createElement("div");
             itemDiv.className = "modal-item";
             itemDiv.innerHTML = `
-                <span class="icon">${item.icon}</span>
-                <span>${item.text}</span>
+                <span class="modal-item-icon">${item.icon}</span>
+                <span class="modal-item-text">${item.text}</span>
             `;
-            modalList.appendChild(itemDiv);
+            
+            itemDiv.addEventListener("click", function() {
+                window.open(item.url, "_blank");
+                modal.style.display = "none";
+            });
+            
+            modalContent.appendChild(itemDiv);
         });
     }
-
-    modal.classList.add("active");
+    
+    modal.style.display = "block";
 }
 
+// إغلاق النافذة المنبثقة
 function closeDropdownModal() {
-    const modal = document.getElementById("dropdownModal");
-    modal.classList.remove("active");
+    const modal = document.getElementById("popupModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
 }
 
-function initializeDropdowns() {
-    // No specific initialization needed here as onclick is directly on the cards
+// إغلاق النافذة المنبثقة
+document.addEventListener("click", function(event) {
+    const modal = document.getElementById("popupModal");
+    const closeButton = document.querySelector(".close-button");
+    
+    if (event.target === modal || event.target === closeButton) {
+        modal.style.display = "none";
+    }
+});
+
+// إضافة الأنماط للنافذة المنبثقة
+const modalStyles = `
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.close-button {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #ffeb3b;
+}
+
+.modal h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.modal-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 1);
+}
+
+.modal-item-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    color: white;
+    flex-shrink: 0;
+}
+
+.modal-item-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+`;
+
+document.head.insertAdjacentHTML("beforeend", modalStyles);
+
+// تحميل محتوى صفحة القسم
+function loadSectionContent() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("category");
+    
+    if (!category) {
+        const titleElement = document.getElementById("section-title");
+        if (titleElement) titleElement.textContent = "القسم غير موجود";
+        return;
+    }
+
+    const titleElement = document.getElementById("section-title");
+    if (titleElement) {
+        titleElement.textContent = sectionsData[category] ? sectionsData[category].title : "القسم";
+    }
+
+    displayPosts(category);
+}
+
+
+
+
+// فتح وإغلاق القائمة الجانبية
+function openSidebar() {
+    document.getElementById("sidebar").classList.add("open");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeSidebar() {
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+
+
+
+// التنقل إلى قسم
+function goToSection(category) {
+    window.location.href = `section.html?category=${category}`;
+}
+
+// التنقل إلى منشور
+function goToPost(id) {
+    window.location.href = `post.html?id=${id}`;
 }
 
 
