@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechTouch - التقنية في متناول يدك</title>
+    <title>TechTouch</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,13 +20,13 @@
         * {
             font-family: 'Tajawal', sans-serif;
         }
-                body {
+        
+        body {
             background: #1B8EEF;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             font-family: 'Tajawal', sans-serif;
-        }lateZ(0);
         }
         
         .glass-effect {
@@ -37,7 +37,6 @@
         
         .card-hover {
             transition: all 0.3s ease;
-            /* تحسين الأداء */
             will-change: transform, box-shadow;
             transform: translateZ(0);
         }
@@ -48,7 +47,7 @@
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #bfdbfe, #93c5fd); /* Lighter blue for text */
+            background: linear-gradient(135deg, #bfdbfe, #93c5fd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -115,7 +114,7 @@
             margin-bottom: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            height: 200px; /* Increased height even more */
+            height: 200px;
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -128,16 +127,16 @@
         }
         
         .main-card .fas {
-            font-size: 3rem; /* Larger icon size */
+            font-size: 3rem;
         }
         
         .main-card h2 {
-            font-size: 2rem; /* Larger title size */
+            font-size: 2rem;
             font-weight: bold;
         }
         
         .main-card p {
-            font-size: 1.1rem; /* Larger description size */
+            font-size: 1.1rem;
         }
         
         .sub-cards-container {
@@ -152,14 +151,14 @@
             backdrop-filter: blur(15px);
             border-radius: 15px;
             padding: 1rem;
-            height: 80px; /* Doubled height */
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 1.2rem; /* Increased font size */
+            font-size: 1.2rem;
             font-weight: 500;
         }
         
@@ -170,18 +169,18 @@
         }
         
         .dropdown-card {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(30, 64, 175, 0.1)); /* Blue gradient */
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(30, 64, 175, 0.1));
             backdrop-filter: blur(15px);
             border-radius: 15px;
             padding: 0.75rem;
-            height: 60px; /* Smaller height for 4 columns */
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 0.9rem; /* Smaller font for 4 columns */
+            font-size: 0.9rem;
             font-weight: 500;
             text-align: center;
         }
@@ -192,7 +191,6 @@
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(30, 64, 175, 0.2));
         }
         
-        /* Responsive adjustments for very small screens */
         @media (max-width: 480px) {
             .dropdown-card {
                 height: 50px;
@@ -201,10 +199,9 @@
             }
         }
         
-        /* Ad banner specific styles */
         .ad-banner {
-            background-color: #fcd34d; /* Yellow */
-            color: #000000; /* Black for main text */
+            background-color: #fcd34d;
+            color: #000000;
             font-weight: bold;
             text-align: center;
             padding: 0.75rem;
@@ -214,43 +211,102 @@
         }
         
         .ad-banner .ad-label {
-            color: #ef4444; /* Red for "إعلان" only */
+            color: #ef4444;
         }
 
         @media (max-width: 768px) {
             .main-card {
                 padding: 1.5rem;
                 height: auto;
-                min-height: 120px; /* Adjusted for smaller screens */
+                min-height: 120px;
             }
             
             .main-card .text-3xl {
-                font-size: 3rem; /* Adjusted for smaller screens */
+                font-size: 3rem;
             }
             
             .main-card .text-xl {
-                font-size: 2rem; /* Adjusted for smaller screens */
+                font-size: 2rem;
             }
             
             .main-card .text-sm {
-                font-size: 1rem; /* Adjusted for smaller screens */
+                font-size: 1rem;
             }
 
             .sub-cards-container {
-                grid-template-columns: 1fr 1fr; /* Keep 2 columns for small screens */
+                grid-template-columns: 1fr 1fr;
                 gap: 0.5rem;
             }
             
             .sub-card, .dropdown-card {
-                height: 60px; /* Adjusted for smaller screens */
+                height: 60px;
                 font-size: 1rem;
             }
         }
 
         @media (max-width: 480px) {
             .sub-cards-container {
-                grid-template-columns: 1fr; /* 1 column for very small screens */
+                grid-template-columns: 1fr;
             }
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            background: rgba(27, 142, 239, 0.05);
+            border: 1px solid rgba(27, 142, 239, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .modal-item:hover {
+            background: rgba(27, 142, 239, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-item .icon {
+            font-size: 1.5rem;
+            margin-left: 1rem;
+            width: 2rem;
+            text-align: center;
         }
     </style>
 </head>
@@ -397,20 +453,20 @@
                     <span class="dropdown-header">قسم المتفرقات</span>
                 </div>
             </div>
-            
-            <!-- Content Display Area -->
-            <div id="sub-content-area" class="mt-4 hidden">
-                <div class="glass-effect rounded-lg p-4">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 id="sub-content-title" class="text-xl font-bold text-gray-800"></h3>
-                        <button onclick="hideSubContent()" class="text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div id="sub-content-list" class="space-y-2">
-                        <!-- المحتوى سيتم إدراجه هنا -->
-                    </div>
-                </div>
+        </div>
+    </div>
+    
+    <!-- Modal for dropdown content -->
+    <div id="dropdown-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-xl font-bold text-gray-800"></h3>
+                <button onclick="closeDropdownModal()" class="text-gray-500 hover:text-gray-700 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modal-list" class="space-y-2">
+                <!-- المحتوى سيتم إدراجه هنا -->
             </div>
         </div>
     </div>
@@ -450,62 +506,25 @@
                     <i class="fas fa-microchip text-cyan-600 ml-3"></i>
                     <span class="font-medium">الذكاء الاصطناعي</span>
                 </a>
+                
+                <hr class="my-4">
+                
+                <a href="admin.html" class="flex items-center p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-cog text-gray-600 ml-3"></i>
+                    <span class="font-medium">لوحة التحكم</span>
+                </a>
             </nav>
-            
-            <!-- Social Links -->
-            <div class="mt-8 pt-6 border-t border-gray-200">
-                <h3 class="text-sm font-bold text-gray-600 mb-4">تابعنا على</h3>
-                <div class="flex space-x-3 space-x-reverse">
-                    <a href="https://www.instagram.com/techtouch0" target="_blank" class="text-pink-500 hover:text-pink-600">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
-                    <a href="https://www.facebook.com/kinan.mjeed.88" target="_blank" class="text-blue-600 hover:text-blue-700">
-                        <i class="fab fa-facebook text-xl"></i>
-                    </a>
-                    <a href="https://t.me/techtouch7" target="_blank" class="text-blue-500 hover:text-blue-600">
-                        <i class="fab fa-telegram text-xl"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@techtouch6" target="_blank" class="text-gray-800 hover:text-gray-900">
-                        <i class="fab fa-tiktok text-xl"></i>
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
     
-    <!-- Floating Home Button -->
-    <button onclick="goHome()" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
-        <i class="fas fa-home"></i>
-    </button>
-    
-    <!-- Modal for Dropdown Content -->
-    <div id="popupModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeDropdownModal()">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <div id="modalContent" class="modal-grid">
-                <!-- Dropdown items will be loaded here -->
-            </div>
-        </div>
-    </div>
+    <!-- Floating Admin Button -->
+    <a href="admin.html" class="fixed bottom-6 left-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
+        <i class="fas fa-cog"></i>
+    </a>
     
     <!-- Footer -->
     <footer style="background-color: #0C18C0;" class="text-white text-center p-6 mt-12">
         <div class="container mx-auto">
-            <div class="flex justify-center space-x-6 space-x-reverse mb-4">
-                <a href="https://www.instagram.com/techtouch0" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-instagram text-xl"></i>
-                </a>
-                <a href="https://www.facebook.com/kinan.mjeed.88" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-facebook text-xl"></i>
-                </a>
-                <a href="https://t.me/techtouch7" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-telegram text-xl"></i>
-                </a>
-                <a href="https://www.tiktok.com/@techtouch6" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-tiktok text-xl"></i>
-                </a>
-            </div>
             <p class="text-sm opacity-90">
                 جميع الحقوق محفوظة © 2025 
                 <a href="https://t.me/kinanmjeed" target="_blank" class="text-yellow-300 hover:underline">kinanmjeed</a>
@@ -515,21 +534,92 @@
     
     <script src="script.js"></script>
     <script>
-        // Function to close the dropdown modal
-        function closeDropdownModal() {
-            document.getElementById('popupModal').style.display = 'none';
+        // بيانات القوائم المنسدلة
+        const dropdownData = {
+            movies: [
+                { icon: "🎬", text: "Cinemana X ايرثلنك", url: "https://t.me/techtouch7/173" },
+                { icon: "🎭", text: "CEE أفلام", url: "https://t.me/techtouch7/174" },
+                { icon: "📽️", text: "Monveibox أفلام", url: "https://t.me/techtouch7/2070" },
+                { icon: "🎪", text: "سينمانا", url: "https://t.me/techtouch7/1668" },
+                { icon: "🍿", text: "نتفلكس محاني", url: "https://t.me/techtouch7/2676" },
+                { icon: "📺", text: "سيمو دراما", url: "https://t.me/techtouch7/211?single" }
+            ],
+            sports: [
+                { icon: "📺", text: "MixFlix tv", url: "https://t.me/techtouch7/1450" },
+                { icon: "📺", text: "دراما لايف tv", url: "https://t.me/techtouch7/1686" },
+                { icon: "⚽", text: "الأسطورة tv", url: "https://t.me/techtouch7/2367?single" },
+                { icon: "🏀", text: "ياسين tv", url: "https://t.me/techtouch7/136" },
+                { icon: "🏈", text: "BlackUltra", url: "https://t.me/techtouch7/2719" },
+                { icon: "🎾", text: "ZAIN LIVE", url: "https://t.me/techtouch7/1992" }
+            ],
+            video: [
+                { icon: "✂️", text: "Viva cut بديل كاب كات", url: "https://t.me/techtouch7/2975?single" },
+                { icon: "🎨", text: "CapCut اصدار 2", url: "https://t.me/techtouch7/3250" },
+                { icon: "🎬", text: "CapCut اصدار 1", url: "https://t.me/techtouch7/3287" }
+            ],
+            misc: [
+                { icon: "📱", text: "MYTV الأندرويد", url: "https://t.me/techtouch7/204" },
+                { icon: "📲", text: "MYTV الآيفون", url: "https://t.me/techtouch7/1041" },
+                { icon: "📺", text: "شبكتي tv للشاشات", url: "https://t.me/techtouch7/1556" },
+                { icon: "📱", text: "شبكتي tv للهاتف", url: "https://t.me/techtouch7/1818" },
+                { icon: "🖥️", text: "المنصة X للشاشات", url: "https://t.me/techtouch7/1639" },
+                { icon: "📲", text: "المنصة X للهاتف", url: "https://t.me/techtouch7/1533" }
+            ]
+        };
+
+        // فتح النافذة المنبثقة
+        function openDropdownModal(type, title) {
+            const modal = document.getElementById('dropdown-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalList = document.getElementById('modal-list');
+            
+            modalTitle.textContent = title;
+            
+            const items = dropdownData[type] || [];
+            let listHTML = '';
+            
+            items.forEach(item => {
+                listHTML += `
+                    <a href="${item.url}" target="_blank" class="modal-item">
+                        <span class="icon">${item.icon}</span>
+                        <span class="text">${item.text}</span>
+                    </a>
+                `;
+            });
+            
+            modalList.innerHTML = listHTML;
+            modal.classList.add('active');
         }
 
-        // Load profile picture from local storage
-        document.addEventListener('DOMContentLoaded', function() {
-            const profilePicUrl = localStorage.getItem('profilePic');
-            if (profilePicUrl) {
-                document.getElementById('profile-pic-display').src = profilePicUrl;
-                document.getElementById('profile-pic-display').style.display = 'block';
-            } else {
-                document.getElementById('profile-pic-display').style.display = 'none';
+        // إغلاق النافذة المنبثقة
+        function closeDropdownModal() {
+            const modal = document.getElementById('dropdown-modal');
+            modal.classList.remove('active');
+        }
+
+        // إغلاق النافذة عند النقر خارجها
+        document.getElementById('dropdown-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDropdownModal();
             }
         });
+
+        // فتح الشريط الجانبي
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        // إغلاق الشريط الجانبي
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        // التنقل إلى قسم
+        function goToSection(category) {
+            window.location.href = `section.html?category=${category}`;
+        }
     </script>
 </body>
 </html>

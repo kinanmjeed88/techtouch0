@@ -22,14 +22,14 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1B8EEF;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
         
         .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
+            background: #0C18C0;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
@@ -51,14 +51,14 @@
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #1B8EEF, #0C18C0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #1B8EEF, #0C18C0);
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 10px;
@@ -66,12 +66,12 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 5px 15px rgba(27, 142, 239, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(27, 142, 239, 0.4);
         }
         
         .btn-success {
@@ -94,7 +94,7 @@
         .form-input {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 2px solid rgba(102, 126, 234, 0.2);
+            border: 2px solid rgba(27, 142, 239, 0.2);
             border-radius: 10px;
             margin-bottom: 1rem;
             font-size: 1rem;
@@ -104,15 +104,15 @@
         
         .form-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #1B8EEF;
+            box-shadow: 0 0 0 3px rgba(27, 142, 239, 0.1);
             background: white;
         }
         
         .form-textarea {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 2px solid rgba(102, 126, 234, 0.2);
+            border: 2px solid rgba(27, 142, 239, 0.2);
             border-radius: 10px;
             margin-bottom: 1rem;
             font-size: 1rem;
@@ -124,15 +124,15 @@
         
         .form-textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #1B8EEF;
+            box-shadow: 0 0 0 3px rgba(27, 142, 239, 0.1);
             background: white;
         }
         
         .form-select {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 2px solid rgba(102, 126, 234, 0.2);
+            border: 2px solid rgba(27, 142, 239, 0.2);
             border-radius: 10px;
             margin-bottom: 1rem;
             font-size: 1rem;
@@ -143,8 +143,8 @@
         
         .form-select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #1B8EEF;
+            box-shadow: 0 0 0 3px rgba(27, 142, 239, 0.1);
             background: white;
         }
         
@@ -162,8 +162,8 @@
         }
         
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
-            50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8); }
+            0%, 100% { box-shadow: 0 0 20px rgba(27, 142, 239, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(27, 142, 239, 0.8); }
         }
         
         .profile-pic-preview {
@@ -172,8 +172,8 @@
             border-radius: 50%;
             object-fit: cover;
             margin: 0 auto 1rem;
-            border: 3px solid #667eea;
-            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+            border: 3px solid white;
+            box-shadow: 0 0 15px rgba(27, 142, 239, 0.3);
         }
         
         @media (max-width: 768px) {
@@ -190,7 +190,7 @@
         <div class="admin-card text-center w-full max-w-md">
             <h2 class="text-3xl font-bold gradient-text mb-6">تسجيل الدخول</h2>
             <input type="password" id="admin-password" placeholder="كلمة المرور" class="form-input mb-4">
-            <button onclick="loginAdmin()" class="btn-primary w-full">
+            <button id="login-btn" class="btn-primary w-full">
                 <i class="fas fa-sign-in-alt ml-2"></i>
                 دخول لوحة التحكم
             </button>
@@ -207,7 +207,7 @@
                     <a href="index.html" class="text-2xl hover:text-yellow-300 transition-colors">
                         <i class="fas fa-home"></i>
                     </a>
-                    <h1 class="text-2xl font-bold gradient-text">لوحة التحكم</h1>
+                    <h1 class="text-2xl font-bold text-white">لوحة التحكم</h1>
                 </div>
                 <div class="flex items-center space-x-4 space-x-reverse">
                     <i class="fas fa-user-shield text-2xl"></i>
@@ -243,19 +243,19 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">تغيير كلمة المرور:</label>
                         <input type="password" id="new-password" placeholder="كلمة المرور الجديدة" class="form-input">
-                        <button onclick="changePassword()" class="btn-primary">
+                        <button id="change-password-btn" class="btn-primary">
                             <i class="fas fa-key ml-2"></i>
                             تغيير كلمة المرور
                         </button>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">تغيير الصورة الشخصية:</label>
-                        <img id="profile-pic-preview" class="profile-pic-preview" src="" alt="صورة شخصية">
+                        <img id="profile-pic-preview" class="profile-pic-preview" src="https://via.placeholder.com/100" alt="صورة شخصية">
                         <input type="file" id="profile-pic-file" accept="image/*" class="form-input">
                         <div id="profile-preview" class="mt-2 hidden">
                             <img id="profile-preview-img" class="w-32 h-32 object-cover rounded-full border-2 border-gray-300" alt="معاينة الصورة الشخصية">
                         </div>
-                        <button onclick="changeProfilePic()" class="btn-primary">
+                        <button id="change-profile-btn" class="btn-primary">
                             <i class="fas fa-image ml-2"></i>
                             تغيير الصورة
                         </button>
@@ -280,7 +280,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">نص الإعلان الحالي:</label>
                         <input type="text" id="ad-input" placeholder="أدخل نص الإعلان الجديد..." class="form-input">
                     </div>
-                    <button onclick="updateAd()" class="btn-primary">
+                    <button id="update-ad-btn" class="btn-primary">
                         <i class="fas fa-save ml-2"></i>
                         حفظ الإعلان
                     </button>
@@ -347,7 +347,7 @@
                     </div>
                     
                     <div class="md:col-span-2">
-                        <button onclick="addPost()" class="btn-success w-full">
+                        <button id="add-post-btn" class="btn-success w-full">
                             <i class="fas fa-paper-plane ml-2"></i>
                             نشر المنشور
                         </button>
@@ -382,26 +382,35 @@
         <footer class="glass-effect text-white text-center p-6 mt-12">
             <div class="container mx-auto">
                 <p class="text-sm opacity-90">
-                    لوحة التحكم - TechTouch © 2025 
+                    جميع الحقوق محفوظة © 2025 
                     <a href="https://t.me/kinanmjeed" target="_blank" class="text-yellow-300 hover:underline">kinanmjeed</a>
                 </p>
             </div>
         </footer>
     </div>
     
-    <script src="script.js"></script>
     <script>
         // Default admin password (can be changed)
-        const ADMIN_PASSWORD = "admin123"; 
+        let ADMIN_PASSWORD = "admin123"; 
         const DEFAULT_PROFILE_PIC = "https://via.placeholder.com/100"; // Default profile pic
         
         document.addEventListener("DOMContentLoaded", function() {
+            console.log("DOM loaded, initializing admin panel...");
             checkLogin();
             loadAdText();
             loadProfilePic();
             updateStats();
-            
-            // إضافة event listener لزر Enter في حقل كلمة المرور
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Login button
+            const loginBtn = document.getElementById("login-btn");
+            if (loginBtn) {
+                loginBtn.addEventListener("click", loginAdmin);
+            }
+
+            // Enter key for password field
             const passwordField = document.getElementById("admin-password");
             if (passwordField) {
                 passwordField.addEventListener("keypress", function(e) {
@@ -410,8 +419,32 @@
                     }
                 });
             }
-            
-            // إضافة معاينة فورية للصورة الشخصية
+
+            // Change password button
+            const changePasswordBtn = document.getElementById("change-password-btn");
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener("click", changePassword);
+            }
+
+            // Change profile picture button
+            const changeProfileBtn = document.getElementById("change-profile-btn");
+            if (changeProfileBtn) {
+                changeProfileBtn.addEventListener("click", changeProfilePic);
+            }
+
+            // Update ad button
+            const updateAdBtn = document.getElementById("update-ad-btn");
+            if (updateAdBtn) {
+                updateAdBtn.addEventListener("click", updateAd);
+            }
+
+            // Add post button
+            const addPostBtn = document.getElementById("add-post-btn");
+            if (addPostBtn) {
+                addPostBtn.addEventListener("click", addPost);
+            }
+
+            // Profile picture file input
             const profilePicFile = document.getElementById("profile-pic-file");
             if (profilePicFile) {
                 profilePicFile.addEventListener("change", function(e) {
@@ -430,155 +463,264 @@
                     }
                 });
             }
-        });
+
+            // Post image file input
+            const postImageFile = document.getElementById("post-image-file");
+            if (postImageFile) {
+                postImageFile.addEventListener("change", function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const previewImg = document.getElementById("preview-img");
+                            const preview = document.getElementById("image-preview");
+                            if (previewImg && preview) {
+                                previewImg.src = e.target.result;
+                                preview.classList.remove("hidden");
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        }
 
         function checkLogin() {
             const isLoggedIn = localStorage.getItem("adminLoggedIn");
+            const loginSection = document.getElementById("login-section");
+            const adminPanel = document.getElementById("admin-panel");
+            
             if (isLoggedIn === "true") {
-                document.getElementById("login-section").classList.add("hidden");
-                document.getElementById("admin-panel").classList.remove("hidden");
+                if (loginSection) loginSection.classList.add("hidden");
+                if (adminPanel) adminPanel.classList.remove("hidden");
             } else {
-                document.getElementById("login-section").classList.remove("hidden");
-                document.getElementById("admin-panel").classList.add("hidden");
+                if (loginSection) loginSection.classList.remove("hidden");
+                if (adminPanel) adminPanel.classList.add("hidden");
             }
         }
 
         function loginAdmin() {
-            console.log("loginAdmin function called"); // للتشخيص
+            console.log("loginAdmin function called");
             
             const passwordInput = document.getElementById("admin-password");
             const loginError = document.getElementById("login-error");
             const storedPassword = localStorage.getItem("adminPassword") || ADMIN_PASSWORD;
             
-            console.log("Password input:", passwordInput ? passwordInput.value : "not found");
+            if (!passwordInput) {
+                console.error("Password input not found");
+                return;
+            }
+
+            const enteredPassword = passwordInput.value.trim();
+            console.log("Entered password:", enteredPassword);
             console.log("Stored password:", storedPassword);
 
-            if (passwordInput && passwordInput.value.trim() === storedPassword) {
+            if (enteredPassword === storedPassword) {
                 console.log("Login successful");
                 localStorage.setItem("adminLoggedIn", "true");
-                passwordInput.value = ""; // مسح حقل كلمة المرور
+                passwordInput.value = ""; // Clear password field
                 
-                // إخفاء رسالة الخطأ
+                // Hide error message
                 if (loginError) {
                     loginError.classList.add("hidden");
                 }
                 
-                // إظهار لوحة التحكم
-                const loginSection = document.getElementById("login-section");
-                const adminPanel = document.getElementById("admin-panel");
-                
-                if (loginSection && adminPanel) {
-                    loginSection.classList.add("hidden");
-                    adminPanel.classList.remove("hidden");
-                }
-                
+                // Show admin panel
                 checkLogin();
+                
+                alert("تم تسجيل الدخول بنجاح!");
             } else {
                 console.log("Login failed");
                 if (loginError) {
                     loginError.classList.remove("hidden");
                 }
+                
+                // Clear password field
+                passwordInput.value = "";
             }
         }
 
         function changePassword() {
-            const newPassword = document.getElementById("new-password").value;
-            if (newPassword && newPassword.trim() !== "") {
-                localStorage.setItem("adminPassword", newPassword.trim());
-                // إعادة تعيين حالة تسجيل الدخول لإجبار المستخدم على تسجيل الدخول مرة أخرى
+            const newPasswordInput = document.getElementById("new-password");
+            if (!newPasswordInput) return;
+            
+            const newPassword = newPasswordInput.value.trim();
+            if (newPassword && newPassword.length >= 4) {
+                localStorage.setItem("adminPassword", newPassword);
+                ADMIN_PASSWORD = newPassword;
+                
+                // Force logout to require new password
                 localStorage.removeItem("adminLoggedIn");
+                
                 alert("تم تغيير كلمة المرور بنجاح! سيتم إعادة توجيهك لتسجيل الدخول مرة أخرى.");
-                document.getElementById("new-password").value = "";
-                checkLogin(); // إعادة فحص حالة تسجيل الدخول
+                newPasswordInput.value = "";
+                checkLogin();
             } else {
-                alert("الرجاء إدخال كلمة مرور جديدة صحيحة.");
+                alert("الرجاء إدخال كلمة مرور جديدة (4 أحرف على الأقل).");
             }
-        }
-
-        function loadProfilePic() {
-            const profilePicUrl = localStorage.getItem("profilePic") || DEFAULT_PROFILE_PIC;
-            document.getElementById("profile-pic-preview").src = profilePicUrl;
         }
 
         function changeProfilePic() {
             const fileInput = document.getElementById("profile-pic-file");
+            if (!fileInput || !fileInput.files[0]) {
+                alert("الرجاء اختيار صورة أولاً!");
+                return;
+            }
+
             const file = fileInput.files[0];
-            
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imageUrl = e.target.result;
-                    localStorage.setItem("profilePic", imageUrl);
-                    loadProfilePic();
-                    alert("تم تغيير الصورة الشخصية بنجاح!");
-                    fileInput.value = "";
-                    document.getElementById("profile-preview").classList.add("hidden");
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert("الرجاء اختيار صورة شخصية.");
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                localStorage.setItem("profilePic", imageData);
+                
+                // Update preview
+                const preview = document.getElementById("profile-pic-preview");
+                if (preview) {
+                    preview.src = imageData;
+                }
+                
+                alert("تم تغيير الصورة الشخصية بنجاح!");
+                
+                // Clear file input
+                fileInput.value = "";
+                
+                // Hide preview
+                const previewDiv = document.getElementById("profile-preview");
+                if (previewDiv) {
+                    previewDiv.classList.add("hidden");
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadProfilePic() {
+            const profilePicUrl = localStorage.getItem("profilePic") || DEFAULT_PROFILE_PIC;
+            const preview = document.getElementById("profile-pic-preview");
+            if (preview) {
+                preview.src = profilePicUrl;
             }
         }
 
-        // تحديث الإحصائيات عند تحميل الصفحة
+        function loadAdText() {
+            const savedAdText = localStorage.getItem("adText");
+            const adInput = document.getElementById("ad-input");
+            if (adInput && savedAdText) {
+                adInput.value = savedAdText;
+            }
+        }
+
+        function updateAd() {
+            const adInput = document.getElementById("ad-input");
+            if (!adInput) return;
+            
+            const newAdText = adInput.value.trim();
+            if (newAdText) {
+                localStorage.setItem("adText", newAdText);
+                alert("تم تحديث الإعلان بنجاح!");
+            } else {
+                alert("يرجى إدخال نص الإعلان!");
+            }
+        }
+
+        function addPost() {
+            const title = document.getElementById("post-title").value.trim();
+            const date = document.getElementById("post-date").value;
+            const content = document.getElementById("post-content").value.trim();
+            const link = document.getElementById("post-link").value.trim();
+            const imageFile = document.getElementById("post-image-file").files[0];
+            const telegramLink = document.getElementById("telegram-link").value.trim();
+            const category = document.getElementById("post-category").value;
+
+            if (!title || !content || !category) {
+                alert("يرجى ملء جميع الحقول المطلوبة!");
+                return;
+            }
+
+            // Process image if uploaded
+            let imageUrl = "";
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageUrl = e.target.result;
+                    savePost(title, date, content, link, imageUrl, telegramLink, category);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                savePost(title, date, content, link, imageUrl, telegramLink, category);
+            }
+        }
+
+        function savePost(title, date, content, link, imageUrl, telegramLink, category) {
+            let posts = JSON.parse(localStorage.getItem("posts") || "[]");
+            
+            const newPost = {
+                id: Date.now(),
+                title: title,
+                date: date || new Date().toISOString().split('T')[0],
+                content: content,
+                link: link,
+                imageUrl: imageUrl,
+                telegramLink: telegramLink,
+                category: category,
+                timestamp: Date.now()
+            };
+
+            posts.unshift(newPost);
+            localStorage.setItem("posts", JSON.stringify(posts));
+
+            // Clear form
+            document.getElementById("post-title").value = "";
+            document.getElementById("post-date").value = "";
+            document.getElementById("post-content").value = "";
+            document.getElementById("post-link").value = "";
+            document.getElementById("post-image-file").value = "";
+            document.getElementById("telegram-link").value = "";
+            document.getElementById("post-category").value = "";
+            
+            // Hide image preview
+            const imagePreview = document.getElementById("image-preview");
+            if (imagePreview) {
+                imagePreview.classList.add("hidden");
+            }
+
+            alert("تم إضافة المنشور بنجاح!");
+            updateStats();
+        }
+
         function updateStats() {
-            const posts = JSON.parse(localStorage.getItem("posts")) || [];
+            const posts = JSON.parse(localStorage.getItem("posts") || "[]");
             const statsContainer = document.getElementById("stats-container");
             
-            const sections = {
-                posts: { title: "المنشورات", icon: "file-lines", color: "blue" },
-                apps: { title: "التطبيقات", icon: "mobile-screen-button", color: "green" },
-                games: { title: "الألعاب", icon: "gamepad", color: "purple" },
-                movies: { title: "الأفلام", icon: "film", color: "red" },
-                tutorials: { title: "الشروحات", icon: "book", color: "orange" },
-                ai: { title: "الذكاء الاصطناعي", icon: "microchip", color: "cyan" }
+            if (!statsContainer) return;
+
+            const categories = {
+                posts: { name: "المنشورات", icon: "file-lines", color: "blue" },
+                apps: { name: "التطبيقات", icon: "mobile-screen-button", color: "green" },
+                games: { name: "الألعاب", icon: "gamepad", color: "purple" },
+                movies: { name: "الأفلام", icon: "film", color: "red" },
+                tutorials: { name: "الشروحات", icon: "book", color: "orange" },
+                ai: { name: "الذكاء الاصطناعي", icon: "microchip", color: "cyan" }
             };
-            
-            statsContainer.innerHTML = '';
-            
-            Object.keys(sections).forEach(key => {
-                const section = sections[key];
-                const count = posts.filter(p => p.category === key).length;
+
+            let statsHTML = "";
+            Object.keys(categories).forEach(category => {
+                const count = posts.filter(p => p.category === category).length;
+                const cat = categories[category];
                 
-                const statCard = document.createElement("div");
-                statCard.className = `bg-${section.color}-50 border border-${section.color}-200 rounded-lg p-4 text-center`;
-                statCard.innerHTML = `
-                    <div class="text-2xl text-${section.color}-600 mb-2">
-                        <i class="fas fa-${section.icon}"></i>
+                statsHTML += `
+                    <div class="bg-white rounded-lg p-4 text-center shadow-md">
+                        <div class="text-2xl text-${cat.color}-600 mb-2">
+                            <i class="fas fa-${cat.icon}"></i>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-800">${count}</div>
+                        <div class="text-sm text-gray-600">${cat.name}</div>
                     </div>
-                    <div class="text-2xl font-bold text-${section.color}-800">${count}</div>
-                    <div class="text-sm text-${section.color}-600">${section.title}</div>
                 `;
-                
-                statsContainer.appendChild(statCard);
             });
+
+            statsContainer.innerHTML = statsHTML;
         }
-        
-        // تحديث الإحصائيات بعد إضافة منشور جديد
-        const originalAddPost = window.addPost;
-        window.addPost = function() {
-            originalAddPost();
-            setTimeout(updateStats, 100);
-        };
     </script>
 </body>
 </html>
-
-
-    <script>
-        // معاينة الصورة المرفوعة
-        document.getElementById('post-image-file').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview-img').src = e.target.result;
-                    document.getElementById('image-preview').classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            } else {
-                document.getElementById('image-preview').classList.add('hidden');
-            }
-        });
-    </script>
 
