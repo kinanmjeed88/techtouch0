@@ -745,3 +745,39 @@ function loadSectionContent() {
 }
 
 
+
+
+// فتح المودال وعرض المحتوى
+function openDropdownModal(type, title) {
+    const modal = document.getElementById("dropdownModal");
+    const modalTitle = document.getElementById("dropdownModalTitle");
+    const modalList = document.getElementById("dropdownModalList");
+
+    const data = dropdownData[type];
+    if (!data) return;
+
+    modalTitle.textContent = title;
+    modalList.innerHTML = "";
+
+    data.forEach(item => {
+        const listItem = document.createElement("a");
+        listItem.href = item.url;
+        listItem.target = "_blank";
+        listItem.className = "modal-item";
+        listItem.innerHTML = `
+            <span class="icon">${item.icon}</span>
+            <span>${item.text}</span>
+        `;
+        modalList.appendChild(listItem);
+    });
+
+    modal.classList.add("active");
+}
+
+// إغلاق المودال
+function closeDropdownModal() {
+    const modal = document.getElementById("dropdownModal");
+    modal.classList.remove("active");
+}
+
+
