@@ -4,17 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>تفاصيل المنشور</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="script.js" defer></script>
+  <style>
+    body { font-family: \'Tajawal\', sans-serif; }
+  </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4">
   <div class="bg-blue-600 text-white p-3 rounded mb-4" id="post-title-bar">عنوان المنشور</div>
   <div class="text-sm mb-2" id="post-meta"></div>
-  <img id="post-image" class="w-full rounded mb-4" alt="صورة المنشور">
-  <div id="post-content" class="mb-4"></div>
-  <a id="download-btn" class="btn btn-primary hidden" target="_blank">تحميل</a>
-  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl" onclick="goHome()">🏠</button>
+  <img id="post-image" class="w-full rounded mb-4 hidden" alt="صورة المنشور">
+  <div id="post-content" class="mb-4 p-4 bg-white rounded-lg shadow-md"></div>
+  <a id="download-btn" class="bg-green-600 text-white px-5 py-2 rounded-md hover:bg-green-700 transition duration-300 hidden" target="_blank">تحميل</a>
+  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl shadow-lg flex items-center justify-center" onclick="goHome()">🏠</button>
+  <script src="script.js"></script>
 </body>
 </html>
 

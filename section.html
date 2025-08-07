@@ -4,18 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>قسم المنشورات</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="script.js" defer></script>
+  <style>
+    body { font-family: \'Tajawal\', sans-serif; }
+  </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4">
   <h1 class="text-2xl font-bold mb-4" id="section-title">القسم</h1>
   <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
   <div class="flex justify-between mt-4">
-    <button onclick="prevPage()" class="btn">السابق</button>
-    <button onclick="nextPage()" class="btn">التالي</button>
+    <button onclick="prevPage()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">السابق</button>
+    <button onclick="nextPage()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">التالي</button>
   </div>
-  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl" onclick="goHome()">🏠</button>
+  <button class="fixed bottom-4 right-4 bg-blue-600 text-white rounded-full w-14 h-14 text-2xl shadow-lg flex items-center justify-center" onclick="goHome()">🏠</button>
+  <script src="script.js"></script>
 </body>
 </html>
 
