@@ -24,6 +24,8 @@
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .glass-effect {
@@ -164,6 +166,16 @@
             50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8); }
         }
         
+        .profile-pic-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid #667eea;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        }
+        
         @media (max-width: 768px) {
             .admin-card {
                 padding: 1.5rem;
@@ -173,163 +185,281 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="glass-effect text-white p-4 mb-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <a href="index.html" class="text-2xl hover:text-yellow-300 transition-colors">
-                    <i class="fas fa-home"></i>
-                </a>
-                <h1 class="text-2xl font-bold gradient-text">لوحة التحكم</h1>
-            </div>
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <i class="fas fa-user-shield text-2xl"></i>
-                <span class="text-sm opacity-90">إدارة المحتوى</span>
-            </div>
+    <!-- Login Section -->
+    <div id="login-section" class="flex-grow flex items-center justify-center p-4">
+        <div class="admin-card text-center w-full max-w-md">
+            <h2 class="text-3xl font-bold gradient-text mb-6">تسجيل الدخول</h2>
+            <input type="password" id="admin-password" placeholder="كلمة المرور" class="form-input mb-4">
+            <button onclick="loginAdmin()" class="btn-primary w-full">
+                <i class="fas fa-sign-in-alt ml-2"></i>
+                دخول لوحة التحكم
+            </button>
+            <p id="login-error" class="text-red-500 mt-3 hidden">كلمة المرور غير صحيحة!</p>
         </div>
-    </header>
-    
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 pb-20">
-        <!-- Welcome Section -->
-        <div class="admin-card text-center">
-            <div class="text-6xl text-blue-600 mb-4">
-                <i class="fas fa-cogs"></i>
-            </div>
-            <h2 class="text-3xl font-bold gradient-text mb-2">مرحباً بك في لوحة التحكم</h2>
-            <p class="text-gray-600 text-lg">إدارة المحتوى والإعلانات بسهولة</p>
-        </div>
-        
-        <!-- Ad Management Section -->
-        <div class="admin-card">
-            <div class="flex items-center mb-6">
-                <div class="text-3xl text-yellow-600 ml-4">
-                    <i class="fas fa-bullhorn"></i>
+    </div>
+
+    <!-- Admin Panel (Hidden by default) -->
+    <div id="admin-panel" class="flex-grow flex flex-col hidden">
+        <!-- Header -->
+        <header class="glass-effect text-white p-4 mb-6">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="index.html" class="text-2xl hover:text-yellow-300 transition-colors">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <h1 class="text-2xl font-bold gradient-text">لوحة التحكم</h1>
                 </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800">إدارة الشريط الإعلاني</h2>
-                    <p class="text-gray-600">تحديث نص الإعلان الذي يظهر في أعلى الموقع</p>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <i class="fas fa-user-shield text-2xl"></i>
+                    <span class="text-sm opacity-90">إدارة المحتوى</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 pb-20">
+            <!-- Welcome Section -->
+            <div class="admin-card text-center">
+                <div class="text-6xl text-blue-600 mb-4">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h2 class="text-3xl font-bold gradient-text mb-2">مرحباً بك في لوحة التحكم</h2>
+                <p class="text-gray-600 text-lg">إدارة المحتوى والإعلانات بسهولة</p>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="admin-card">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl text-purple-600 ml-4">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">الإعدادات</h2>
+                        <p class="text-gray-600">إدارة كلمة المرور والصورة الشخصية</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">تغيير كلمة المرور:</label>
+                        <input type="password" id="new-password" placeholder="كلمة المرور الجديدة" class="form-input">
+                        <button onclick="changePassword()" class="btn-primary">
+                            <i class="fas fa-key ml-2"></i>
+                            تغيير كلمة المرور
+                        </button>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">تغيير الصورة الشخصية:</label>
+                        <img id="profile-pic-preview" class="profile-pic-preview" src="" alt="صورة شخصية">
+                        <input type="url" id="profile-pic-url" placeholder="رابط الصورة الشخصية" class="form-input">
+                        <button onclick="changeProfilePic()" class="btn-primary">
+                            <i class="fas fa-image ml-2"></i>
+                            تغيير الصورة
+                        </button>
+                    </div>
                 </div>
             </div>
             
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">نص الإعلان الحالي:</label>
-                    <input type="text" id="ad-input" placeholder="أدخل نص الإعلان الجديد..." class="form-input">
-                </div>
-                <button onclick="updateAd()" class="btn-primary">
-                    <i class="fas fa-save ml-2"></i>
-                    حفظ الإعلان
-                </button>
-            </div>
-        </div>
-        
-        <!-- Post Management Section -->
-        <div class="admin-card">
-            <div class="flex items-center mb-6">
-                <div class="text-3xl text-green-600 ml-4">
-                    <i class="fas fa-plus-circle"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800">إضافة منشور جديد</h2>
-                    <p class="text-gray-600">إنشاء منشور جديد وإضافته إلى القسم المناسب</p>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">عنوان المنشور:</label>
-                    <input type="text" id="post-title" placeholder="أدخل عنوان المنشور..." class="form-input">
+            <!-- Ad Management Section -->
+            <div class="admin-card">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl text-yellow-600 ml-4">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">إدارة الشريط الإعلاني</h2>
+                        <p class="text-gray-600">تحديث نص الإعلان الذي يظهر في أعلى الموقع</p>
+                    </div>
                 </div>
                 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">تاريخ النشر:</label>
-                    <input type="date" id="post-date" class="form-input">
-                </div>
-                
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">محتوى المنشور:</label>
-                    <textarea id="post-content" placeholder="أدخل محتوى المنشور..." class="form-textarea"></textarea>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">رابط التحميل (اختياري):</label>
-                    <input type="url" id="post-link" placeholder="https://example.com/download" class="form-input">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">القسم:</label>
-                    <select id="post-category" class="form-select">
-                        <option value="">اختر القسم المناسب</option>
-                        <option value="posts">📝 المنشورات</option>
-                        <option value="apps">📱 التطبيقات</option>
-                        <option value="games">🎮 الألعاب</option>
-                        <option value="movies">🎬 الأفلام</option>
-                        <option value="tutorials">📚 الشروحات</option>
-                        <option value="ai">🤖 الذكاء الاصطناعي</option>
-                    </select>
-                </div>
-                
-                <div class="md:col-span-2">
-                    <button onclick="addPost()" class="btn-success w-full">
-                        <i class="fas fa-paper-plane ml-2"></i>
-                        نشر المنشور
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">نص الإعلان الحالي:</label>
+                        <input type="text" id="ad-input" placeholder="أدخل نص الإعلان الجديد..." class="form-input">
+                    </div>
+                    <button onclick="updateAd()" class="btn-primary">
+                        <i class="fas fa-save ml-2"></i>
+                        حفظ الإعلان
                     </button>
                 </div>
             </div>
-        </div>
-        
-        <!-- Statistics Section -->
-        <div class="admin-card">
-            <div class="flex items-center mb-6">
-                <div class="text-3xl text-purple-600 ml-4">
-                    <i class="fas fa-chart-bar"></i>
+            
+            <!-- Post Management Section -->
+            <div class="admin-card">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl text-green-600 ml-4">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">إضافة منشور جديد</h2>
+                        <p class="text-gray-600">إنشاء منشور جديد وإضافته إلى القسم المناسب</p>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800">إحصائيات سريعة</h2>
-                    <p class="text-gray-600">نظرة عامة على محتوى الموقع</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">عنوان المنشور:</label>
+                        <input type="text" id="post-title" placeholder="أدخل عنوان المنشور..." class="form-input">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">تاريخ النشر:</label>
+                        <input type="date" id="post-date" class="form-input">
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">محتوى المنشور:</label>
+                        <textarea id="post-content" placeholder="أدخل محتوى المنشور..." class="form-textarea"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">رابط التحميل (اختياري):</label>
+                        <input type="url" id="post-link" placeholder="https://example.com/download" class="form-input">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">رابط صورة المنشور (اختياري):</label>
+                        <input type="url" id="post-image-url" placeholder="https://example.com/image.jpg" class="form-input">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">رابط قناة التليجرام (اختياري):</label>
+                        <input type="url" id="telegram-link" placeholder="https://t.me/yourchannel" class="form-input">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">القسم:</label>
+                        <select id="post-category" class="form-select">
+                            <option value="">اختر القسم المناسب</option>
+                            <option value="posts">📝 المنشورات</option>
+                            <option value="apps">📱 التطبيقات</option>
+                            <option value="games">🎮 الألعاب</option>
+                            <option value="movies">🎬 الأفلام</option>
+                            <option value="tutorials">📚 الشروحات</option>
+                            <option value="ai">🤖 الذكاء الاصطناعي</option>
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <button onclick="addPost()" class="btn-success w-full">
+                            <i class="fas fa-paper-plane ml-2"></i>
+                            نشر المنشور
+                        </button>
+                    </div>
                 </div>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="stats-container">
-                <!-- Stats will be populated by JavaScript -->
+            <!-- Statistics Section -->
+            <div class="admin-card">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl text-purple-600 ml-4">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">إحصائيات سريعة</h2>
+                        <p class="text-gray-600">نظرة عامة على محتوى الموقع</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="stats-container">
+                    <!-- Stats will be populated by JavaScript -->
+                </div>
             </div>
         </div>
+        
+        <!-- Floating Back Button -->
+        <a href="index.html" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        
+        <!-- Footer -->
+        <footer class="glass-effect text-white text-center p-6 mt-12">
+            <div class="container mx-auto">
+                <p class="text-sm opacity-90">
+                    لوحة التحكم - TechTouch © 2025 
+                    <a href="https://t.me/kinanmjeed" target="_blank" class="text-yellow-300 hover:underline">kinanmjeed</a>
+                </p>
+            </div>
+        </footer>
     </div>
-    
-    <!-- Floating Back Button -->
-    <a href="index.html" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
-        <i class="fas fa-arrow-right"></i>
-    </a>
-    
-    <!-- Footer -->
-    <footer class="glass-effect text-white text-center p-6 mt-12">
-        <div class="container mx-auto">
-            <p class="text-sm opacity-90">
-                لوحة التحكم - TechTouch © 2025 
-                <a href="https://t.me/kinanmjeed" target="_blank" class="text-yellow-300 hover:underline">kinanmjeed</a>
-            </p>
-        </div>
-    </footer>
     
     <script src="script.js"></script>
     <script>
-        // تحديث الإحصائيات عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
+        // Default admin password (can be changed)
+        const ADMIN_PASSWORD = "admin123"; 
+        const DEFAULT_PROFILE_PIC = "https://via.placeholder.com/100"; // Default profile picture
+
+        document.addEventListener("DOMContentLoaded", function() {
+            checkLogin();
             updateStats();
+            loadProfilePic();
         });
-        
+
+        function checkLogin() {
+            const isLoggedIn = localStorage.getItem("adminLoggedIn");
+            if (isLoggedIn === "true") {
+                document.getElementById("login-section").classList.add("hidden");
+                document.getElementById("admin-panel").classList.remove("hidden");
+            } else {
+                document.getElementById("login-section").classList.remove("hidden");
+                document.getElementById("admin-panel").classList.add("hidden");
+            }
+        }
+
+        function loginAdmin() {
+            const passwordInput = document.getElementById("admin-password").value;
+            const loginError = document.getElementById("login-error");
+            const storedPassword = localStorage.getItem("adminPassword") || ADMIN_PASSWORD;
+
+            if (passwordInput === storedPassword) {
+                localStorage.setItem("adminLoggedIn", "true");
+                checkLogin();
+                loginError.classList.add("hidden");
+            } else {
+                loginError.classList.remove("hidden");
+            }
+        }
+
+        function changePassword() {
+            const newPassword = document.getElementById("new-password").value;
+            if (newPassword) {
+                localStorage.setItem("adminPassword", newPassword);
+                alert("تم تغيير كلمة المرور بنجاح!");
+                document.getElementById("new-password").value = "";
+            } else {
+                alert("الرجاء إدخال كلمة مرور جديدة.");
+            }
+        }
+
+        function loadProfilePic() {
+            const profilePicUrl = localStorage.getItem("profilePic") || DEFAULT_PROFILE_PIC;
+            document.getElementById("profile-pic-preview").src = profilePicUrl;
+            document.getElementById("profile-pic-url").value = profilePicUrl;
+        }
+
+        function changeProfilePic() {
+            const newProfilePicUrl = document.getElementById("profile-pic-url").value;
+            if (newProfilePicUrl) {
+                localStorage.setItem("profilePic", newProfilePicUrl);
+                loadProfilePic();
+                alert("تم تغيير الصورة الشخصية بنجاح!");
+            } else {
+                alert("الرجاء إدخال رابط الصورة الشخصية.");
+            }
+        }
+
+        // تحديث الإحصائيات عند تحميل الصفحة
         function updateStats() {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const statsContainer = document.getElementById('stats-container');
+            const posts = JSON.parse(localStorage.getItem("posts")) || [];
+            const statsContainer = document.getElementById("stats-container");
             
             const sections = {
-                posts: { title: 'المنشورات', icon: 'file-lines', color: 'blue' },
-                apps: { title: 'التطبيقات', icon: 'mobile-screen-button', color: 'green' },
-                games: { title: 'الألعاب', icon: 'gamepad', color: 'purple' },
-                movies: { title: 'الأفلام', icon: 'film', color: 'red' },
-                tutorials: { title: 'الشروحات', icon: 'book', color: 'orange' },
-                ai: { title: 'الذكاء الاصطناعي', icon: 'microchip', color: 'cyan' }
+                posts: { title: "المنشورات", icon: "file-lines", color: "blue" },
+                apps: { title: "التطبيقات", icon: "mobile-screen-button", color: "green" },
+                games: { title: "الألعاب", icon: "gamepad", color: "purple" },
+                movies: { title: "الأفلام", icon: "film", color: "red" },
+                tutorials: { title: "الشروحات", icon: "book", color: "orange" },
+                ai: { title: "الذكاء الاصطناعي", icon: "microchip", color: "cyan" }
             };
             
             statsContainer.innerHTML = '';
@@ -338,7 +468,7 @@
                 const section = sections[key];
                 const count = posts.filter(p => p.category === key).length;
                 
-                const statCard = document.createElement('div');
+                const statCard = document.createElement("div");
                 statCard.className = `bg-${section.color}-50 border border-${section.color}-200 rounded-lg p-4 text-center`;
                 statCard.innerHTML = `
                     <div class="text-2xl text-${section.color}-600 mb-2">

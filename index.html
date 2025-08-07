@@ -22,7 +22,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); /* Blue gradient */
             min-height: 100vh;
         }
         
@@ -42,7 +42,7 @@
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #bfdbfe, #93c5fd); /* Lighter blue for text */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -62,8 +62,8 @@
         }
         
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
-            50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8); }
+            0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(37, 99, 235, 0.8); }
         }
         
         .sidebar {
@@ -109,7 +109,7 @@
             margin-bottom: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            height: 80px;
+            height: 160px; /* Doubled height */
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -119,6 +119,18 @@
         .main-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .main-card .text-3xl {
+            font-size: 4rem; /* Doubled icon size */
+        }
+        
+        .main-card .text-xl {
+            font-size: 2.5rem; /* Doubled title size */
+        }
+        
+        .main-card .text-sm {
+            font-size: 1.2rem; /* Increased description size */
         }
         
         .sub-cards-container {
@@ -133,14 +145,14 @@
             backdrop-filter: blur(15px);
             border-radius: 15px;
             padding: 1rem;
-            height: 40px;
+            height: 80px; /* Doubled height */
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 0.9rem;
+            font-size: 1.2rem; /* Increased font size */
             font-weight: 500;
         }
         
@@ -151,42 +163,72 @@
         }
         
         .dropdown-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(30, 64, 175, 0.1)); /* Blue gradient */
             backdrop-filter: blur(15px);
             border-radius: 15px;
             padding: 1rem;
-            height: 40px;
+            height: 80px; /* Doubled height */
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 0.9rem;
+            font-size: 1.2rem; /* Increased font size */
             font-weight: 500;
         }
         
         .dropdown-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(30, 64, 175, 0.2));
         }
         
+        /* Ad banner specific styles */
+        .ad-banner {
+            background-color: #fcd34d; /* Yellow */
+            color: #ef4444; /* Red */
+            font-weight: bold;
+            text-align: center;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         @media (max-width: 768px) {
             .main-card {
                 padding: 1.5rem;
                 height: auto;
-                min-height: 80px;
+                min-height: 120px; /* Adjusted for smaller screens */
             }
             
+            .main-card .text-3xl {
+                font-size: 3rem; /* Adjusted for smaller screens */
+            }
+            
+            .main-card .text-xl {
+                font-size: 2rem; /* Adjusted for smaller screens */
+            }
+            
+            .main-card .text-sm {
+                font-size: 1rem; /* Adjusted for smaller screens */
+            }
+
             .sub-cards-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr; /* Keep 2 columns for small screens */
                 gap: 0.5rem;
             }
             
             .sub-card, .dropdown-card {
-                height: 50px;
+                height: 60px; /* Adjusted for smaller screens */
                 font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sub-cards-container {
+                grid-template-columns: 1fr; /* 1 column for very small screens */
             }
         }
     </style>
@@ -205,14 +247,14 @@
                 <h1 class="text-2xl font-bold gradient-text">TechTouch</h1>
             </div>
             <div class="flex items-center space-x-4 space-x-reverse">
-                <img src="./images/profile.png" alt="الصورة الشخصية" class="w-10 h-10 rounded-full border-2 border-white/30" onerror="this.style.display='none'">
+                <img id="profile-pic-display" src="./images/profile.png" alt="الصورة الشخصية" class="w-10 h-10 rounded-full border-2 border-white/30" onerror="this.style.display='none'">
                 <span class="text-sm opacity-90">التقنية في متناول يدك</span>
             </div>
         </div>
     </header>
     
     <!-- Ad Banner -->
-    <div class="glass-effect text-white text-center p-3 mb-6 mx-4 rounded-lg pulse-glow">
+    <div class="ad-banner mx-4 rounded-lg pulse-glow">
         <span class="font-bold">📢 إعلان:</span>
         <span id="ad-text" class="mr-2">مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!</span>
     </div>
@@ -224,12 +266,12 @@
             <!-- المنشورات -->
             <div class="main-card" onclick="goToSection('posts')">
                 <div class="flex items-center w-full">
-                    <div class="text-3xl text-blue-600 ml-4">
+                    <div class="text-blue-600 ml-4">
                         <i class="fas fa-file-lines"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-xl font-bold text-gray-800">المنشورات</h2>
-                        <p class="text-sm text-gray-600" id="posts-latest">آخر المنشورات والأخبار التقنية</p>
+                        <h2 class="font-bold text-gray-800">المنشورات</h2>
+                        <p class="text-gray-600" id="posts-latest">آخر المنشورات والأخبار التقنية</p>
                     </div>
                     <div class="text-gray-400">
                         <i class="fas fa-chevron-left"></i>
@@ -240,12 +282,12 @@
             <!-- التطبيقات -->
             <div class="main-card" onclick="goToSection('apps')">
                 <div class="flex items-center w-full">
-                    <div class="text-3xl text-green-600 ml-4">
+                    <div class="text-green-600 ml-4">
                         <i class="fas fa-mobile-screen-button"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-xl font-bold text-gray-800">التطبيقات</h2>
-                        <p class="text-sm text-gray-600" id="apps-latest">أحدث التطبيقات والبرامج</p>
+                        <h2 class="font-bold text-gray-800">التطبيقات</h2>
+                        <p class="text-gray-600" id="apps-latest">أحدث التطبيقات والبرامج</p>
                     </div>
                     <div class="text-gray-400">
                         <i class="fas fa-chevron-left"></i>
@@ -256,12 +298,12 @@
             <!-- الألعاب -->
             <div class="main-card" onclick="goToSection('games')">
                 <div class="flex items-center w-full">
-                    <div class="text-3xl text-purple-600 ml-4">
+                    <div class="text-purple-600 ml-4">
                         <i class="fas fa-gamepad"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-xl font-bold text-gray-800">الألعاب</h2>
-                        <p class="text-sm text-gray-600" id="games-latest">أفضل الألعاب والترفيه</p>
+                        <h2 class="font-bold text-gray-800">الألعاب</h2>
+                        <p class="text-gray-600" id="games-latest">أفضل الألعاب والترفيه</p>
                     </div>
                     <div class="text-gray-400">
                         <i class="fas fa-chevron-left"></i>
@@ -272,12 +314,12 @@
             <!-- الأفلام -->
             <div class="main-card" onclick="goToSection('movies')">
                 <div class="flex items-center w-full">
-                    <div class="text-3xl text-red-600 ml-4">
+                    <div class="text-red-600 ml-4">
                         <i class="fas fa-film"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-xl font-bold text-gray-800">الأفلام</h2>
-                        <p class="text-sm text-gray-600" id="movies-latest">أحدث الأفلام والمسلسلات</p>
+                        <h2 class="font-bold text-gray-800">الأفلام</h2>
+                        <p class="text-gray-600" id="movies-latest">أحدث الأفلام والمسلسلات</p>
                     </div>
                     <div class="text-gray-400">
                         <i class="fas fa-chevron-left"></i>
@@ -288,12 +330,12 @@
             <!-- الشروحات -->
             <div class="main-card" onclick="goToSection('tutorials')">
                 <div class="flex items-center w-full">
-                    <div class="text-3xl text-orange-600 ml-4">
+                    <div class="text-orange-600 ml-4">
                         <i class="fas fa-book"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-xl font-bold text-gray-800">الشروحات</h2>
-                        <p class="text-sm text-gray-600" id="tutorials-latest">دروس ونصائح تقنية مفيدة</p>
+                        <h2 class="font-bold text-gray-800">الشروحات</h2>
+                        <p class="text-gray-600" id="tutorials-latest">دروس ونصائح تقنية مفيدة</p>
                     </div>
                     <div class="text-gray-400">
                         <i class="fas fa-chevron-left"></i>
@@ -304,12 +346,12 @@
             <!-- الذكاء الاصطناعي -->
             <div class="main-card" onclick="goToSection('ai')">
                 <div class="flex items-center w-full">
-                    <div class="text-3xl text-cyan-600 ml-4">
+                    <div class="text-cyan-600 ml-4">
                         <i class="fas fa-microchip"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-xl font-bold text-gray-800">الذكاء الاصطناعي</h2>
-                        <p class="text-sm text-gray-600" id="ai-latest">أدوات وتطبيقات الذكاء الاصطناعي</p>
+                        <h2 class="font-bold text-gray-800">الذكاء الاصطناعي</h2>
+                        <p class="text-gray-600" id="ai-latest">أدوات وتطبيقات الذكاء الاصطناعي</p>
                     </div>
                     <div class="text-gray-400">
                         <i class="fas fa-chevron-left"></i>
@@ -401,17 +443,17 @@
     </div>
     
     <!-- Floating Home Button -->
-    <button onclick="goHome()" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
+    <button onclick="goHome()" class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-xl floating-animation">
         <i class="fas fa-home"></i>
     </button>
     
     <!-- Modal for Dropdown Content -->
     <div id="popupModal" class="modal">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 id="modalTitle">العنوان</h2>
+            <span class="close-button" onclick="closeDropdownModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
             <div id="modalContent" class="modal-grid">
-                <!-- Content will be populated by JavaScript -->
+                <!-- Dropdown items will be loaded here -->
             </div>
         </div>
     </div>
@@ -441,6 +483,23 @@
     </footer>
     
     <script src="script.js"></script>
+    <script>
+        // Function to close the dropdown modal
+        function closeDropdownModal() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
+
+        // Load profile picture from local storage
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePicUrl = localStorage.getItem('profilePic');
+            if (profilePicUrl) {
+                document.getElementById('profile-pic-display').src = profilePicUrl;
+                document.getElementById('profile-pic-display').style.display = 'block';
+            } else {
+                document.getElementById('profile-pic-display').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
 
