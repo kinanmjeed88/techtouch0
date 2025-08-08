@@ -24,7 +24,7 @@ exports.handler = async (event, context) => {
         const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
         const GITHUB_OWNER = 'kinanmjeed88';
         const GITHUB_REPO = 'techtouch0';
-        const GITHUB_BRANCH = 'searchidf';
+        const GITHUB_BRANCH = 'main';
         
         if (!GITHUB_TOKEN) {
             return {
