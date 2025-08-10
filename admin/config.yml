@@ -1,0 +1,34 @@
+backend:
+  name: github
+  repo: kinanmjeed88/techtouch0
+  branch: main
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "المنشورات"
+    folder: "data/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "العنوان", name: "title", widget: "string"}
+      - {label: "التاريخ", name: "date", widget: "datetime"}
+      - {label: "الفئة", name: "category", widget: "select", options: ["posts", "apps", "games", "movies", "tutorials", "ai"]}
+      - {label: "الصورة", name: "image", widget: "image", required: false}
+      - {label: "المحتوى", name: "body", widget: "markdown"}
+      - {label: "رابط التليجرام", name: "telegramLink", widget: "string", required: false}
+      - {label: "رابط خارجي", name: "link", widget: "string", required: false}
+
+  - name: "dropdowns"
+    label: "القوائم المنسدلة"
+    folder: "data/dropdowns"
+    create: true
+    slug: "{{category}}-{{slug}}"
+    fields:
+      - {label: "العنوان", name: "title", widget: "string"}
+      - {label: "الفئة", name: "category", widget: "select", options: ["movies", "sports", "videos", "misc"]}
+      - {label: "الأيقونة", name: "icon", widget: "string"}
+      - {label: "الرابط", name: "url", widget: "string"}
+

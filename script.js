@@ -47,135 +47,68 @@ let dropdownData = {};
 // تحميل البيانات من GitHub
 async function loadDataFromGitHub() {
     try {
-        // تحميل المنشورات
-        const postsData = await fetchFromGitHub('posts.json');
-        if (postsData) {
-            posts = postsData;
-        }
+        console.log("Loading data from GitHub...");
         
-        // تحميل القوائم المنسدلة
-        const dropdownsData = await fetchFromGitHub('dropdowns.json');
-        if (dropdownsData) {
-            dropdownData = dropdownsData;
-        }
+        // تحميل المنشورات من ملفات Markdown
+        posts = await fetchAllPosts();
+        console.log("Posts loaded:", posts.length);
         
-        console.log('Data loaded from GitHub successfully');
+        // تحميل القوائم المنسدلة من ملفات Markdown
+        dropdownData = await fetchAllDropdowns();
+        console.log("Dropdowns loaded:", dropdownData);
+        
         return true;
     } catch (error) {
-        console.error('Error loading data from GitHub:', error);
+        console.error("Error loading data from GitHub:", error);
         // في حالة الفشل، استخدم البيانات المحلية كبديل
-        loadFallbackData();
+        loadLocalData();
         return false;
     }
 }
 
-// تحميل البيانات الاحتياطية من localStorage
-function loadFallbackData() {
-    console.log('Loading fallback data from localStorage');
+// تحميل البيانات المحلية كبديل
+function loadLocalData() {
+    console.log("Loading local data as fallback...");
     
     // تحميل المنشورات من localStorage
-    posts = JSON.parse(localStorage.getItem("posts")) || [
-        {
-            id: 1,
-            title: "أول منشور تجريبي",
-            date: "2025-08-06",
-            content: "هذا هو المحتوى التجريبي لأول منشور. يمكن تعديله من لوحة التحكم.",
-            link: "#",
-            imageUrl: "",
-            telegramLink: "",
-            category: "posts"
-        },
-        {
-            id: 2,
-            title: "تطبيق تجريبي جديد",
-            date: "2025-08-05",
-            content: "هذا هو المحتوى التجريبي لتطبيق جديد. يمكن تعديله من لوحة التحكم.",
-            link: "#",
-            imageUrl: "",
-            telegramLink: "",
-            category: "apps"
-        },
-        {
-            id: 3,
-            title: "لعبة تجريبية ممتعة",
-            date: "2025-08-04",
-            content: "هذا هو المحتوى التجريبي للعبة جديدة. يمكن تعديله من لوحة التحكم.",
-            link: "#",
-            imageUrl: "",
-            telegramLink: "",
-            category: "games"
-        },
-        {
-            id: 4,
-            title: "سينمانا الاسود",
-            date: "2025-08-03",
-            content: "تطبيق سينمانا الأسود لمشاهدة الأفلام والمسلسلات.",
-            link: "#",
-            imageUrl: "",
-            telegramLink: "",
-            category: "movies"
+    const savedPosts = localStorage.getItem("posts");
+    if (savedPosts) {
+        try {
+            posts = JSON.parse(savedPosts);
+        } catch (error) {
+            console.error("Error parsing saved posts:", error);
+            posts = [];
         }
-    ];
+    }
     
     // تحميل القوائم المنسدلة من localStorage
-    dropdownData = JSON.parse(localStorage.getItem("dropdownData")) || {
-        movies: [
-            { icon: "🎬", text: "Cinemana X ايرثلنك", url: "https://t.me/techtouch7/173" },
-            { icon: "🎭", text: "CEE أفلام", url: "https://t.me/techtouch7/174" },
-            { icon: "📽️", text: "Monveibox أفلام", url: "https://t.me/techtouch7/2070" },
-            { icon: "🎪", text: "سينمانا", url: "https://t.me/techtouch7/1668" },
-            { icon: "🍿", text: "نتفلكس محاني", url: "https://t.me/techtouch7/2676" },
-            { icon: "📺", text: "سيمو دراما", url: "https://t.me/techtouch7/211?single" }
-        ],
-        sports: [
-            { icon: "📺", text: "MixFlix tv", url: "https://t.me/techtouch7/1450" },
-            { icon: "📺", text: "دراما لايف tv", url: "https://t.me/techtouch7/1686" },
-            { icon: "⚽", text: "الأسطورة tv", url: "https://t.me/techtouch7/2367?single" },
-            { icon: "🏀", text: "ياسين tv", url: "https://t.me/techtouch7/136" },
-            { icon: "🏈", text: "BlackUltra", url: "https://t.me/techtouch7/2719" },
-            { icon: "🎾", text: "ZAIN LIVE", url: "https://t.me/techtouch7/1992" }
-        ],
-        video: [
-            { icon: "✂️", text: "Viva cut بديل كاب كات", url: "https://t.me/techtouch7/2975?single" },
-            { icon: "🎨", text: "CapCut اصدار 2", url: "https://t.me/techtouch7/3250" },
-            { icon: "🎬", text: "CapCut اصدار 1", url: "https://t.me/techtouch7/3287" }
-        ],
-        misc: [
-            { icon: "📱", text: "MYTV الأندرويد", url: "https://t.me/techtouch7/204" },
-            { icon: "📲", text: "MYTV الآيفون", url: "https://t.me/techtouch7/1041" },
-            { icon: "📺", text: "شبكتي tv للشاشات", url: "https://t.me/techtouch7/1556" },
-            { icon: "📱", text: "شبكتي tv للهاتف", url: "https://t.me/techtouch7/1818" },
-            { icon: "🖥️", text: "المنصة X للشاشات", url: "https://t.me/techtouch7/1639" },
-            { icon: "📲", text: "المنصة X للهاتف", url: "https://t.me/techtouch7/1533" }
-        ]
-    };
+    const savedDropdowns = localStorage.getItem("dropdownData");
+    if (savedDropdowns) {
+        try {
+            dropdownData = JSON.parse(savedDropdowns);
+        } catch (error) {
+            console.error("Error parsing saved dropdowns:", error);
+            dropdownData = { movies: [], sports: [], videos: [], misc: [] };
+        }
+    } else {
+        dropdownData = { movies: [], sports: [], videos: [], misc: [] };
+    }
 }
 
-// تحديث بيانات القوائم المنسدلة (لم تعد تستخدم localStorage)
-async function updateDropdownData() {
-    // البيانات تُحمل الآن من GitHub في loadDataFromGitHub()
-    console.log('Dropdown data updated from GitHub');
-}
-
-// تحميل المحتوى حسب الصفحة
+// دالة تحميل المحتوى الرئيسية
 async function loadContent() {
-    console.log("loadContent called");
+    console.log("Starting content load...");
     
     // تحميل البيانات من GitHub أولاً
-    await loadDataFromGitHub();
+    const githubSuccess = await loadDataFromGitHub();
     
-    const path = window.location.pathname;
-
-    if (path.includes("admin.html")) {
-        // Admin page logic is now handled directly in admin.html script block
-    } else if (path.includes("section.html")) {
-        loadSectionContent();
-    } else if (path.includes("post.html")) {
-        loadPostContent();
-    } else {
-        loadHomePageContent();
+    if (!githubSuccess) {
+        console.log("GitHub loading failed, using local data");
     }
-    updateAdBar();
+    
+    // عرض المحتوى
+    displayContent();
+    updateAdText();
 }
 
 // إعداد مستمعي الأحداث
