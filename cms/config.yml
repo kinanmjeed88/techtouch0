@@ -32,3 +32,6 @@ collections:
       - {label: "الأيقونة", name: "icon", widget: "string"}
       - {label: "الرابط", name: "url", widget: "string"}
 
+local_backend: true
+admin_path: /cms/
+

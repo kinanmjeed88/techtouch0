@@ -809,21 +809,16 @@
             window.location.href = `section.html?category=${category}`;
         }
     </script>
-    <script src="github-config.js"></script>
-    <script src="script.js"></script>
-    
-    <!-- Netlify Identity Script -->
+    <script src="github-config.js"></scr    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", user => {
           if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
+            window.netlifyIdentity.on("login", () =              document.location.href = "/cms/";
             });
           }
         });
       }
-    </script>
-</body>
+    </script>/body>
 </html>
 
