@@ -172,6 +172,63 @@ async function fetchAllDropdowns() {
     }
 }
 
+// دالة لجلب إعدادات الإعلانات من GitHub
+async function fetchAdSettings() {
+    try {
+        const markdownContent = await fetchMarkdownFromGitHub('settings/advertisements.md');
+        if (markdownContent) {
+            const { frontMatter } = parseFrontMatter(markdownContent);
+            return {
+                adText: frontMatter.adText || 'مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!',
+                adEnabled: frontMatter.adEnabled !== false
+            };
+        }
+        return {
+            adText: 'مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!',
+            adEnabled: true
+        };
+    } catch (error) {
+        console.error('Error fetching ad settings:', error);
+        return {
+            adText: 'مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!',
+            adEnabled: true
+        };
+    }
+}
+
+// دالة لجلب قنوات التليجرام من GitHub
+async function fetchTelegramChannels() {
+    try {
+        const files = await fetchFolderContents('telegram');
+        const channels = [];
+        
+        for (const file of files) {
+            if (file.name.endsWith('.md')) {
+                const markdownContent = await fetchMarkdownFromGitHub(`telegram/${file.name}`);
+                if (markdownContent) {
+                    const { frontMatter } = parseFrontMatter(markdownContent);
+                    channels.push({
+                        id: file.name.replace('.md', ''),
+                        title: frontMatter.title || 'بدون عنوان',
+                        description: frontMatter.description || '',
+                        icon: frontMatter.icon || 'fas fa-link',
+                        url: frontMatter.url || '#',
+                        order: parseInt(frontMatter.order) || 999,
+                        filename: file.name
+                    });
+                }
+            }
+        }
+        
+        // ترتيب القنوات حسب الترتيب المحدد
+        channels.sort((a, b) => a.order - b.order);
+        return channels;
+    } catch (error) {
+        console.error('Error fetching telegram channels:', error);
+        return [];
+    }
+}
+
 // دالة لحفظ البيانات إلى GitHub (تتطلب دالة Netlify)
 async function saveToGitHub(filename, data) {
     try {

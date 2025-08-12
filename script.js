@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
     requestAnimationFrame(() => {
         loadContent();
         setupEventListeners();
-        initializeDropdowns();
         updateProfilePic(); // تحديث الصورة الشخصية
     });
 });
@@ -24,25 +23,25 @@ function updateProfilePic() {
 // بيانات الأقسام
 const sectionsData = {
     posts: { title: "المنشورات", icon: "file-lines" },
-    apps: { title: "التطبيقات", icon: "mobile-screen-button" },
     games: { title: "الألعاب", icon: "gamepad" },
-    movies: { title: "الأفلام", icon: "film" },
-    tutorials: { title: "الشروحات", icon: "book" },
-    ai: { title: "الذكاء الاصطناعي", icon: "microchip" }
+    sports: { title: "الرياضة", icon: "futbol" }
 };
 
 // بيانات المنشورات - سيتم تحميلها من GitHub
 let posts = [];
 
-// نص الإعلان - سيبقى في localStorage مؤقتاً
-let adText = localStorage.getItem("adText") || "مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!";
+// بيانات قنوات التليجرام - سيتم تحميلها من GitHub
+let telegramChannels = [];
+
+// إعدادات الإعلان - سيتم تحميلها من GitHub
+let adSettings = {
+    adText: 'مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!',
+    adEnabled: true
+};
 
 // متغيرات التصفح
 let currentPage = 1;
 const postsPerPage = 10;
-
-// بيانات القوائم المنسدلة - سيتم تحميلها من GitHub
-let dropdownData = {};
 
 // تحميل البيانات من GitHub
 async function loadDataFromGitHub() {
@@ -53,9 +52,13 @@ async function loadDataFromGitHub() {
         posts = await fetchAllPosts();
         console.log("Posts loaded:", posts.length);
         
-        // تحميل القوائم المنسدلة من ملفات Markdown
-        dropdownData = await fetchAllDropdowns();
-        console.log("Dropdowns loaded:", dropdownData);
+        // تحميل قنوات التليجرام من ملفات Markdown
+        telegramChannels = await fetchTelegramChannels();
+        console.log("Telegram channels loaded:", telegramChannels.length);
+        
+        // تحميل إعدادات الإعلان
+        adSettings = await fetchAdSettings();
+        console.log("Ad settings loaded:", adSettings);
         
         return true;
     } catch (error) {
@@ -81,17 +84,10 @@ function loadLocalData() {
         }
     }
     
-    // تحميل القوائم المنسدلة من localStorage
-    const savedDropdowns = localStorage.getItem("dropdownData");
-    if (savedDropdowns) {
-        try {
-            dropdownData = JSON.parse(savedDropdowns);
-        } catch (error) {
-            console.error("Error parsing saved dropdowns:", error);
-            dropdownData = { movies: [], sports: [], videos: [], misc: [] };
-        }
-    } else {
-        dropdownData = { movies: [], sports: [], videos: [], misc: [] };
+    // تحميل إعدادات الإعلان من localStorage
+    const savedAdText = localStorage.getItem("adText");
+    if (savedAdText) {
+        adSettings.adText = savedAdText;
     }
 }
 
@@ -111,10 +107,26 @@ async function loadContent() {
     updateAdText();
 }
 
+// عرض المحتوى
+function displayContent() {
+    // عرض المنشورات لكل قسم
+    displaySectionPosts('posts', 1);
+    displaySectionPosts('games', 1);
+    displaySectionPosts('sports', 1);
+}
+
+// تحديث نص الإعلان
+function updateAdText() {
+    const adElement = document.getElementById("ad-text");
+    if (adElement && adSettings.adEnabled) {
+        adElement.textContent = adSettings.adText;
+    }
+}
+
 // إعداد مستمعي الأحداث
 function setupEventListeners() {
     // إضافة تأثيرات التفاعل للبطاقات
-    const cards = document.querySelectorAll(".main-card, .sub-card, .dropdown-card");
+    const cards = document.querySelectorAll(".post-card, .telegram-section");
     cards.forEach(card => {
         card.addEventListener("mouseenter", function() {
             this.style.transform = "translateY(-3px) scale(1.02)";
