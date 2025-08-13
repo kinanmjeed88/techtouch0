@@ -1,0 +1,48 @@
+backend:
+  name: github
+  repo: kinanmjeed88/techtouch0
+  branch: main
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "settings"
+    label: "إعدادات الموقع"
+    files:
+      - label: "الإعلانات"
+        name: "advertisements"
+        file: "data/settings/advertisements.md"
+        fields:
+          - {label: "نص الإعلان", name: "adText", widget: "string", default: "مرحباً بكم في TechTouch - موقعكم المفضل للتقنية!"}
+          - {label: "تفعيل الإعلان", name: "adEnabled", widget: "boolean", default: true}
+
+  - name: "posts"
+    label: "المنشورات"
+    folder: "data/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "العنوان", name: "title", widget: "string"}
+      - {label: "التاريخ", name: "date", widget: "datetime"}
+      - {label: "الفئة", name: "category", widget: "select", options: ["posts", "games", "sports"]}
+      - {label: "الصورة", name: "image", widget: "image", required: false}
+      - {label: "المحتوى", name: "body", widget: "markdown"}
+      - {label: "رابط التليجرام", name: "telegramLink", widget: "string", required: false}
+      - {label: "رابط خارجي", name: "link", widget: "string", required: false}
+
+  - name: "telegram"
+    label: "قنوات التليجرام"
+    folder: "data/telegram"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "اسم القناة", name: "title", widget: "string"}
+      - {label: "الوصف", name: "description", widget: "string"}
+      - {label: "الأيقونة", name: "icon", widget: "string", hint: "مثال: fas fa-gamepad"}
+      - {label: "الرابط", name: "url", widget: "string"}
+      - {label: "الترتيب", name: "order", widget: "number", default: 1}
+
+local_backend: true
+admin_path: /cms/
+

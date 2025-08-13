@@ -22,22 +22,97 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1B8EEF;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Header Styles */
+        .header-bar {
+            background: linear-gradient(135deg, #1B8EEF, #0C18C0);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { background: linear-gradient(135deg, #1B8EEF, #0C18C0); }
+            50% { background: linear-gradient(135deg, #0C18C0, #1B8EEF); }
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+        }
+        
+        .section-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1B8EEF;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .section-description {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Posts Grid */
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
         
         .post-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
@@ -47,273 +122,430 @@
         .post-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 1);
         }
         
-        /* Home Button Styles */
-        .home-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #1B8EEF, #0C18C0);
-            color: white;
-            border-radius: 50%;
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .post-excerpt {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-meta {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 9999;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1rem;
         }
         
-        .home-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #0C18C0, #1B8EEF);
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .home-button:active {
-            transform: scale(0.95);
-        }
-        
-        @media (max-width: 768px) {
-            .home-button {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-                bottom: 15px;
-                right: 15px;
-            }
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .read-more-btn {
+            background: #1B8EEF;
             color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .read-more-btn:hover {
+            background: #0C18C0;
+            transform: translateY(-2px);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .pagination button {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1B8EEF;
+            border: 2px solid #1B8EEF;
             padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            border: none;
-            font-weight: 600;
+            border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            font-weight: 500;
         }
         
-        .btn-primary:hover {
+        .pagination button:hover:not(:disabled) {
+            background: #1B8EEF;
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
         
-        .btn-primary:disabled {
-            opacity: 0.5;
+        .pagination button:disabled {
+            background: #ccc;
+            color: #666;
+            border-color: #ccc;
             cursor: not-allowed;
             transform: none;
         }
         
-        .floating-animation {
-            animation: float 6s ease-in-out infinite;
+        .page-info {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            color: #333;
+            font-weight: 500;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
         
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1B8EEF;
+            border: 2px solid #1B8EEF;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-btn:hover {
+            background: #1B8EEF;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 3rem;
-            color: rgba(255, 255, 255, 0.8);
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin: 2rem 0;
         }
         
         .empty-state i {
             font-size: 4rem;
+            color: #ccc;
             margin-bottom: 1rem;
-            opacity: 0.5;
         }
         
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .empty-state p {
+            color: #888;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .header-title {
+                font-size: 1.5rem;
+            }
+            
+            .header-image {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .posts-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pagination {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem 0.5rem;
+            }
+            
             .post-card {
-                padding: 1rem;
-                margin-bottom: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .section-header {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Home Button -->
-    <a href="index.html" class="home-button" title="العودة للصفحة الرئيسية">
-        <i class="fas fa-home"></i>
-    </a>
-    
-    <!-- Header -->
-    <header class="glass-effect text-white p-4 mb-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <a href="index.html" class="text-2xl hover:text-yellow-300 transition-colors">
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <h1 class="text-2xl font-bold gradient-text" id="section-title">القسم</h1>
-            </div>
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <i class="fas fa-folder-open text-2xl"></i>
-                <span class="text-sm opacity-90">استعراض المحتوى</span>
-            </div>
+    <!-- Header Bar -->
+    <header class="header-bar">
+        <div class="header-content">
+            <h1 class="header-title">TechTouch</h1>
+            <img id="profile-pic-display" src="https://via.placeholder.com/100" alt="الصورة الشخصية" class="header-image">
         </div>
     </header>
     
     <!-- Main Content -->
-    <div class="container mx-auto px-4 pb-20">
+    <div class="main-content">
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-btn">
+                <i class="fas fa-home"></i>
+                العودة للرئيسية
+            </a>
+        </div>
+        
+        <!-- Section Header -->
+        <div class="section-header">
+            <h1 class="section-title" id="section-title">
+                <i class="fas fa-file-lines"></i>
+                المنشورات
+            </h1>
+            <p class="section-description" id="section-description">
+                تصفح جميع المنشورات في هذا القسم
+            </p>
+        </div>
+        
         <!-- Posts Container -->
-        <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Posts will be populated by JavaScript -->
+        <div class="posts-container" id="posts-container">
+            <!-- Posts will be loaded here -->
         </div>
         
         <!-- Empty State -->
-        <div id="empty-state" class="empty-state hidden">
+        <div class="empty-state" id="empty-state" style="display: none;">
             <i class="fas fa-inbox"></i>
-            <h3 class="text-xl font-bold mb-2">لا توجد منشورات</h3>
-            <p class="text-sm opacity-75">لم يتم نشر أي محتوى في هذا القسم بعد</p>
+            <h3>لا توجد منشورات</h3>
+            <p>لم يتم نشر أي محتوى في هذا القسم بعد</p>
         </div>
         
         <!-- Pagination -->
-        <div class="flex justify-center space-x-4 space-x-reverse mt-8" id="pagination-container">
-            <button onclick="prevPage()" id="prev-btn" class="btn-primary">
-                <i class="fas fa-chevron-right ml-2"></i>
+        <div class="pagination" id="pagination-container">
+            <button onclick="prevPage()" id="prev-btn">
+                <i class="fas fa-chevron-right"></i>
                 السابق
             </button>
-            <button onclick="nextPage()" id="next-btn" class="btn-primary">
+            <div class="page-info" id="page-info">صفحة 1</div>
+            <button onclick="nextPage()" id="next-btn">
                 التالي
-                <i class="fas fa-chevron-left mr-2"></i>
+                <i class="fas fa-chevron-left"></i>
             </button>
         </div>
     </div>
     
-    <script src="script.js"></script>
-    <script>t text-white text-center p-6 mt-12">
-        <div class="container mx-auto">
-            <div class="flex justify-center space-x-6 space-x-reverse mb-4">
-                <a href="https://www.instagram.com/techtouch0" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-instagram text-xl"></i>
-                </a>
-                <a href="https://www.facebook.com/kinan.mjeed.88" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-facebook text-xl"></i>
-                </a>
-                <a href="https://t.me/techtouch7" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-telegram text-xl"></i>
-                </a>
-                <a href="https://www.tiktok.com/@techtouch6" target="_blank" class="hover:text-yellow-300 transition-colors">
-                    <i class="fab fa-tiktok text-xl"></i>
-                </a>
-            </div>
-            <p class="text-sm opacity-90">
-                جميع الحقوق محفوظة © 2025 
-                <a href="https://t.me/kinanmjeed" target="_blank" class="text-yellow-300 hover:underline">kinanmjeed</a>
-            </p>
-        </div>
-    </footer>
-    
-    <script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="github-config.js"></script>
     <script>
-        // تحسين عرض المنشورات
-        function displayPosts(category) {
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category') || 'posts';
+        
+        // Section data
+        const sectionsData = {
+            posts: { 
+                title: "المنشورات", 
+                icon: "file-lines",
+                description: "تصفح جميع المنشورات والأخبار التقنية"
+            },
+            games: { 
+                title: "الألعاب", 
+                icon: "gamepad",
+                description: "اكتشف أحدث الألعاب والتطبيقات الترفيهية"
+            },
+            sports: { 
+                title: "الرياضة", 
+                icon: "futbol",
+                description: "تابع آخر أخبار الرياضة والتطبيقات الرياضية"
+            }
+        };
+        
+        // Posts data
+        let posts = [];
+        let currentPage = 1;
+        const postsPerPage = 10;
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSectionInfo();
+            loadPosts();
+            updateProfilePic();
+        });
+        
+        // Update section information
+        function updateSectionInfo() {
+            const sectionData = sectionsData[category];
+            if (sectionData) {
+                document.getElementById('section-title').innerHTML = `
+                    <i class="fas fa-${sectionData.icon}"></i>
+                    ${sectionData.title}
+                `;
+                document.getElementById('section-description').textContent = sectionData.description;
+                document.title = `${sectionData.title} - TechTouch`;
+            }
+        }
+        
+        // Load posts from GitHub
+        async function loadPosts() {
+            try {
+                const allPosts = await fetchAllPosts();
+                posts = allPosts.filter(post => post.category === category);
+                displayPosts();
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                showEmptyState();
+            }
+        }
+        
+        // Display posts
+        function displayPosts() {
             const postsContainer = document.getElementById('posts-container');
             const emptyState = document.getElementById('empty-state');
             const paginationContainer = document.getElementById('pagination-container');
             
-            if (!postsContainer) return;
-
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const filteredPosts = posts.filter(p => p.category === category);
-            const postsPerPage = 9; // زيادة عدد المنشورات لكل صفحة
-            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-
+            const totalPages = Math.ceil(posts.length / postsPerPage);
             const start = (currentPage - 1) * postsPerPage;
             const end = start + postsPerPage;
-            const paginatedPosts = filteredPosts.slice(start, end);
-
+            const paginatedPosts = posts.slice(start, end);
+            
             postsContainer.innerHTML = '';
             
             if (paginatedPosts.length === 0) {
-                emptyState.classList.remove('hidden');
-                paginationContainer.classList.add('hidden');
+                showEmptyState();
                 return;
-            } else {
-                emptyState.classList.add('hidden');
-                paginationContainer.classList.remove('hidden');
             }
-
+            
+            emptyState.style.display = 'none';
+            paginationContainer.style.display = 'flex';
+            
             paginatedPosts.forEach(post => {
                 const postCard = document.createElement('div');
                 postCard.className = 'post-card';
-                postCard.onclick = () => goToPost(post.id);
-                
-                // تحديد أيقونة القسم
-                const sectionIcons = {
-                    posts: 'file-lines',
-                    apps: 'mobile-screen-button',
-                    games: 'gamepad',
-                    movies: 'film',
-                    tutorials: 'book',
-                    ai: 'microchip'
-                };
-                
-                const sectionColors = {
-                    posts: 'blue',
-                    apps: 'green',
-                    games: 'purple',
-                    movies: 'red',
-                    tutorials: 'orange',
-                    ai: 'cyan'
-                };
-                
-                const icon = sectionIcons[post.category] || 'star';
-                const color = sectionColors[post.category] || 'gray';
+                postCard.onclick = () => openPost(post.id);
                 
                 postCard.innerHTML = `
-                    <div class="flex items-start mb-4">
-                        <div class="text-2xl text-${color}-600 ml-3">
-                            <i class="fas fa-${icon}"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h2 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">${post.title}</h2>
-                            <div class="flex items-center text-sm text-gray-500 mb-3">
-                                <i class="fas fa-calendar-alt ml-1"></i>
-                                <span>${post.date}</span>
-                            </div>
-                        </div>
+                    <h2 class="post-title">${post.title}</h2>
+                    <div class="post-meta">
+                        <span><i class="fas fa-calendar-alt"></i> ${formatDate(post.date)}</span>
+                        <span><i class="fas fa-tag"></i> ${sectionsData[post.category]?.title || 'عام'}</span>
                     </div>
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-3">${post.content.substring(0, 150)}${post.content.length > 150 ? '...' : ''}</p>
-                    <div class="flex justify-between items-center">
-                        <button class="text-${color}-600 hover:text-${color}-700 font-medium text-sm transition-colors">
-                            <i class="fas fa-arrow-left ml-1"></i>
+                    <p class="post-excerpt">${truncateText(post.content, 150)}</p>
+                    <div class="post-actions">
+                        <a href="post.html?id=${post.id}" class="read-more-btn">
                             قراءة المزيد
-                        </button>
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
                         ${post.link && post.link !== '#' ? `
                             <div class="text-green-600">
-                                <i class="fas fa-download"></i>
+                                <i class="fas fa-download" title="رابط تحميل متوفر"></i>
                             </div>
                         ` : ''}
                     </div>
                 `;
+                
                 postsContainer.appendChild(postCard);
             });
-
-            // تحديث أزرار التصفح
+            
+            updatePagination(totalPages);
+        }
+        
+        // Show empty state
+        function showEmptyState() {
+            document.getElementById('empty-state').style.display = 'block';
+            document.getElementById('pagination-container').style.display = 'none';
+        }
+        
+        // Update pagination
+        function updatePagination(totalPages) {
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
+            const pageInfo = document.getElementById('page-info');
             
-            if (prevBtn) prevBtn.disabled = currentPage === 1;
-            if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+            pageInfo.textContent = `صفحة ${currentPage} من ${totalPages}`;
+        }
+        
+        // Navigation functions
+        function nextPage() {
+            const totalPages = Math.ceil(posts.length / postsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayPosts();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayPosts();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        // Open post
+        function openPost(postId) {
+            window.location.href = `post.html?id=${postId}`;
+        }
+        
+        // Utility functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+        
+        // Update profile picture
+        function updateProfilePic() {
+            const profilePicDisplay = document.getElementById("profile-pic-display");
+            if (profilePicDisplay) {
+                const savedProfilePic = localStorage.getItem("profilePic");
+                if (savedProfilePic) {
+                    profilePicDisplay.src = savedProfilePic;
+                }
+            }
         }
     </script>
 </body>
