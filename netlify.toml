@@ -1,9 +1,6 @@
-[build]
-  publish = "public"
-  functions = "netlify/functions"
-
 [[redirects]]
   from = "/cms/*"
   to = "/cms/index.html"
   status = 200
+
 
